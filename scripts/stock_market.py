@@ -3,6 +3,7 @@ import re
 
 # 常見股票代號對照表 (台股與熱門美股)
 STOCK_NAME_MAP = {
+    # 台股上市 / 上櫃熱門個股
     "2330": "台積電",
     "2337": "旺宏",
     "2454": "聯發科",
@@ -13,11 +14,21 @@ STOCK_NAME_MAP = {
     "6669": "緯穎",
     "2379": "瑞昱",
     "3034": "聯詠",
+    "1537": "廣隆",
+    "3105": "穩懋",
+    "3264": "欣銓",
+    "3526": "凡甲",
+    "6139": "亞翔",
+    "6239": "力成",
+    "2441": "超豐",
+    "2409": "友達",
     "0050": "元大台灣50",
     "0056": "元大高股息",
     "00878": "國泰永續高股息",
     "00919": "群益台灣精選高息",
     "00929": "復華台灣科技優息",
+
+    # 美股與半導體巨頭
     "NVDA": "輝達",
     "TSLA": "特斯拉",
     "AAPL": "蘋果",
@@ -27,6 +38,8 @@ STOCK_NAME_MAP = {
     "AMZN": "亞馬遜",
     "MU": "美光",
     "INTC": "英特爾",
+    "AVGO": "博通",
+    "FN": "Fabrinet",
     "TSM": "台積電ADR"
 }
 
@@ -39,6 +52,29 @@ def normalize_ticker(symbol: str) -> str:
     if re.match(r'^\d{4,5}$', symbol):
         return f"{symbol}.TW"
     return symbol
+
+def fetch_yfinance_info(ticker_str: str) -> tuple[dict, str]:
+    """獲取 yfinance info，包含台股上市 (.TW) 與上櫃 (.TWO) 的自動備援處理"""
+    try:
+        stock = yf.Ticker(ticker_str)
+        info = stock.info
+        if info and ('regularMarketPrice' in info or 'currentPrice' in info or 'previousClose' in info):
+            return info, ticker_str
+    except Exception:
+        pass
+
+    # 若為台股 .TW 但失敗，嘗試上櫃 (.TWO)
+    if ticker_str.endswith(".TW"):
+        otc_ticker = ticker_str.replace(".TW", ".TWO")
+        try:
+            stock = yf.Ticker(otc_ticker)
+            info = stock.info
+            if info and ('regularMarketPrice' in info or 'currentPrice' in info or 'previousClose' in info):
+                return info, otc_ticker
+        except Exception:
+            pass
+
+    return {}, ticker_str
 
 def get_clean_stock_info(symbol: str) -> tuple[str, str]:
     """
@@ -56,8 +92,8 @@ def get_clean_stock_info(symbol: str) -> tuple[str, str]:
     # 2. 次之透過 yfinance 獲取 shortName
     try:
         norm_ticker = normalize_ticker(symbol)
-        stock = yf.Ticker(norm_ticker)
-        short_name = stock.info.get('shortName', clean_code)
+        info, _ = fetch_yfinance_info(norm_ticker)
+        short_name = info.get('shortName', clean_code)
         # 清理多餘字樣
         short_name = re.sub(r'INC|CORP|LTD|CO|COMPANY|\.|\,', '', short_name, flags=re.IGNORECASE).strip()
         return clean_code, short_name if short_name else clean_code
@@ -76,8 +112,7 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
         seen.add(ticker_str)
         
         try:
-            stock = yf.Ticker(ticker_str)
-            info = stock.info
+            info, actual_ticker = fetch_yfinance_info(ticker_str)
             
             if not info or ('regularMarketPrice' not in info and 'currentPrice' not in info and 'previousClose' not in info):
                 continue
@@ -100,7 +135,7 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
             
             results.append({
                 'raw': raw,
-                'ticker': ticker_str,
+                'ticker': actual_ticker,
                 'code': code,
                 'clean_name': clean_name,
                 'name': display_name,
@@ -113,6 +148,7 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
             print(f"ℹ️ 無法抓取 {ticker_str} 股票數據: {e}")
             
     return results
+
 
 def generate_market_table_md(stock_data: list[dict]) -> str:
     """將即時股價資料轉換為 Markdown 表格"""
