@@ -41,36 +41,38 @@ def generate_summary(video_info: dict, transcript: str, transcript_source: str =
 {transcript[:30000]}
 """
 
-    models_to_try = ['gemini-flash-latest', 'gemini-2.0-flash', 'gemini-2.0-flash-lite']
+    model_name = 'gemini-3.5-flash'
+
     response = None
     last_error = None
     
-    for attempt in range(5):
-        for model_name in models_to_try:
-            try:
-                response = client.models.generate_content(
-                    model=model_name,
-                    contents=[SYSTEM_PROMPT, user_content],
-                    config=types.GenerateContentConfig(
-                        response_mime_type="application/json",
-                        temperature=0.2
-                    )
+    for attempt in range(10):
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                contents=[SYSTEM_PROMPT, user_content],
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    temperature=0.2
                 )
-                if response:
-                    break
-            except Exception as e:
-                last_error = e
-                err_str = str(e)
-                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
-                    print(f"⏳ [Attempt {attempt+1}/5] 觸發 Gemini API 限流 (429)，自動等待 20 秒後重試...")
-                    import time
-                    time.sleep(20)
-                continue
-        if response:
-            break
+            )
+            if response:
+                break
+        except Exception as e:
+            last_error = e
+            err_str = str(e)
+            if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                print(f"⏳ [Attempt {attempt+1}/10] 觸發 Gemini API 限流 (429)，自動等待 65 秒後重試...")
+                import time
+                time.sleep(65)
+            else:
+                print(f"⚠️ API 錯誤: {e}")
+                import time
+                time.sleep(5)
             
     if not response:
         raise RuntimeError(f"Gemini API 呼叫失敗: {last_error}")
+
         
     try:
         data = json.loads(response.text)

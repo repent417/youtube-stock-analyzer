@@ -1,6 +1,8 @@
 import os
 import re
 import tempfile
+import time
+import mimetypes
 from pathlib import Path
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -26,6 +28,7 @@ def get_video_info(url: str) -> dict:
         'quiet': True,
         'no_warnings': True,
         'extract_flat': False,
+        'extractor_args': {'youtube': {'player_client': ['android_vr', 'web_embedded']}},
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=False)
@@ -88,38 +91,57 @@ def get_transcript(video_id: str, url: str) -> dict:
         print("🎙️ 影片無預設字幕，啟動 Gemini AI 音訊轉譯 (Audio Transcription)...")
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
-                audio_path = os.path.join(temp_dir, "audio.mp3")
+                audio_tmpl = os.path.join(temp_dir, 'audio.%(ext)s')
                 ydl_opts = {
                     'format': 'bestaudio/best',
-                    'postprocessors': [{
-                        'key': 'FFmpegExtractAudio',
-                        'preferredcodec': 'mp3',
-                        'preferredquality': '192',
-                    }],
-                    'outtmpl': os.path.join(temp_dir, 'audio.%(ext)s'),
+                    'outtmpl': audio_tmpl,
+                    'extractor_args': {'youtube': {'player_client': ['android_vr', 'web_embedded']}},
                     'quiet': True,
                     'no_warnings': True,
                 }
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([url])
                 
-                actual_mp3 = audio_path if os.path.exists(audio_path) else None
-                if not actual_mp3:
-                    for f in os.listdir(temp_dir):
-                        if f.endswith(".mp3"):
-                            actual_mp3 = os.path.join(temp_dir, f)
-                            break
+                # 尋找下載好的音訊檔案
+                actual_audio = None
+                for f in os.listdir(temp_dir):
+                    if f.startswith("audio."):
+                        actual_audio = os.path.join(temp_dir, f)
+                        break
 
-                if actual_mp3 and os.path.exists(actual_mp3):
+                if actual_audio and os.path.exists(actual_audio):
+                    # 推斷正確的音訊 MIME Type (預設音訊 audio/webm)
+                    ext = Path(actual_audio).suffix.lower()
+                    mime_map = {
+                        '.webm': 'audio/webm',
+                        '.m4a': 'audio/m4a',
+                        '.mp3': 'audio/mp3',
+                        '.wav': 'audio/wav',
+                        '.ogg': 'audio/ogg'
+                    }
+                    mime_type = mime_map.get(ext, 'audio/webm')
+
                     client = genai.Client(api_key=GEMINI_API_KEY)
-                    uploaded_file = client.files.upload(file=actual_mp3)
+                    uploaded_file = client.files.upload(
+                        file=actual_audio,
+                        config=types.UploadFileConfig(mime_type=mime_type)
+                    )
                     
-                    import time
+                    # 等待狀態變更為 ACTIVE
+                    for _ in range(30):
+                        if uploaded_file.state.name != "PROCESSING":
+                            break
+                        time.sleep(2)
+                        uploaded_file = client.files.get(name=uploaded_file.name)
+                        
+                    if uploaded_file.state.name != "ACTIVE":
+                        raise Exception(f"檔案上傳狀態無效: {uploaded_file.state.name}")
+                        
                     response = None
-                    for attempt in range(5):
+                    for attempt in range(10):
                         try:
                             response = client.models.generate_content(
-                                model='gemini-flash-latest',
+                                model='gemini-3.5-flash',
                                 contents=[
                                     uploaded_file,
                                     "請將這段語音完整轉錄為繁體中文逐字稿，附上大約的時間標記（例如 [01:23]），保持標的代號與專有名詞精準。"
@@ -130,17 +152,18 @@ def get_transcript(video_id: str, url: str) -> dict:
                         except Exception as e:
                             err_str = str(e)
                             if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
-                                print(f"⏳ 音訊轉譯 [Attempt {attempt+1}/5] 觸發 Gemini API 限流，自動等待 20 秒...")
-                                time.sleep(20)
+                                print(f"⏳ 音訊轉譯 [Attempt {attempt+1}/10] 觸發 Gemini API 限流，等待 65 秒...")
+                                time.sleep(65)
                             else:
                                 raise e
+
                     
                     try:
                         client.files.delete(name=uploaded_file.name)
                     except Exception:
                         pass
 
-                    if response:
+                    if response and response.text:
                         return {
                             'text': response.text,
                             'source': "🎙️ Gemini AI 音訊轉譯 (無預設 CC 字幕)"
