@@ -59,9 +59,11 @@ def process_youtube_url(url: str):
             console.print(f"[bold red]❌ Gemini AI 分析失敗: {e}[/bold red]")
             return
 
-    # 4. 寫入 Markdown 筆記 (影片筆記/頻道名稱/日期_標題.md)
-    note_path = save_note(info['channel'], info['upload_date'], info['title'], summary_result['final_md'])
+    # 4. 寫入 Markdown 筆記 (影片筆記/頻道名稱/【股票代號名稱】日期_標題.md)
+    tickers = summary_result.get('tickers', [])
+    note_path = save_note(info['channel'], info['upload_date'], info['title'], summary_result['final_md'], tickers=tickers)
     console.print(f"[bold green]✅ 影片筆記已成功生成:[bold green] [bold underline]{note_path.relative_to(BASE_DIR)}[/bold underline]")
+
 
     # 5. 更新個股交叉索引
     tickers = summary_result.get('tickers', [])

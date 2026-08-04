@@ -3,7 +3,7 @@ from pathlib import Path
 from google import genai
 from google.genai import types
 from config import NOTES_DIR, GEMINI_API_KEY, sanitize_filename
-from stock_market import get_stock_data, generate_market_table_md
+from stock_market import get_stock_data, generate_market_table_md, get_clean_stock_info
 
 SYSTEM_PROMPT = """
 你是一位資深的量化交易員與股票分析師。請將輸入的 YouTube 股票分析影片逐字稿與元資料，整理成極具投資決策價值、結構嚴密的 Markdown 筆記。
@@ -17,8 +17,8 @@ SYSTEM_PROMPT = """
 
 請嚴格輸出 JSON 格式，結構如下：
 {
-  "tickers": ["2330.TW", "NVDA"],
-  "tags": ["#2330台積電", "#NVDA輝達", "#台股大盤"],
+  "tickers": ["2337.TW", "NVDA"],
+  "tags": ["#2337旺宏", "#NVDA輝達", "#NORFlash", "#AI伺服器"],
   "summary_markdown": "...完整的 Markdown 內容 (不用包含市場數據表格，系統會自動插入)..."
 }
 """
@@ -38,7 +38,7 @@ def generate_summary(video_info: dict, transcript: str) -> dict:
 - 連結：{video_info['url']}
 
 【影片字幕逐字稿】
-{transcript[:30000]}  # 限制長度避免溢出
+{transcript[:30000]}
 """
 
     models_to_try = ['gemini-flash-latest', 'gemini-2.0-flash', 'gemini-2.0-flash-lite']
@@ -63,8 +63,7 @@ def generate_summary(video_info: dict, transcript: str) -> dict:
             
     if not response:
         raise RuntimeError(f"Gemini API 呼叫失敗: {last_error}")
-
-    
+        
     try:
         data = json.loads(response.text)
     except Exception as e:
@@ -106,15 +105,37 @@ def generate_summary(video_info: dict, transcript: str) -> dict:
         "tags": data.get("tags", [])
     }
 
-def save_note(channel: str, date: str, title: str, note_content: str) -> Path:
-    """將總結寫入 影片筆記/<頻道名稱>/<日期>_<標題>.md"""
+def build_stock_prefix(tickers: list[str]) -> str:
+    """根據提及股票產生標頭前綴，如 【2337旺宏】 或 【2330台積電_NVDA輝達】"""
+    if not tickers:
+        return ""
+        
+    prefix_parts = []
+    # 最多取前 2~3 個主要標的
+    for t in tickers[:3]:
+        code, clean_name = get_clean_stock_info(t)
+        if clean_name and clean_name != code:
+            prefix_parts.append(f"{code}{clean_name}")
+        else:
+            prefix_parts.append(code)
+            
+    if prefix_parts:
+        return f"【{'_'.join(prefix_parts)}】"
+    return ""
+
+def save_note(channel: str, date: str, title: str, note_content: str, tickers: list[str] = None) -> Path:
+    """
+    將總結寫入 影片筆記/<頻道名稱>/【股票代號名稱】<日期>_<標題>.md
+    """
     clean_channel = sanitize_filename(channel)
     clean_title = sanitize_filename(title)
+    
+    stock_prefix = build_stock_prefix(tickers) if tickers else ""
     
     channel_dir = NOTES_DIR / clean_channel
     channel_dir.mkdir(parents=True, exist_ok=True)
     
-    filename = f"{date}_{clean_title}.md"
+    filename = f"{stock_prefix}{date}_{clean_title}.md"
     file_path = channel_dir / filename
     
     with open(file_path, "w", encoding="utf-8") as f:
