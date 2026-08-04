@@ -45,24 +45,33 @@ def generate_summary(video_info: dict, transcript: str) -> dict:
     response = None
     last_error = None
     
-    for model_name in models_to_try:
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=[SYSTEM_PROMPT, user_content],
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    temperature=0.2
+    for attempt in range(5):
+        for model_name in models_to_try:
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=[SYSTEM_PROMPT, user_content],
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        temperature=0.2
+                    )
                 )
-            )
-            if response:
-                break
-        except Exception as e:
-            last_error = e
-            continue
+                if response:
+                    break
+            except Exception as e:
+                last_error = e
+                err_str = str(e)
+                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                    print(f"⏳ [Attempt {attempt+1}/5] 觸發 Gemini API 限流 (429)，自動等待 20 秒後重試...")
+                    import time
+                    time.sleep(20)
+                continue
+        if response:
+            break
             
     if not response:
         raise RuntimeError(f"Gemini API 呼叫失敗: {last_error}")
+
         
     try:
         data = json.loads(response.text)

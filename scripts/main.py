@@ -108,10 +108,14 @@ def main():
         console.print("[yellow]未提供任何有效的網址。程式結束。[/yellow]")
         return
 
-    for url in urls:
+    import time
+    for idx, url in enumerate(urls, 1):
+        console.print(f"\n[bold yellow]───────────── [{idx}/{len(urls)}] ─────────────[/bold yellow]")
         process_youtube_url(url)
+        time.sleep(4)
 
     console.print("\n[bold green]🎉 全部任務處理完成！[/bold green]\n")
+
 
 if __name__ == "__main__":
     main()

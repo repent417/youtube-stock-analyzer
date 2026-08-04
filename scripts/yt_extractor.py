@@ -113,16 +113,36 @@ def get_transcript(video_id: str, url: str) -> str:
                     client = genai.Client(api_key=GEMINI_API_KEY)
                     uploaded_file = client.files.upload(file=actual_mp3)
                     
-                    response = client.models.generate_content(
-                        model='gemini-flash-latest',
-                        contents=[
-                            uploaded_file,
-                            "請將這段語音完整轉錄為繁體中文逐字稿，附上大約的時間標記（例如 [01:23]），保持標的代號與專有名詞精準。"
-                        ]
-                    )
+                    import time
+                    response = None
+                    for attempt in range(5):
+                        try:
+                            response = client.models.generate_content(
+                                model='gemini-flash-latest',
+                                contents=[
+                                    uploaded_file,
+                                    "請將這段語音完整轉錄為繁體中文逐字稿，附上大約的時間標記（例如 [01:23]），保持標的代號與專有名詞精準。"
+                                ]
+                            )
+                            if response:
+                                break
+                        except Exception as e:
+                            err_str = str(e)
+                            if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                                print(f"⏳ 音訊轉譯 [Attempt {attempt+1}/5] 觸發 Gemini API 限流，自動等待 20 秒...")
+                                time.sleep(20)
+                            else:
+                                raise e
+                    
                     # 清理遠端暫存檔
-                    client.files.delete(name=uploaded_file.name)
-                    return response.text
+                    try:
+                        client.files.delete(name=uploaded_file.name)
+                    except Exception:
+                        pass
+
+                    if response:
+                        return response.text
+
         except Exception as e:
             print(f"⚠️ Gemini 音訊轉譯失敗: {e}")
 
