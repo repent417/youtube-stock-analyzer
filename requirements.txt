@@ -1,0 +1,8 @@
+yt-dlp
+youtube-transcript-api
+google-genai
+yfinance
+pandas
+tabulate
+rich
+python-dotenv
