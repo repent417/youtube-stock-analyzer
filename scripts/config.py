@@ -12,12 +12,14 @@ NOTES_DIR = BASE_DIR / "影片筆記"
 INDEX_DIR = BASE_DIR / "個股索引"
 TRANSCRIPTS_DIR = BASE_DIR / "原始字幕"
 SCRIPTS_DIR = BASE_DIR / "scripts"
+LOGS_DIR = BASE_DIR / "logs"
 NO_SUBTITLES_FILE = BASE_DIR / "no_subtitles_urls.txt"
-
+PROCESSED_URLS_FILE = BASE_DIR / "processed_urls.txt"
 
 # 確保目錄存在
-for d in [NOTES_DIR, INDEX_DIR, TRANSCRIPTS_DIR]:
+for d in [NOTES_DIR, INDEX_DIR, TRANSCRIPTS_DIR, LOGS_DIR]:
     d.mkdir(parents=True, exist_ok=True)
+
 
 # GEMINI API 金鑰
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
