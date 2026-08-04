@@ -44,24 +44,23 @@ def get_video_info(url: str) -> dict:
             'url': url
         }
 
-def get_transcript(video_id: str, url: str) -> str:
+def get_transcript(video_id: str, url: str) -> dict:
     """
-    抓取影片字幕逐字稿：
-    1. 優先使用 youtube-transcript-api 抓取繁中/簡中/英文官方或自動 CC
-    2. 若失敗則嘗試 yt-dlp 抓取字幕
-    3. 若皆無字幕，下戴音訊並透過 Gemini Audio API 轉成逐字稿
+    抓取影片字幕逐字稿，並回傳格式化內容與來源標籤：
+    {
+        'text': 逐字稿文字,
+        'source': "📜 YouTube CC 字幕" 或 "🎙️ Gemini AI 音訊轉譯 (無預設 CC 字幕)"
+    }
     """
     # 嘗試方法 1: youtube-transcript-api
     try:
         api = YouTubeTranscriptApi()
         transcript_list = api.list_transcripts(video_id)
         
-        # 尋找中文或英文語系
         transcript = None
         try:
             transcript = transcript_list.find_transcript(['zh-TW', 'zh-Hant', 'zh', 'zh-CN', 'zh-Hans', 'en'])
         except Exception:
-            # 抓第一個可用的字幕
             for t in transcript_list:
                 transcript = t
                 break
@@ -77,13 +76,16 @@ def get_transcript(video_id: str, url: str) -> str:
                 text = item.get('text', '').strip()
                 if text:
                     text_lines.append(f"{time_str} {text}")
-            return "\n".join(text_lines)
+            return {
+                'text': "\n".join(text_lines),
+                'source': "📜 YouTube CC 字幕"
+            }
     except Exception as e:
         print(f"ℹ️ youtube-transcript-api 未取得字幕: {e}")
 
     # 嘗試方法 2: Gemini 音訊轉文字
     if GEMINI_API_KEY:
-        print("🎙️ 影片無預設字幕，啟動 Gemini 音訊轉文字 (Audio Transcription)...")
+        print("🎙️ 影片無預設字幕，啟動 Gemini AI 音訊轉譯 (Audio Transcription)...")
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
                 audio_path = os.path.join(temp_dir, "audio.mp3")
@@ -101,7 +103,6 @@ def get_transcript(video_id: str, url: str) -> str:
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([url])
                 
-                # 尋找下載好的 mp3 檔案
                 actual_mp3 = audio_path if os.path.exists(audio_path) else None
                 if not actual_mp3:
                     for f in os.listdir(temp_dir):
@@ -134,19 +135,24 @@ def get_transcript(video_id: str, url: str) -> str:
                             else:
                                 raise e
                     
-                    # 清理遠端暫存檔
                     try:
                         client.files.delete(name=uploaded_file.name)
                     except Exception:
                         pass
 
                     if response:
-                        return response.text
+                        return {
+                            'text': response.text,
+                            'source': "🎙️ Gemini AI 音訊轉譯 (無預設 CC 字幕)"
+                        }
 
         except Exception as e:
             print(f"⚠️ Gemini 音訊轉譯失敗: {e}")
 
-    return "（警告：未能取得字幕，將嘗試僅由影片資訊進行分析）"
+    return {
+        'text': "（警告：未能取得字幕，將嘗試僅由影片資訊進行分析）",
+        'source': "⚠️ 未能取得字幕"
+    }
 
 def save_transcript(channel: str, date: str, title: str, transcript: str) -> Path:
     """將原始字幕寫入 原始字幕/<頻道名稱>/<日期>_<標題>.txt"""

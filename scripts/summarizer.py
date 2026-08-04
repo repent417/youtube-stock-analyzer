@@ -23,7 +23,7 @@ SYSTEM_PROMPT = """
 }
 """
 
-def generate_summary(video_info: dict, transcript: str) -> dict:
+def generate_summary(video_info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
     """使用 Gemini API 生成股票分析 Markdown 總結"""
     if not GEMINI_API_KEY:
         raise ValueError("未設定 GEMINI_API_KEY！請在 .env 檔案中設定 GEMINI_API_KEY=")
@@ -71,7 +71,6 @@ def generate_summary(video_info: dict, transcript: str) -> dict:
             
     if not response:
         raise RuntimeError(f"Gemini API 呼叫失敗: {last_error}")
-
         
     try:
         data = json.loads(response.text)
@@ -96,6 +95,7 @@ def generate_summary(video_info: dict, transcript: str) -> dict:
 - **發布日期**：{video_info['upload_date']}
 - **影片連結**：[{video_info['title']}]({video_info['url']})
 - **提及標的**：{tags_str if tags_str else '無特定標的'}
+- **逐字稿來源**：{transcript_source}
 
 ---
 
@@ -155,4 +155,3 @@ def save_note(channel: str, date: str, title: str, note_content: str, tickers: l
         f.write(note_content)
         
     return file_path
-

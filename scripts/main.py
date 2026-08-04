@@ -45,19 +45,23 @@ def process_youtube_url(url: str):
 
     # 2. 抓取字幕
     with console.status("[bold green]正在抓取與解析字幕/音訊逐字稿...[/bold green]"):
-        transcript = get_transcript(video_id, url)
+        transcript_data = get_transcript(video_id, url)
+        transcript_text = transcript_data['text']
+        transcript_source = transcript_data['source']
+        console.print(f"  [dim]字幕來源: {transcript_source}[/dim]")
         
     # 保存原始字幕
-    transcript_path = save_transcript(info['channel'], info['upload_date'], info['title'], transcript)
+    transcript_path = save_transcript(info['channel'], info['upload_date'], info['title'], transcript_text)
     console.print(f"  [dim]📄 逐字稿已備份至: {transcript_path.relative_to(BASE_DIR)}[/dim]")
 
     # 3. AI 總結與股票指標提取
     with console.status("[bold green]正在透過 Gemini AI 進行股票分析與提煉...[/bold green]"):
         try:
-            summary_result = generate_summary(info, transcript)
+            summary_result = generate_summary(info, transcript_text, transcript_source=transcript_source)
         except Exception as e:
             console.print(f"[bold red]❌ Gemini AI 分析失敗: {e}[/bold red]")
             return
+
 
     # 4. 寫入 Markdown 筆記 (影片筆記/頻道名稱/【股票代號名稱】日期_標題.md)
     tickers = summary_result.get('tickers', [])
