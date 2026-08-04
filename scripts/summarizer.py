@@ -125,7 +125,7 @@ def build_stock_prefix(tickers: list[str]) -> str:
 
 def save_note(channel: str, date: str, title: str, note_content: str, tickers: list[str] = None) -> Path:
     """
-    將總結寫入 影片筆記/<頻道名稱>/【股票代號名稱】<日期>_<標題>.md
+    將總結寫入 影片筆記/<頻道名稱>/<日期>_【股票代號名稱】_<標題>.md
     """
     clean_channel = sanitize_filename(channel)
     clean_title = sanitize_filename(title)
@@ -135,10 +135,15 @@ def save_note(channel: str, date: str, title: str, note_content: str, tickers: l
     channel_dir = NOTES_DIR / clean_channel
     channel_dir.mkdir(parents=True, exist_ok=True)
     
-    filename = f"{stock_prefix}{date}_{clean_title}.md"
+    if stock_prefix:
+        filename = f"{date}_{stock_prefix}_{clean_title}.md"
+    else:
+        filename = f"{date}_{clean_title}.md"
+        
     file_path = channel_dir / filename
     
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(note_content)
         
     return file_path
+
