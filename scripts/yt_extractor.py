@@ -47,15 +47,16 @@ def get_video_info(url: str) -> dict:
             'url': url
         }
 
-def get_transcript(video_id: str, url: str) -> dict:
+def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True) -> dict:
     """
     抓取影片字幕逐字稿，並回傳格式化內容與來源標籤：
     {
         'text': 逐字稿文字,
-        'source': "📜 YouTube CC 字幕" 或 "🎙️ Gemini AI 音訊轉譯 (無預設 CC 字幕)"
+        'source': "📜 YouTube CC 字幕" 或 "🎙️ Gemini AI 音訊轉譯 (無預設 CC 字幕)",
+        'has_cc': True / False
     }
     """
-    # 嘗試方法 1: youtube-transcript-api
+    # 嘗試方法 1: youtube-transcript-api 抓取預設 CC 字幕
     try:
         api = YouTubeTranscriptApi()
         transcript_list = api.list_transcripts(video_id)
@@ -81,10 +82,19 @@ def get_transcript(video_id: str, url: str) -> dict:
                     text_lines.append(f"{time_str} {text}")
             return {
                 'text': "\n".join(text_lines),
-                'source': "📜 YouTube CC 字幕"
+                'source': "📜 YouTube CC 字幕",
+                'has_cc': True
             }
     except Exception as e:
         print(f"ℹ️ youtube-transcript-api 未取得字幕: {e}")
+
+    # 若不允許音訊轉譯 (預設常規模式)，直接傳回無字幕標記
+    if not allow_audio_fallback:
+        return {
+            'text': "",
+            'source': "NO_CC",
+            'has_cc': False
+        }
 
     # 嘗試方法 2: Gemini 音訊轉文字
     if GEMINI_API_KEY:
@@ -110,7 +120,6 @@ def get_transcript(video_id: str, url: str) -> dict:
                         break
 
                 if actual_audio and os.path.exists(actual_audio):
-                    # 推斷正確的音訊 MIME Type (預設音訊 audio/webm)
                     ext = Path(actual_audio).suffix.lower()
                     mime_map = {
                         '.webm': 'audio/webm',
@@ -156,7 +165,6 @@ def get_transcript(video_id: str, url: str) -> dict:
                                 time.sleep(65)
                             else:
                                 raise e
-
                     
                     try:
                         client.files.delete(name=uploaded_file.name)
@@ -166,7 +174,8 @@ def get_transcript(video_id: str, url: str) -> dict:
                     if response and response.text:
                         return {
                             'text': response.text,
-                            'source': "🎙️ Gemini AI 音訊轉譯 (無預設 CC 字幕)"
+                            'source': "🎙️ Gemini AI 音訊轉譯 (無預設 CC 字幕)",
+                            'has_cc': False
                         }
 
         except Exception as e:
@@ -174,7 +183,8 @@ def get_transcript(video_id: str, url: str) -> dict:
 
     return {
         'text': "（警告：未能取得字幕，將嘗試僅由影片資訊進行分析）",
-        'source': "⚠️ 未能取得字幕"
+        'source': "⚠️ 未能取得字幕",
+        'has_cc': False
     }
 
 def save_transcript(channel: str, date: str, title: str, transcript: str) -> Path:
