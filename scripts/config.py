@@ -16,9 +16,11 @@ LOGS_DIR = BASE_DIR / "logs"
 NO_SUBTITLES_FILE = BASE_DIR / "no_subtitles_urls.txt"
 PROCESSED_URLS_FILE = BASE_DIR / "processed_urls.txt"
 
-# 確保目錄存在
-for d in [NOTES_DIR, INDEX_DIR, TRANSCRIPTS_DIR, LOGS_DIR]:
-    d.mkdir(parents=True, exist_ok=True)
+# 地端 LLM 與 語音轉譯設定
+OLLAMA_HOST = "http://localhost:11434"
+OLLAMA_MODEL = "qwen2.5:7b"
+WHISPER_MODEL_SIZE = "small"  # 亦可改為 "medium" 或 "base"
+
 
 
 # GEMINI API 金鑰

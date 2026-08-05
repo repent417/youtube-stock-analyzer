@@ -1,150 +1,200 @@
 import json
+import re
+import requests
+import time
 from pathlib import Path
-from google import genai
-from google.genai import types
-from config import NOTES_DIR, GEMINI_API_KEY, sanitize_filename
-from stock_market import get_stock_data, generate_market_table_md, get_clean_stock_info
 
-SYSTEM_PROMPT = """
-你是一位資深的量化交易員與股票分析師。請將輸入的 YouTube 股票分析影片逐字稿與元資料，整理成極具投資決策價值、結構嚴密的 Markdown 筆記。
+from config import NOTES_DIR, OLLAMA_HOST, OLLAMA_MODEL, GEMINI_API_KEY, sanitize_filename
+from stock_market import get_stock_data, generate_market_table_md, STOCK_NAME_MAP, normalize_ticker
 
-請遵守以下規則：
-1. 使用繁體中文。
-2. 精確提取影片中提及的所有個股與 ETF（包含台股如 2330, 2454, 0050 與美股如 NVDA, TSLA, AAPL）。
-3. 嚴格分析創作者對每檔個股的立場（🟢 看多 / 🔴 看空 / 🟡 觀望），並整理出關鍵技術面支撐/壓力位、目標價、停損點與基本面催化劑。
-4. 提供「看多 vs 看空」對比表格。
-5. 附帶 key timestamp 時間標記（如 [02:15]）。
 
-請嚴格輸出 JSON 格式，結構如下：
-{
-  "tickers": ["2337.TW", "NVDA"],
-  "tags": ["#2337旺宏", "#NVDA輝達", "#NORFlash", "#AI伺服器"],
-  "summary_markdown": "...完整的 Markdown 內容 (不用包含市場數據表格，系統會自動插入)..."
-}
-"""
-
-def generate_summary(video_info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
-    """使用 Gemini API 生成股票分析 Markdown 總結"""
-    if not GEMINI_API_KEY:
-        raise ValueError("未設定 GEMINI_API_KEY！請在 .env 檔案中設定 GEMINI_API_KEY=")
-
-    client = genai.Client(api_key=GEMINI_API_KEY)
-    
-    user_content = f"""
-【影片元資料】
-- 標題：{video_info['title']}
-- 頻道：{video_info['channel']}
-- 發布日期：{video_info['upload_date']}
-- 連結：{video_info['url']}
-
-【影片字幕逐字稿】
-{transcript[:30000]}
-"""
-
-    model_name = 'gemini-3.5-flash'
-
-    response = None
-    last_error = None
-    
-    for attempt in range(10):
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=[SYSTEM_PROMPT, user_content],
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    temperature=0.2
-                )
-            )
-            if response:
-                break
-        except Exception as e:
-            last_error = e
-            err_str = str(e)
-            if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
-                print(f"⏳ [Attempt {attempt+1}/10] 觸發 Gemini API 限流 (429)，自動等待 65 秒後重試...")
-                import time
-                time.sleep(65)
-            else:
-                print(f"⚠️ API 錯誤: {e}")
-                import time
-                time.sleep(5)
-            
-    if not response:
-        raise RuntimeError(f"Gemini API 呼叫失敗: {last_error}")
-
-        
-    try:
-        data = json.loads(response.text)
-    except Exception as e:
-        print(f"⚠️ AI 輸出 Parsing 失敗，使用標準格式: {e}")
-        data = {
-            "tickers": [],
-            "tags": [],
-            "summary_markdown": response.text
-        }
-        
-    # 抓取市場即時數據
-    tickers = data.get("tickers", [])
-    market_data = get_stock_data(tickers)
-    market_table_md = generate_market_table_md(market_data)
-    
-    # 組合最終 MD 檔案內容
-    tags_str = " ".join([f"`{tag}`" for tag in data.get("tags", [])])
-    
-    final_md = f"""# 【股票分析】{video_info['title']}
-- **頻道／創作者**：{video_info['channel']}
-- **發布日期**：{video_info['upload_date']}
-- **影片連結**：[{video_info['title']}]({video_info['url']})
-- **提及標的**：{tags_str if tags_str else '無特定標的'}
-- **逐字稿來源**：{transcript_source}
-
----
-
-## 📊 提及標的即時數據 (Real-time Market Data)
-{market_table_md}
-
----
-
-{data.get('summary_markdown', '')}
-"""
-
-    return {
-        "final_md": final_md,
-        "tickers": tickers,
-        "market_data": market_data,
-        "tags": data.get("tags", [])
-    }
-
-def build_stock_prefix(tickers: list[str]) -> str:
-    """根據提及股票產生標頭前綴，如 【2337旺宏】 或 【2330台積電_NVDA輝達】"""
+def build_stock_prefix(tickers: list) -> str:
+    """從 tickers 建立代號與股名前綴，例如 【2330台積電_NVDA輝達】"""
     if not tickers:
         return ""
-        
-    prefix_parts = []
-    # 最多取前 2~3 個主要標的
-    for t in tickers[:3]:
-        code, clean_name = get_clean_stock_info(t)
-        if clean_name and clean_name != code:
-            prefix_parts.append(f"{code}{clean_name}")
+    parts = []
+    for t in tickers:
+        raw_code = str(t).split('.')[0]
+        norm = normalize_ticker(str(t))
+        name = STOCK_NAME_MAP.get(norm, STOCK_NAME_MAP.get(raw_code, ""))
+        if name and name != raw_code:
+            parts.append(f"{raw_code}{name}")
         else:
-            prefix_parts.append(code)
-            
-    if prefix_parts:
-        return f"【{'_'.join(prefix_parts)}】"
-    return ""
+            parts.append(raw_code)
+    return f"【{'_'.join(parts)}】"
 
-def save_note(channel: str, date: str, title: str, note_content: str, tickers: list[str] = None) -> Path:
-    """
-    將總結寫入 影片筆記/<頻道名稱>/<日期>_【股票代號名稱】_<標題>.md
-    """
+
+SYSTEM_PROMPT = """你是一位專業的台股與美股資深證券分析師、法人級投資研究員。
+請閱讀傳入的 YouTube 影片資訊與字幕逐字稿內容，進行結構化提煉，並嚴格回傳包含以下欄位的 JSON 格式物件：
+
+{
+  "tickers": ["2330.TW", "NVDA"],
+  "stock_name_zh": "核心股票中文名稱",
+  "summary_title": "簡短專業的投資主題",
+  "key_takeaways": [
+    "核心重點第一點...",
+    "核心重點第二點..."
+  ],
+  "bullish_reasons": [
+    "看多理由與成長動能第一點...",
+    "看多理由第二點..."
+  ],
+  "bearish_reasons": [
+    "風險隱憂與疑慮第一點..."
+  ],
+  "timeline_notes": [
+    "[01:23] 時間點關鍵內容摘要...",
+    "[05:10] 時間點關鍵內容摘要..."
+  ],
+  "author_stance": "看多"
+}
+
+請確保所有輸出內容均為專業精準的【繁體中文】，欄位值必須確實填寫，不可留空。
+僅回傳合法的 JSON 字串。
+"""
+
+def generate_summary_with_ollama(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
+    """使用地端 Ollama (qwen2.5:7b) 生成結構化總結"""
+    user_content = f"""
+【影片頻道】：{info['channel']}
+【影片標題】：{info['title']}
+【發布日期】：{info['upload_date']}
+【字幕來源】：{transcript_source}
+
+【字幕逐字稿內容】：
+{transcript[:4000]}
+"""
+    url = f"{OLLAMA_HOST}/api/chat"
+    payload = {
+        "model": OLLAMA_MODEL,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_content}
+        ],
+        "format": "json",
+        "stream": False,
+        "options": {
+            "temperature": 0.2,
+            "num_ctx": 4096,
+            "num_thread": 16
+        }
+    }
+    
+    res = requests.post(url, json=payload, timeout=300)
+    res.raise_for_status()
+    data = res.json()
+    content = data["message"]["content"]
+    
+    json_data = json.loads(content)
+    return parse_json_to_markdown(info, json_data, transcript_source)
+
+
+
+def format_field(val) -> str:
+    if isinstance(val, list):
+        return "\n".join([f"- {item}" for item in val])
+    return str(val) if val else "無"
+
+def parse_json_to_markdown(info: dict, data: dict, transcript_source: str) -> dict:
+    raw_tickers = data.get("tickers", [])
+    clean_tickers = []
+    if isinstance(raw_tickers, list):
+        for item in raw_tickers:
+            if isinstance(item, list):
+                clean_tickers.extend([str(x).strip() for x in item if str(x).strip()])
+            elif item:
+                clean_tickers.append(str(item).strip())
+    tickers = clean_tickers
+    
+    # 抓取即時市場數據與股價表格
+    stock_market_table = ""
+    if tickers:
+        stock_data = get_stock_data(tickers)
+        stock_market_table = generate_market_table_md(stock_data)
+
+        
+    stock_prefix = build_stock_prefix(tickers)
+    
+    key_takeaways = format_field(data.get('key_takeaways'))
+    bullish_reasons = format_field(data.get('bullish_reasons'))
+    bearish_reasons = format_field(data.get('bearish_reasons'))
+    timeline_notes = format_field(data.get('timeline_notes'))
+    
+    # 建立 Markdown 筆記內文
+    final_md = f"""# {info['title']}
+
+- **頻道名稱**：{info['channel']}
+- **發布日期**：{info['upload_date']}
+- **影片連結**：[{info['title']}]({info['url']})
+- **逐字稿來源**：{transcript_source}
+- **分析標的**：{', '.join(tickers) if tickers else '無特別標的'}
+- **創作者立場**：`{data.get('author_stance', '中立')}`
+
+---
+
+## 📊 即時行情與估值數據
+{stock_market_table if stock_market_table else '*(未包含特定個股數據)*'}
+
+---
+
+## 🎯 核心投資精華
+{key_takeaways}
+
+---
+
+## ⚖️ 多空論點對比分析
+
+### 🟢 看多動能與利多因素
+{bullish_reasons}
+
+### 🔴 風險隱憂與看空疑慮
+{bearish_reasons}
+
+---
+
+## ⏱️ 時間軸與重點摘要
+{timeline_notes}
+
+---
+*註：本筆記由地端 AI (Qwen2.5) 自動提煉分析，僅供研究參考，不構成任何投資建議。*
+"""
+    return {
+        'tickers': tickers,
+        'stock_prefix': stock_prefix,
+        'final_md': final_md
+    }
+
+def generate_summary(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
+    """優先使用地端 Ollama，若服務未啟動則備援至 Gemini API"""
+    try:
+        print(f"🤖 [地端 AI] 正在呼叫 Ollama ({OLLAMA_MODEL}) 提煉結構化筆記...")
+        return generate_summary_with_ollama(info, transcript, transcript_source)
+    except Exception as e:
+        print(f"⚠️ 地端 Ollama 呼叫失敗 ({e})，嘗試使用 Gemini API 備援...")
+        if GEMINI_API_KEY:
+            from google import genai
+            from google.genai import types
+            client = genai.Client(api_key=GEMINI_API_KEY)
+            user_content = f"【影片頻道】：{info['channel']}\n【影片標題】：{info['title']}\n【字幕逐字稿】：\n{transcript[:30000]}"
+            res = client.models.generate_content(
+                model='gemini-3.5-flash',
+                contents=[SYSTEM_PROMPT, user_content],
+                config=types.GenerateContentConfig(response_mime_type="application/json")
+            )
+            data = json.loads(res.text)
+            return parse_json_to_markdown(info, data, transcript_source)
+        else:
+            raise e
+
+def save_note(channel: str, date: str, title: str, content: str, tickers: list = None) -> Path:
+    """寫入 影片筆記/<頻道名稱>/<日期>_【<股票代號股名>】_<標題>.md"""
     clean_channel = sanitize_filename(channel)
     clean_title = sanitize_filename(title)
     
-    stock_prefix = build_stock_prefix(tickers) if tickers else ""
-    
     channel_dir = NOTES_DIR / clean_channel
     channel_dir.mkdir(parents=True, exist_ok=True)
+    
+    stock_prefix = build_stock_prefix(tickers)
     
     if stock_prefix:
         filename = f"{date}_{stock_prefix}_{clean_title}.md"
@@ -154,6 +204,6 @@ def save_note(channel: str, date: str, title: str, note_content: str, tickers: l
     file_path = channel_dir / filename
     
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write(note_content)
+        f.write(content)
         
     return file_path
