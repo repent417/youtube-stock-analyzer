@@ -4,9 +4,8 @@ import requests
 import time
 from pathlib import Path
 
-from config import NOTES_DIR, OLLAMA_HOST, OLLAMA_MODEL, GEMINI_API_KEY, sanitize_filename
+from config import NOTES_DIR, OLLAMA_HOST, OLLAMA_MODEL, sanitize_filename
 from stock_market import get_stock_data, generate_market_table_md, STOCK_NAME_MAP, normalize_ticker
-
 
 def build_stock_prefix(tickers: list) -> str:
     """從 tickers 建立代號與股名前綴，例如 【2330台積電_NVDA輝達】"""
@@ -22,7 +21,6 @@ def build_stock_prefix(tickers: list) -> str:
         else:
             parts.append(raw_code)
     return f"【{'_'.join(parts)}】"
-
 
 SYSTEM_PROMPT = """你是一位專業的台股與美股資深證券分析師、法人級投資研究員。
 請閱讀傳入的 YouTube 影片資訊與字幕逐字稿內容，進行結構化提煉，並嚴格回傳包含以下欄位的 JSON 格式物件：
@@ -54,7 +52,7 @@ SYSTEM_PROMPT = """你是一位專業的台股與美股資深證券分析師、�
 """
 
 def generate_summary_with_ollama(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
-    """使用地端 Ollama (qwen2.5:7b) 生成結構化總結"""
+    """使用地端 Ollama (qwen2.5:7b) 進行 100% 離線結構化總結"""
     user_content = f"""
 【影片頻道】：{info['channel']}
 【影片標題】：{info['title']}
@@ -62,7 +60,7 @@ def generate_summary_with_ollama(info: dict, transcript: str, transcript_source:
 【字幕來源】：{transcript_source}
 
 【字幕逐字稿內容】：
-{transcript[:4000]}
+{transcript[:3000]}
 """
     url = f"{OLLAMA_HOST}/api/chat"
     payload = {
@@ -80,14 +78,14 @@ def generate_summary_with_ollama(info: dict, transcript: str, transcript_source:
         }
     }
     
-    res = requests.post(url, json=payload, timeout=300)
+    # 設置 600 秒超時，確保 CPU 在高負載下也能穩定產出
+    res = requests.post(url, json=payload, timeout=600)
     res.raise_for_status()
     data = res.json()
     content = data["message"]["content"]
     
     json_data = json.loads(content)
     return parse_json_to_markdown(info, json_data, transcript_source)
-
 
 
 def format_field(val) -> str:
@@ -111,7 +109,6 @@ def parse_json_to_markdown(info: dict, data: dict, transcript_source: str) -> di
     if tickers:
         stock_data = get_stock_data(tickers)
         stock_market_table = generate_market_table_md(stock_data)
-
         
     stock_prefix = build_stock_prefix(tickers)
     
@@ -165,26 +162,9 @@ def parse_json_to_markdown(info: dict, data: dict, transcript_source: str) -> di
     }
 
 def generate_summary(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
-    """優先使用地端 Ollama，若服務未啟動則備援至 Gemini API"""
-    try:
-        print(f"🤖 [地端 AI] 正在呼叫 Ollama ({OLLAMA_MODEL}) 提煉結構化筆記...")
-        return generate_summary_with_ollama(info, transcript, transcript_source)
-    except Exception as e:
-        print(f"⚠️ 地端 Ollama 呼叫失敗 ({e})，嘗試使用 Gemini API 備援...")
-        if GEMINI_API_KEY:
-            from google import genai
-            from google.genai import types
-            client = genai.Client(api_key=GEMINI_API_KEY)
-            user_content = f"【影片頻道】：{info['channel']}\n【影片標題】：{info['title']}\n【字幕逐字稿】：\n{transcript[:30000]}"
-            res = client.models.generate_content(
-                model='gemini-3.5-flash',
-                contents=[SYSTEM_PROMPT, user_content],
-                config=types.GenerateContentConfig(response_mime_type="application/json")
-            )
-            data = json.loads(res.text)
-            return parse_json_to_markdown(info, data, transcript_source)
-        else:
-            raise e
+    """純地端模式：由地端 Ollama (qwen2.5:7b) 完全離線處理"""
+    print(f"🤖 [純地端 AI] 正在由 Ollama ({OLLAMA_MODEL}) 進行 16 執行緒 CPU 重點提煉...")
+    return generate_summary_with_ollama(info, transcript, transcript_source)
 
 def save_note(channel: str, date: str, title: str, content: str, tickers: list = None) -> Path:
     """寫入 影片筆記/<頻道名稱>/<日期>_【<股票代號股名>】_<標題>.md"""
