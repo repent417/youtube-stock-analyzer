@@ -16,9 +16,15 @@ LOGS_DIR = BASE_DIR / "logs"
 NO_SUBTITLES_FILE = BASE_DIR / "no_subtitles_urls.txt"
 PROCESSED_URLS_FILE = BASE_DIR / "processed_urls.txt"
 
+# DeepSeek API 設定
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+
 # 地端 LLM 與 語音轉譯設定
-OLLAMA_HOST = "http://localhost:11434"
-OLLAMA_MODEL = "qwen2.5:7b"
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b")
 WHISPER_MODEL_SIZE = "small"  # 亦可改為 "medium" 或 "base"
 
 

@@ -4,7 +4,15 @@ import requests
 import time
 from pathlib import Path
 
-from config import NOTES_DIR, OLLAMA_HOST, OLLAMA_MODEL, sanitize_filename
+from config import (
+    NOTES_DIR, 
+    DEEPSEEK_API_KEY, 
+    DEEPSEEK_BASE_URL, 
+    DEEPSEEK_MODEL, 
+    OLLAMA_HOST, 
+    OLLAMA_MODEL, 
+    sanitize_filename
+)
 from stock_market import get_stock_data, generate_market_table_md, STOCK_NAME_MAP, normalize_ticker
 
 def build_stock_prefix(tickers: list) -> str:
@@ -23,22 +31,24 @@ def build_stock_prefix(tickers: list) -> str:
     return f"【{'_'.join(parts)}】"
 
 SYSTEM_PROMPT = """你是一位專業的台股與美股資深證券分析師、法人級投資研究員。
-請閱讀傳入的 YouTube 影片資訊與字幕逐字稿內容，進行結構化提煉，並嚴格回傳包含以下欄位的 JSON 格式物件：
+請深度閱讀傳入的 YouTube 影片資訊與全量逐字稿內容，進行結構化提煉，並嚴格回傳包含以下欄位的 JSON 格式物件：
 
 {
   "tickers": ["2330.TW", "NVDA"],
   "stock_name_zh": "核心股票中文名稱",
   "summary_title": "簡短專業的投資主題",
   "key_takeaways": [
-    "核心重點第一點...",
-    "核心重點第二點..."
+    "核心投資重點第一點...",
+    "核心投資重點第二點...",
+    "核心投資重點第三點..."
   ],
   "bullish_reasons": [
-    "看多理由與成長動能第一點...",
-    "看多理由第二點..."
+    "看多動能與利多因素第一點...",
+    "看多動能第二點..."
   ],
   "bearish_reasons": [
-    "風險隱憂與疑慮第一點..."
+    "風險隱憂與疑慮第一點...",
+    "風險隱憂第二點..."
   ],
   "timeline_notes": [
     "[01:23] 時間點關鍵內容摘要...",
@@ -47,9 +57,44 @@ SYSTEM_PROMPT = """你是一位專業的台股與美股資深證券分析師、�
   "author_stance": "看多"
 }
 
-請確保所有輸出內容均為專業精準的【繁體中文】，欄位值必須確實填寫，不可留空。
-僅回傳合法的 JSON 字串。
+請確保所有輸出內容均為專業精準的【繁體中文】，內容必須深入且具體（包含財務數字、展望、產業邏輯），不可粗略敷衍。
+僅回傳合法的 JSON 物件。
 """
+
+def generate_summary_with_deepseek(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
+    """使用極速且強大的 DeepSeek API (deepseek-chat V3) 進行法人級結構化總結"""
+    user_content = f"""
+【影片頻道】：{info['channel']}
+【影片標題】：{info['title']}
+【發布日期】：{info['upload_date']}
+【字幕來源】：{transcript_source}
+
+【全量字幕逐字稿內容】：
+{transcript[:60000]}
+"""
+    url = f"{DEEPSEEK_BASE_URL}/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": DEEPSEEK_MODEL,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_content}
+        ],
+        "response_format": {"type": "json_object"},
+        "temperature": 0.2,
+        "max_tokens": 4096
+    }
+    
+    res = requests.post(url, headers=headers, json=payload, timeout=60)
+    res.raise_for_status()
+    data = res.json()
+    content = data["choices"][0]["message"]["content"]
+    
+    json_data = json.loads(content)
+    return parse_json_to_markdown(info, json_data, transcript_source, engine_label="🚀 DeepSeek AI (V3)")
 
 def generate_summary_with_ollama(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
     """使用地端 Ollama (qwen2.5:7b) 進行 100% 離線結構化總結"""
@@ -78,22 +123,20 @@ def generate_summary_with_ollama(info: dict, transcript: str, transcript_source:
         }
     }
     
-    # 設置 600 秒超時，確保 CPU 在高負載下也能穩定產出
     res = requests.post(url, json=payload, timeout=600)
     res.raise_for_status()
     data = res.json()
     content = data["message"]["content"]
     
     json_data = json.loads(content)
-    return parse_json_to_markdown(info, json_data, transcript_source)
-
+    return parse_json_to_markdown(info, json_data, transcript_source, engine_label="🤖 地端 Qwen2.5 7B")
 
 def format_field(val) -> str:
     if isinstance(val, list):
         return "\n".join([f"- {item}" for item in val])
     return str(val) if val else "無"
 
-def parse_json_to_markdown(info: dict, data: dict, transcript_source: str) -> dict:
+def parse_json_to_markdown(info: dict, data: dict, transcript_source: str, engine_label: str = "🚀 DeepSeek AI") -> dict:
     raw_tickers = data.get("tickers", [])
     clean_tickers = []
     if isinstance(raw_tickers, list):
@@ -144,7 +187,7 @@ def parse_json_to_markdown(info: dict, data: dict, transcript_source: str) -> di
 ### 🟢 看多動能與利多因素
 {bullish_reasons}
 
-### 🔴 風險隱憂與看空疑慮
+### 🔴 風險隱誘與看空疑慮
 {bearish_reasons}
 
 ---
@@ -153,7 +196,7 @@ def parse_json_to_markdown(info: dict, data: dict, transcript_source: str) -> di
 {timeline_notes}
 
 ---
-*註：本筆記由地端 AI (Qwen2.5) 自動提煉分析，僅供研究參考，不構成任何投資建議。*
+*註：本筆記由 {engine_label} 自動提煉分析，僅供研究參考，不構成任何投資建議。*
 """
     return {
         'tickers': tickers,
@@ -162,8 +205,15 @@ def parse_json_to_markdown(info: dict, data: dict, transcript_source: str) -> di
     }
 
 def generate_summary(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
-    """純地端模式：由地端 Ollama (qwen2.5:7b) 完全離線處理"""
-    print(f"🤖 [純地端 AI] 正在由 Ollama ({OLLAMA_MODEL}) 進行 16 執行緒 CPU 重點提煉...")
+    """優先使用 DeepSeek API (極速/高品質)，若未設定 Key 或網路失敗則備援至地端 Ollama"""
+    if DEEPSEEK_API_KEY:
+        try:
+            print(f"🚀 [DeepSeek AI] 正在發送全量逐字稿至 DeepSeek API ({DEEPSEEK_MODEL}) 進行法人級提煉...")
+            return generate_summary_with_deepseek(info, transcript, transcript_source)
+        except Exception as e:
+            print(f"⚠️ DeepSeek API 呼叫失敗 ({e})，切換至地端 Ollama 備援...")
+            
+    print(f"🤖 [地端 AI] 正在由 Ollama ({OLLAMA_MODEL}) 進行重點提煉...")
     return generate_summary_with_ollama(info, transcript, transcript_source)
 
 def save_note(channel: str, date: str, title: str, content: str, tickers: list = None) -> Path:
