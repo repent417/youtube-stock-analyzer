@@ -118,7 +118,9 @@ def process_youtube_url(url: str, allow_audio_fallback: bool = False, index: int
 
     # 4. 寫入 Markdown 筆記 (影片筆記/頻道名稱/<日期>_【股票代號名稱】_<標題>.md)
     tickers = summary_result.get('tickers', [])
-    note_path = save_note(info['channel'], info['upload_date'], info['title'], summary_result['final_md'], tickers=tickers)
+    stock_name_zh = summary_result.get('stock_name_zh', '')
+    note_path = save_note(info['channel'], info['upload_date'], info['title'], summary_result['final_md'], tickers=tickers, stock_name_zh=stock_name_zh)
+
     rel_note = note_path.relative_to(BASE_DIR)
     
     msg = f"[{index}/{total}] [SUCCESS] 筆記成功生成: {rel_note}"

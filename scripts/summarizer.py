@@ -15,8 +15,8 @@ from config import (
 )
 from stock_market import get_stock_data, generate_market_table_md, STOCK_NAME_MAP, normalize_ticker
 
-def build_stock_prefix(tickers: list) -> str:
-    """從 tickers 建立代號與股名前綴，例如 【2330台積電_NVDA輝達】"""
+def build_stock_prefix(tickers: list, stock_name_zh: str = "") -> str:
+    """從 tickers 建立代號與股名前綴，例如 【2330台積電_NVDA輝達】 或 【8039台虹】"""
     if not tickers:
         return ""
     parts = []
@@ -24,11 +24,16 @@ def build_stock_prefix(tickers: list) -> str:
         raw_code = str(t).split('.')[0]
         norm = normalize_ticker(str(t))
         name = STOCK_NAME_MAP.get(norm, STOCK_NAME_MAP.get(raw_code, ""))
+        if not name and stock_name_zh:
+            clean_zh = re.sub(r'\(.*?\)|（.*?）|\d+', '', stock_name_zh).strip()
+            if clean_zh:
+                name = clean_zh
         if name and name != raw_code:
             parts.append(f"{raw_code}{name}")
         else:
             parts.append(raw_code)
     return f"【{'_'.join(parts)}】"
+
 
 SYSTEM_PROMPT = """你是一位專業的台股與美股資深證券分析師、法人級投資研究員。
 請深度閱讀傳入的 YouTube 影片資訊與全量逐字稿內容，進行結構化提煉，並嚴格回傳包含以下欄位的 JSON 格式物件：
@@ -147,13 +152,15 @@ def parse_json_to_markdown(info: dict, data: dict, transcript_source: str, engin
                 clean_tickers.append(str(item).strip())
     tickers = clean_tickers
     
+    stock_name_zh = data.get("stock_name_zh", "")
+    
     # 抓取即時市場數據與股價表格
     stock_market_table = ""
     if tickers:
         stock_data = get_stock_data(tickers)
         stock_market_table = generate_market_table_md(stock_data)
         
-    stock_prefix = build_stock_prefix(tickers)
+    stock_prefix = build_stock_prefix(tickers, stock_name_zh=stock_name_zh)
     
     key_takeaways = format_field(data.get('key_takeaways'))
     bullish_reasons = format_field(data.get('bullish_reasons'))
@@ -200,6 +207,7 @@ def parse_json_to_markdown(info: dict, data: dict, transcript_source: str, engin
 """
     return {
         'tickers': tickers,
+        'stock_name_zh': stock_name_zh,
         'stock_prefix': stock_prefix,
         'final_md': final_md
     }
@@ -216,7 +224,7 @@ def generate_summary(info: dict, transcript: str, transcript_source: str = "📜
     print(f"🤖 [地端 AI] 正在由 Ollama ({OLLAMA_MODEL}) 進行重點提煉...")
     return generate_summary_with_ollama(info, transcript, transcript_source)
 
-def save_note(channel: str, date: str, title: str, content: str, tickers: list = None) -> Path:
+def save_note(channel: str, date: str, title: str, content: str, tickers: list = None, stock_name_zh: str = "") -> Path:
     """寫入 影片筆記/<頻道名稱>/<日期>_【<股票代號股名>】_<標題>.md"""
     clean_channel = sanitize_filename(channel)
     clean_title = sanitize_filename(title)
@@ -224,7 +232,7 @@ def save_note(channel: str, date: str, title: str, content: str, tickers: list =
     channel_dir = NOTES_DIR / clean_channel
     channel_dir.mkdir(parents=True, exist_ok=True)
     
-    stock_prefix = build_stock_prefix(tickers)
+    stock_prefix = build_stock_prefix(tickers, stock_name_zh=stock_name_zh)
     
     if stock_prefix:
         filename = f"{date}_{stock_prefix}_{clean_title}.md"
@@ -237,3 +245,4 @@ def save_note(channel: str, date: str, title: str, content: str, tickers: list =
         f.write(content)
         
     return file_path
+
