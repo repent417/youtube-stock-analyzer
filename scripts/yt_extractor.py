@@ -210,13 +210,14 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True) -
 
 def save_transcript(channel: str, date: str, title: str, transcript: str) -> Path:
     """將原始字幕寫入 原始字幕/<頻道名稱>/<日期>_<標題>.txt"""
-    clean_channel = sanitize_filename(channel)
+    clean_channel = sanitize_filename(channel, max_length=50)
     clean_title = sanitize_filename(title)
     
     channel_dir = TRANSCRIPTS_DIR / clean_channel
     channel_dir.mkdir(parents=True, exist_ok=True)
     
-    filename = f"{date}_{clean_title}.txt"
+    raw_filename = f"{date}_{clean_title}.txt"
+    filename = sanitize_filename(raw_filename, max_length=70)
     file_path = channel_dir / filename
     
     with open(file_path, "w", encoding="utf-8") as f:

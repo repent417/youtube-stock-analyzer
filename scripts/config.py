@@ -39,10 +39,21 @@ BATCH_COOLDOWN_SECONDS = 180  # 分批大休眠秒數 (180s = 3分鐘)
 # GEMINI API 金鑰
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
-def sanitize_filename(name: str) -> str:
-    """清理檔案與資料夾名稱中的非法字元 (Windows / Linux 相容)"""
-    # 移除 Windows 檔名不允許的字元 \ / : * ? " < > |
-    cleaned = re.sub(r'[\\/:*?"<>|]', '_', name)
-    # 移除多餘空白
-    cleaned = cleaned.strip()
-    return cleaned if cleaned else "未命名"
+def sanitize_filename(name: str, max_length: int = 70) -> str:
+    """清理檔案與資料夾名稱中的非法字元 (Windows / Linux 相容)，並限制長度在 max_length 以內"""
+    # 1. 移除 Windows 檔名不允許的字元 \ / : * ? " < > |
+    cleaned = re.sub(r'[\\/:*?"<>|]', '_', name).strip()
+    if not cleaned:
+        cleaned = "未命名"
+
+    # 2. 處理長度限制與副檔名保護
+    if max_length and len(cleaned) > max_length:
+        name_part, ext_part = os.path.splitext(cleaned)
+        if ext_part and len(ext_part) < 10:
+            max_name_len = max_length - len(ext_part)
+            if max_name_len > 0 and len(name_part) > max_name_len:
+                cleaned = name_part[:max_name_len].strip() + ext_part
+        else:
+            cleaned = cleaned[:max_length].strip()
+
+    return cleaned

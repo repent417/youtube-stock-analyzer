@@ -293,7 +293,7 @@ def generate_summary(info: dict, transcript: str, transcript_source: str = "📜
 
 def save_note(channel: str, date: str, title: str, content: str, tickers: list = None, stock_name_zh: str = "") -> Path:
     """寫入 影片筆記/<頻道名稱>/<日期>_【<股票代號股名>】_<標題>.md"""
-    clean_channel = sanitize_filename(channel)
+    clean_channel = sanitize_filename(channel, max_length=50)
     clean_title = sanitize_filename(title)
     
     channel_dir = NOTES_DIR / clean_channel
@@ -302,10 +302,11 @@ def save_note(channel: str, date: str, title: str, content: str, tickers: list =
     stock_prefix = build_stock_prefix(tickers, stock_name_zh=stock_name_zh)
     
     if stock_prefix:
-        filename = f"{date}_{stock_prefix}_{clean_title}.md"
+        raw_filename = f"{date}_{stock_prefix}_{clean_title}.md"
     else:
-        filename = f"{date}_{clean_title}.md"
+        raw_filename = f"{date}_{clean_title}.md"
         
+    filename = sanitize_filename(raw_filename, max_length=70)
     file_path = channel_dir / filename
     
     with open(file_path, "w", encoding="utf-8") as f:

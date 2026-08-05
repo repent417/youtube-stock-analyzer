@@ -1,32 +1,5 @@
-=== 最新執行紀錄 (2026-08-05 07:09:15) ===
-[2026-08-05 07:09:16] [INFO] ==================== 股票分析定時任務開始 ====================
-[2026-08-05 07:09:16] [INFO] 讀取網址清單總數: 24 個，已完成記錄檔數: 14 個
-[2026-08-05 07:09:16] [INFO] [1/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=srIPRlZPILY
-[2026-08-05 07:09:16] [INFO] [2/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=rumV252bc9M
-[2026-08-05 07:09:16] [INFO] [3/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=WtrCBK8wXHg
-[2026-08-05 07:09:16] [INFO] [4/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=s59ZlaNL5JA
-[2026-08-05 07:09:16] [INFO] [5/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=khPR-JycAow
-[2026-08-05 07:09:16] [INFO] [6/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=FtZ5Q0g2OXQ
-[2026-08-05 07:09:16] [INFO] [7/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=ZiofVgow6GM
-[2026-08-05 07:09:16] [INFO] [8/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=xdDUd4S6KAc
-[2026-08-05 07:09:16] [INFO] [9/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=7SKkCSSeDrc
-[2026-08-05 07:09:16] [INFO] [10/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=7DD8uHkN_UY
-[2026-08-05 07:09:16] [INFO] [11/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=zLM9wNOxMs4
-[2026-08-05 07:09:16] [INFO] [12/24] 開始處理網址: https://www.youtube.com/watch?v=B4rtajkMfBs
-[2026-08-05 07:09:18] [INFO] [12/24] [SKIP_NO_CC] 標題: '中光電(5371) ：無人機題材與毛利真相' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
-[2026-08-05 07:09:21] [INFO] [13/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=_pGU9JLo2Kk
-[2026-08-05 07:09:21] [INFO] [14/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=cpKPWRFTKEo
-[2026-08-05 07:09:21] [INFO] [15/24] 開始處理網址: https://www.youtube.com/watch?v=Jc1B3gxJUfY
-[2026-08-05 07:09:22] [INFO] [15/24] [SKIP_NO_CC] 標題: '瑞昱  (2379) ：成本轉嫁與規格升級獲利攻防戰' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
-[2026-08-05 07:09:25] [INFO] [16/24] 開始處理網址: https://www.youtube.com/watch?v=1JTjvFmWk5Q
-[2026-08-05 07:09:26] [INFO] [16/24] [SKIP_NO_CC] 標題: '聯發科（2454）：智慧型手機轉向雲端 AI 算力的重塑之路' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
-[2026-08-05 07:09:29] [INFO] [17/24] 開始處理網址: https://www.youtube.com/watch?v=rOH1C1NO8Cg
-[2026-08-05 07:09:31] [INFO] [17/24] [SKIP_NO_CC] 標題: '台燿(6274.TW)：高階板材升級與全球擴產布局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
-[2026-08-05 07:09:34] [INFO] [18/24] 開始處理網址: https://www.youtube.com/watch?v=EWBMSniu-mA
-[2026-08-05 07:09:35] [INFO] [18/24] [SKIP_NO_CC] 標題: '台達電(2308) ：AI電力霸主價值重構評估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
-[2026-08-05 07:09:38] [INFO] [19/24] 開始處理網址: https://www.youtube.com/watch?v=D_ChnsWWLrk
-[2026-08-05 07:09:39] [INFO] [19/24] [SKIP_NO_CC] 標題: '亞翔（6139）：東協半導體建廠潮與四千億訂單' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
-[2026-08-05 07:09:42] [INFO] [20/24] 開始處理網址: https://www.youtube.com/watch?v=rlf6DF8Uzlw
-[2026-08-05 07:09:43] [INFO] [20/24] [SKIP_NO_CC] 標題: '穩懋（3105）法說研究：AI光通轉型與獲利爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
-[2026-08-05 07:09:46] [INFO] [21/24] 開始處理網址: https://www.youtube.com/watch?v=sZa60IkLTLs
-[2026-08-05 07:09:47] [INFO] [21/24] [SKIP_NO_CC] 標題: '宇瞻（8271）法說會深度研究：AI 記憶體超級週期與豪賭策略' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+=== 最新執行紀錄 (2026-08-05 22:59:37) ===
+[2026-08-05 22:59:37] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 22:59:37] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 22:59:38] [INFO] 啟動無字幕專用模式，處理 76 部暫存影片
+[2026-08-05 22:59:38] [INFO] [1/76] 開始處理網址: https://www.youtube.com/watch?v=AEM1qLanV94

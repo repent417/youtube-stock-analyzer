@@ -29,3 +29,689 @@
 [2026-08-05 07:09:43] [INFO] [20/24] [SKIP_NO_CC] 標題: '穩懋（3105）法說研究：AI光通轉型與獲利爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
 [2026-08-05 07:09:46] [INFO] [21/24] 開始處理網址: https://www.youtube.com/watch?v=sZa60IkLTLs
 [2026-08-05 07:09:47] [INFO] [21/24] [SKIP_NO_CC] 標題: '宇瞻（8271）法說會深度研究：AI 記憶體超級週期與豪賭策略' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 07:09:50] [INFO] [22/24] 開始處理網址: https://www.youtube.com/watch?v=NoCFgd5F2Ts
+[2026-08-05 07:09:51] [INFO] [22/24] [SKIP_NO_CC] 標題: '立隆電（2472）法說解碼：AI與車用雙引擎轉型佈局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 07:09:55] [INFO] [23/24] 開始處理網址: https://www.youtube.com/watch?v=5QU0KuJokHs
+[2026-08-05 07:09:56] [INFO] [23/24] [SKIP_NO_CC] 標題: '潤弘（2597）：預鑄霸主與AI建廠的成長解碼' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 07:09:59] [INFO] [24/24] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=utfBXNpZkmU
+[2026-08-05 07:09:59] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 07:09:59] [INFO] 總檢查網址數: 24
+[2026-08-05 07:09:59] [INFO] 成功生成筆記: 0 部
+[2026-08-05 07:09:59] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 10 部
+[2026-08-05 07:09:59] [INFO] 跳過先前已完成影片: 14 部
+[2026-08-05 07:09:59] [INFO] ===================================================
+[2026-08-05 12:58:35] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 12:58:36] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 14 個
+[2026-08-05 12:58:36] [INFO] [1/1] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=srIPRlZPILY
+[2026-08-05 12:58:36] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 12:58:36] [INFO] 總檢查網址數: 1
+[2026-08-05 12:58:36] [INFO] 成功生成筆記: 0 部
+[2026-08-05 12:58:36] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 12:58:36] [INFO] 跳過先前已完成影片: 1 部
+[2026-08-05 12:58:36] [INFO] ===================================================
+[2026-08-05 12:58:41] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 12:58:41] [INFO] 啟動無字幕專用模式，處理 10 部暫存影片
+[2026-08-05 12:58:41] [INFO] [1/10] 開始處理網址: https://www.youtube.com/watch?v=B4rtajkMfBs
+[2026-08-05 13:05:06] [INFO] [1/10] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-08-03_中光電(5371) ：無人機題材與毛利真相.md
+[2026-08-05 13:05:10] [INFO] [2/10] 開始處理網址: https://www.youtube.com/watch?v=Jc1B3gxJUfY
+[2026-08-05 13:11:31] [INFO] [2/10] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-08-03_瑞昱  (2379) ：成本轉嫁與規格升級獲利攻防戰.md
+[2026-08-05 13:11:35] [INFO] [3/10] 開始處理網址: https://www.youtube.com/watch?v=1JTjvFmWk5Q
+[2026-08-05 13:11:58] [ERROR] [3/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] 1JTjvFmWk5Q: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:12:02] [INFO] [4/10] 開始處理網址: https://www.youtube.com/watch?v=rOH1C1NO8Cg
+[2026-08-05 13:12:02] [ERROR] [4/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] rOH1C1NO8Cg: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:12:06] [INFO] [5/10] 開始處理網址: https://www.youtube.com/watch?v=EWBMSniu-mA
+[2026-08-05 13:12:06] [ERROR] [5/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] EWBMSniu-mA: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:12:10] [INFO] [6/10] 開始處理網址: https://www.youtube.com/watch?v=D_ChnsWWLrk
+[2026-08-05 13:12:33] [ERROR] [6/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] D_ChnsWWLrk: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:12:37] [INFO] [7/10] 開始處理網址: https://www.youtube.com/watch?v=rlf6DF8Uzlw
+[2026-08-05 13:12:37] [ERROR] [7/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] rlf6DF8Uzlw: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:12:41] [INFO] [8/10] 開始處理網址: https://www.youtube.com/watch?v=sZa60IkLTLs
+[2026-08-05 13:13:06] [ERROR] [8/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] sZa60IkLTLs: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:13:10] [INFO] [9/10] 開始處理網址: https://www.youtube.com/watch?v=NoCFgd5F2Ts
+[2026-08-05 13:13:10] [ERROR] [9/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] NoCFgd5F2Ts: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:13:14] [INFO] [10/10] 開始處理網址: https://www.youtube.com/watch?v=5QU0KuJokHs
+[2026-08-05 13:13:14] [ERROR] [10/10] [ERROR] 抓取資訊失敗: ERROR: [youtube] 5QU0KuJokHs: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 13:43:34] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 13:43:34] [INFO] 啟動無字幕專用模式，處理 8 部暫存影片
+[2026-08-05 13:43:34] [INFO] [1/8] 開始處理網址: https://www.youtube.com/watch?v=1JTjvFmWk5Q
+[2026-08-05 13:48:11] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 13:48:11] [INFO] 讀取網址清單總數: 6 個，已完成記錄檔數: 16 個
+[2026-08-05 13:48:11] [INFO] [1/6] 開始處理網址: https://www.youtube.com/watch?v=0dqYfcPRPRQ
+[2026-08-05 13:48:14] [INFO] [1/6] [SKIP_NO_CC] 標題: '台積電大聯盟隱藏版！6725 矽科宏晟 資本額僅3.7億卻吃下龐大建廠大單？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:48:17] [INFO] [2/6] 開始處理網址: https://www.youtube.com/watch?v=0vRK7UMN5-o
+[2026-08-05 13:48:20] [INFO] [2/6] [SKIP_NO_CC] 標題: '財報藏魔鬼細節！漢唐(2404)美國營收佔比飆破50%，但這「兩個致命傷」恐鎖死未來獲利天花板？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:48:23] [INFO] [3/6] 開始處理網址: https://www.youtube.com/watch?v=DYeYx4DE1qo
+[2026-08-05 13:48:25] [INFO] [3/6] [SKIP_NO_CC] 標題: '別管傳統封裝了！AI 算力極限的唯一解方「玻璃基板」，這家關鍵設備商 LPK.F 即將迎來量產爆發？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:48:28] [INFO] [4/6] 開始處理網址: https://www.youtube.com/watch?v=l_px5kGmkXA
+[2026-08-05 13:48:30] [INFO] [4/6] [SKIP_NO_CC] 標題: '友達 (2409.TW)法說會解碼：雙軸轉型與估值評估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:48:33] [INFO] [5/6] 開始處理網址: https://www.youtube.com/watch?v=sF20zytF_mM
+[2026-08-05 13:48:35] [INFO] [5/6] [SKIP_NO_CC] 標題: '樺漢 (6414) ：從獲利逆風邁向實體AI帝國' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:48:38] [INFO] [6/6] 開始處理網址: https://www.youtube.com/watch?v=263wkWDBm-A
+[2026-08-05 13:48:40] [INFO] [6/6] [SKIP_NO_CC] 標題: '力積電（6770）Q2財報：從紅海到3D AI' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:48:43] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 13:48:43] [INFO] 總檢查網址數: 6
+[2026-08-05 13:48:43] [INFO] 成功生成筆記: 0 部
+[2026-08-05 13:48:43] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 6 部
+[2026-08-05 13:48:43] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 13:48:43] [INFO] ===================================================
+[2026-08-05 13:50:46] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 13:50:46] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 13:50:46] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=vwh-1G0C3o8
+[2026-08-05 13:50:48] [INFO] [1/1] [SKIP_NO_CC] 標題: '突破物理極限！單季營收年增逾 200%，Credo (CRDO) 的光銅雙棲護城河到底有多深？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:50:52] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 13:50:52] [INFO] 總檢查網址數: 1
+[2026-08-05 13:50:52] [INFO] 成功生成筆記: 0 部
+[2026-08-05 13:50:52] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 1 部
+[2026-08-05 13:50:52] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 13:50:52] [INFO] ===================================================
+[2026-08-05 13:52:03] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 13:52:03] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 13:52:03] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 13:52:05] [INFO] [1/1] [SKIP_NO_CC] 標題: '日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 13:52:08] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 13:52:08] [INFO] 總檢查網址數: 1
+[2026-08-05 13:52:08] [INFO] 成功生成筆記: 0 部
+[2026-08-05 13:52:08] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 1 部
+[2026-08-05 13:52:08] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 13:52:08] [INFO] ===================================================
+[2026-08-05 13:53:10] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 13:53:10] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 13:53:10] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 13:55:59] [ERROR] [1/1] [ERROR] Gemini AI 分析失敗 (日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析): 'list' object has no attribute 'strip'
+[2026-08-05 13:56:02] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 13:56:02] [INFO] 總檢查網址數: 1
+[2026-08-05 13:56:02] [INFO] 成功生成筆記: 0 部
+[2026-08-05 13:56:02] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 13:56:02] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 13:56:02] [INFO] ===================================================
+[2026-08-05 13:56:13] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 13:56:13] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 13:56:13] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 13:57:41] [INFO] [1/1] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-03-11_日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析.md
+[2026-08-05 13:57:44] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 13:57:44] [INFO] 總檢查網址數: 1
+[2026-08-05 13:57:44] [INFO] 成功生成筆記: 1 部
+[2026-08-05 13:57:45] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 13:57:45] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 13:57:45] [INFO] ===================================================
+[2026-08-05 13:59:13] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 13:59:13] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 13:59:13] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 14:00:05] [INFO] [1/1] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-03-11_日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析.md
+[2026-08-05 14:00:08] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 14:00:08] [INFO] 總檢查網址數: 1
+[2026-08-05 14:00:08] [INFO] 成功生成筆記: 1 部
+[2026-08-05 14:00:08] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 14:00:08] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 14:00:08] [INFO] ===================================================
+[2026-08-05 14:08:00] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 14:08:00] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 14:08:00] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 14:13:17] [ERROR] [1/1] [ERROR] Gemini AI 分析失敗 (日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析): 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.5-flash\nPlease retry in 43.572619317s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-3.5-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '43s'}]}}
+[2026-08-05 14:13:20] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 14:13:20] [INFO] 總檢查網址數: 1
+[2026-08-05 14:13:20] [INFO] 成功生成筆記: 0 部
+[2026-08-05 14:13:20] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 14:13:20] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 14:13:21] [INFO] ===================================================
+[2026-08-05 14:17:04] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 14:17:04] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 14:17:04] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 14:20:16] [ERROR] [1/1] [ERROR] Gemini AI 分析失敗 (日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析): 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.5-flash\nPlease retry in 44.757722922s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-3.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '44s'}]}}
+[2026-08-05 14:20:19] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 14:20:19] [INFO] 總檢查網址數: 1
+[2026-08-05 14:20:19] [INFO] 成功生成筆記: 0 部
+[2026-08-05 14:20:19] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 14:20:19] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 14:20:19] [INFO] ===================================================
+[2026-08-05 14:49:36] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 14:49:36] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 14:49:36] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 14:59:40] [ERROR] [1/1] [ERROR] Gemini AI 分析失敗 (日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析): HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=600)
+[2026-08-05 14:59:43] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 14:59:43] [INFO] 總檢查網址數: 1
+[2026-08-05 14:59:43] [INFO] 成功生成筆記: 0 部
+[2026-08-05 14:59:43] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 14:59:43] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 14:59:43] [INFO] ===================================================
+[2026-08-05 15:05:09] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 15:05:09] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 15:05:09] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 15:07:44] [INFO] [1/1] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-03-11_【2330台積電_NVDA輝達】_日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析.md
+[2026-08-05 15:07:47] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 15:07:47] [INFO] 總檢查網址數: 1
+[2026-08-05 15:07:47] [INFO] 成功生成筆記: 1 部
+[2026-08-05 15:07:47] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 15:07:47] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 15:07:47] [INFO] ===================================================
+[2026-08-05 15:25:50] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 15:25:50] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 15:25:50] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 16 個
+[2026-08-05 15:25:50] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 15:26:04] [INFO] [1/1] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-03-11_【3711日月光投控】_日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析.md
+[2026-08-05 15:26:08] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 15:26:08] [INFO] 總檢查網址數: 1
+[2026-08-05 15:26:08] [INFO] 成功生成筆記: 1 部
+[2026-08-05 15:26:08] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 0 部
+[2026-08-05 15:26:08] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 15:26:08] [INFO] ===================================================
+[2026-08-05 15:40:49] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 15:40:49] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 15:40:49] [INFO] 讀取網址清單總數: 534 個，已完成記錄檔數: 17 個
+[2026-08-05 15:40:49] [INFO] [1/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=srIPRlZPILY
+[2026-08-05 15:40:49] [INFO] [2/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=rumV252bc9M
+[2026-08-05 15:40:49] [INFO] [3/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=WtrCBK8wXHg
+[2026-08-05 15:40:49] [INFO] [4/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=s59ZlaNL5JA
+[2026-08-05 15:40:49] [INFO] [5/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=khPR-JycAow
+[2026-08-05 15:40:49] [INFO] [6/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=FtZ5Q0g2OXQ
+[2026-08-05 15:40:49] [INFO] [7/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=ZiofVgow6GM
+[2026-08-05 15:40:50] [INFO] [8/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=xdDUd4S6KAc
+[2026-08-05 15:40:50] [INFO] [9/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=7SKkCSSeDrc
+[2026-08-05 15:40:50] [INFO] [10/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=7DD8uHkN_UY
+[2026-08-05 15:40:50] [INFO] [11/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=zLM9wNOxMs4
+[2026-08-05 15:40:50] [INFO] [12/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=B4rtajkMfBs
+[2026-08-05 15:40:50] [INFO] [13/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=_pGU9JLo2Kk
+[2026-08-05 15:40:50] [INFO] [14/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=cpKPWRFTKEo
+[2026-08-05 15:40:50] [INFO] [15/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=Jc1B3gxJUfY
+[2026-08-05 15:40:50] [INFO] [16/534] 開始處理網址: https://www.youtube.com/watch?v=1JTjvFmWk5Q
+[2026-08-05 15:40:55] [INFO] [16/534] [SKIP_NO_CC] 標題: '聯發科（2454）：智慧型手機轉向雲端 AI 算力的重塑之路' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:40:58] [INFO] [17/534] 開始處理網址: https://www.youtube.com/watch?v=rOH1C1NO8Cg
+[2026-08-05 15:41:02] [INFO] [17/534] [SKIP_NO_CC] 標題: '台燿(6274.TW)：高階板材升級與全球擴產布局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:41:05] [INFO] [18/534] 開始處理網址: https://www.youtube.com/watch?v=EWBMSniu-mA
+[2026-08-05 15:41:10] [INFO] [18/534] [SKIP_NO_CC] 標題: '台達電(2308) ：AI電力霸主價值重構評估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:41:13] [INFO] [19/534] 開始處理網址: https://www.youtube.com/watch?v=D_ChnsWWLrk
+[2026-08-05 15:41:17] [INFO] [19/534] [SKIP_NO_CC] 標題: '亞翔（6139）：東協半導體建廠潮與四千億訂單' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:41:20] [INFO] [20/534] 開始處理網址: https://www.youtube.com/watch?v=rlf6DF8Uzlw
+[2026-08-05 15:41:24] [INFO] [20/534] [SKIP_NO_CC] 標題: '穩懋（3105）法說研究：AI光通轉型與獲利爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:41:28] [INFO] [21/534] 開始處理網址: https://www.youtube.com/watch?v=sZa60IkLTLs
+[2026-08-05 15:41:32] [INFO] [21/534] [SKIP_NO_CC] 標題: '宇瞻（8271）法說會深度研究：AI 記憶體超級週期與豪賭策略' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:41:35] [INFO] [22/534] 開始處理網址: https://www.youtube.com/watch?v=NoCFgd5F2Ts
+[2026-08-05 15:41:40] [INFO] [22/534] [SKIP_NO_CC] 標題: '立隆電（2472）法說解碼：AI與車用雙引擎轉型佈局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:41:43] [INFO] [23/534] 開始處理網址: https://www.youtube.com/watch?v=5QU0KuJokHs
+[2026-08-05 15:41:48] [INFO] [23/534] [SKIP_NO_CC] 標題: '潤弘（2597）：預鑄霸主與AI建廠的成長解碼' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:41:51] [INFO] [24/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=utfBXNpZkmU
+[2026-08-05 15:41:51] [INFO] [25/534] 開始處理網址: https://www.youtube.com/watch?v=rQTHqxtx0-k
+[2026-08-05 15:42:01] [INFO] [25/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-22_【3338】_泰碩3338 營收衰退 8% 卻大砸研發？揭密散熱老將 All in AI 液冷的豪賭，下半年這 3 個 KPI 決定生死！.md
+[2026-08-05 15:42:04] [INFO] [26/534] 開始處理網址: https://www.youtube.com/watch?v=JyN6BrldaHM
+[2026-08-05 15:42:16] [INFO] [26/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-21_【NFLX】_網飛 NFLX 史上最大 47 億美元回購護盤！ 股價跌破 52 週低點，這檔 PEG 僅 0.5 的隱藏版價值股 是陷阱還是黃金坑？.md
+[2026-08-05 15:42:19] [INFO] [27/534] 開始處理網址: https://www.youtube.com/watch?v=oz5smtwCkd0
+[2026-08-05 15:42:30] [INFO] [27/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-20_【6414】_在手訂單破 2,150 億！樺漢 6414 轉型「實體 AI」的關鍵真相，毛利暴衝 35% 的底層邏輯！.md
+[2026-08-05 15:42:34] [INFO] [28/534] 開始處理網址: https://www.youtube.com/watch?v=jGgyCdAEmgY
+[2026-08-05 15:42:45] [INFO] [28/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-19_【ASML】_晶片製造沒有它不行！ASML 護城河究竟有多深？FY26Q2 財報魔鬼細節拆解：這項「高毛利年金」才是真正獲利引擎！.md
+[2026-08-05 15:42:48] [INFO] [29/534] 開始處理網址: https://www.youtube.com/watch?v=QeAebXcFp8o
+[2026-08-05 15:43:02] [INFO] [29/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-18_【AEHR】_AI 晶圓測試霸主誕生？深度拆解 AEHR 財報，轉型後憑什麼預告 160% 爆發成長！.md
+[2026-08-05 15:43:05] [INFO] [30/534] 開始處理網址: https://www.youtube.com/watch?v=byTtasKCaRs
+[2026-08-05 15:43:23] [INFO] [30/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-17_【5243】_乙盛財報底牌大公開！鴻海集團的隱形王牌！砍掉低毛利舊生意，這檔「隱形骨架鍛造者」如何靠產品換血迎來獲利大爆發？.md
+[2026-08-05 15:43:26] [INFO] [31/534] 開始處理網址: https://www.youtube.com/watch?v=RRilOZR7iBk
+[2026-08-05 15:43:38] [INFO] [31/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-16_【3518】_豪賭第三代半導體！從筆電代工轉型SiC一條龍，柏騰(3518)的跨界突圍能成功嗎？ 散戶必看的5大檢驗KPI！.md
+[2026-08-05 15:43:41] [INFO] [32/534] 開始處理網址: https://www.youtube.com/watch?v=tN8tePIVfR8
+[2026-08-05 15:43:51] [INFO] [32/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-15_【JPM】_華爾街之王自爆「好日子快結束了」？看懂 JPM 摩根大通財報背後，執行長不敢說的人事未爆彈！.md
+[2026-08-05 15:43:55] [INFO] [33/534] 開始處理網址: https://www.youtube.com/watch?v=7bXToPtycCc
+[2026-08-05 15:44:11] [INFO] [33/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-14_【8027】_這家「雷射與電漿」設備廠長單看到 2027，先進封裝的真正聖盃？.md
+[2026-08-05 15:44:15] [INFO] [34/534] 開始處理網址: https://www.youtube.com/watch?v=VU0h-7mki5k
+[2026-08-05 15:44:34] [INFO] [34/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-07-01_【7610】_中美斷鏈的最大贏家？獨家揭密這家「城市煉金廠」聯友金屬 (7610) 的60倍暴利真相與致命風險！.md
+[2026-08-05 15:44:38] [INFO] [35/534] 開始處理網址: https://www.youtube.com/watch?v=o7VJLjwH6nA
+[2026-08-05 15:44:55] [INFO] [35/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-30_【6921】_27人小廠吃下全球PC巨頭！揭開嘉雨思(6921)財報魔鬼細節，營收與獲利的極端背離.md
+[2026-08-05 15:44:59] [INFO] [36/534] 開始處理網址: https://www.youtube.com/watch?v=vlUAWmm3dz8
+[2026-08-05 15:45:16] [INFO] [36/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-29_【6190】_賣鏟子給算力與太空經濟！萬泰科(6190)從大宗線材到高階成長股的重評之路，毛利率朝20%邁進的關鍵！.md
+[2026-08-05 15:45:20] [INFO] [37/534] 開始處理網址: https://www.youtube.com/watch?v=7KIdqv5lEAw
+[2026-08-05 15:45:26] [INFO] [37/534] [SKIP_NO_CC] 標題: '獲利暴增 5 倍卻暗藏致命傷？最大客戶佔比破三成！Credo (CRDO) 財報背後的兩大紅燈與三張底牌' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:45:29] [INFO] [38/534] 開始處理網址: https://www.youtube.com/watch?v=7wApihZ9_c4
+[2026-08-05 15:45:35] [INFO] [38/534] [SKIP_NO_CC] 標題: 'FY26Q3 財報全面超標！狂吞 136 億美元 AI 訂單，揭密 Jabil (JBL) 甩開低毛利宿命的「降維打擊」戰術！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:45:38] [INFO] [39/534] 開始處理網址: https://www.youtube.com/watch?v=ZpsrbmeNyN8
+[2026-08-05 15:45:44] [INFO] [39/534] [SKIP_NO_CC] 標題: '甲骨文暴賺還是慘賠？6380億天價訂單藏魔鬼細節，拆解 ORCL 財報你沒看到的真相！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:45:47] [INFO] [40/534] 開始處理網址: https://www.youtube.com/watch?v=EucsZE-5d-4
+[2026-08-05 15:45:53] [INFO] [40/534] [SKIP_NO_CC] 標題: '企業AI帳單大暴增！宏碁資訊(6811)不蓋機房卻能狂收「AI水電費」？揭開百倍Token利潤的秘密！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:45:56] [INFO] [41/534] 開始處理網址: https://www.youtube.com/watch?v=uUrdnxF1iUE
+[2026-08-05 15:46:02] [INFO] [41/534] [SKIP_NO_CC] 標題: '把地熱變成「精密製造業」！解密 FRVO 的樂高式擴張，4 個決定生死的時間點！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:46:05] [INFO] [42/534] 開始處理網址: https://www.youtube.com/watch?v=0dqYfcPRPRQ
+[2026-08-05 15:46:11] [INFO] [42/534] [SKIP_NO_CC] 標題: '台積電大聯盟隱藏版！6725 矽科宏晟 資本額僅3.7億卻吃下龐大建廠大單？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:46:14] [INFO] [43/534] 開始處理網址: https://www.youtube.com/watch?v=0vRK7UMN5-o
+[2026-08-05 15:46:20] [INFO] [43/534] [SKIP_NO_CC] 標題: '財報藏魔鬼細節！漢唐(2404)美國營收佔比飆破50%，但這「兩個致命傷」恐鎖死未來獲利天花板？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:46:23] [INFO] [44/534] 開始處理網址: https://www.youtube.com/watch?v=DYeYx4DE1qo
+[2026-08-05 15:46:29] [INFO] [44/534] [SKIP_NO_CC] 標題: '別管傳統封裝了！AI 算力極限的唯一解方「玻璃基板」，這家關鍵設備商 LPK.F 即將迎來量產爆發？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:46:32] [INFO] [45/534] 開始處理網址: https://www.youtube.com/watch?v=l_px5kGmkXA
+[2026-08-05 15:48:39] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 15:48:39] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 15:48:39] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 29 個
+[2026-08-05 15:48:39] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=ZpsrbmeNyN8
+[2026-08-05 15:48:45] [INFO] [1/1] [SKIP_NO_CC] 標題: '甲骨文暴賺還是慘賠？6380億天價訂單藏魔鬼細節，拆解 ORCL 財報你沒看到的真相！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:48:48] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 15:48:48] [INFO] 總檢查網址數: 1
+[2026-08-05 15:48:48] [INFO] 成功生成筆記: 0 部
+[2026-08-05 15:48:48] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 1 部
+[2026-08-05 15:48:48] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 15:48:48] [INFO] ===================================================
+[2026-08-05 15:48:54] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 15:48:54] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 15:48:54] [INFO] 啟動無字幕專用模式，處理 20 部暫存影片
+[2026-08-05 15:48:54] [INFO] [1/20] 開始處理網址: https://www.youtube.com/watch?v=1JTjvFmWk5Q
+[2026-08-05 15:52:33] [INFO] [1/20] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-08-02_【2454聯發科】_聯發科（2454）：智慧型手機轉向雲端 AI 算力的重塑之路.md
+[2026-08-05 15:52:37] [INFO] [2/20] 開始處理網址: https://www.youtube.com/watch?v=rOH1C1NO8Cg
+[2026-08-05 15:57:53] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 15:57:53] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 15:57:54] [INFO] 讀取網址清單總數: 534 個，已完成記錄檔數: 30 個
+[2026-08-05 15:57:54] [INFO] [1/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=srIPRlZPILY
+[2026-08-05 15:57:54] [INFO] [2/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=rumV252bc9M
+[2026-08-05 15:57:54] [INFO] [3/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=WtrCBK8wXHg
+[2026-08-05 15:57:54] [INFO] [4/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=s59ZlaNL5JA
+[2026-08-05 15:57:54] [INFO] [5/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=khPR-JycAow
+[2026-08-05 15:57:54] [INFO] [6/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=FtZ5Q0g2OXQ
+[2026-08-05 15:57:54] [INFO] [7/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=ZiofVgow6GM
+[2026-08-05 15:57:54] [INFO] [8/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=xdDUd4S6KAc
+[2026-08-05 15:57:54] [INFO] [9/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=7SKkCSSeDrc
+[2026-08-05 15:57:54] [INFO] [10/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=7DD8uHkN_UY
+[2026-08-05 15:57:54] [INFO] [11/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=zLM9wNOxMs4
+[2026-08-05 15:57:54] [INFO] [12/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=B4rtajkMfBs
+[2026-08-05 15:57:54] [INFO] [13/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=_pGU9JLo2Kk
+[2026-08-05 15:57:54] [INFO] [14/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=cpKPWRFTKEo
+[2026-08-05 15:57:55] [INFO] [15/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=Jc1B3gxJUfY
+[2026-08-05 15:57:55] [INFO] [16/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=1JTjvFmWk5Q
+[2026-08-05 15:57:55] [INFO] [17/534] 開始處理網址: https://www.youtube.com/watch?v=rOH1C1NO8Cg
+[2026-08-05 15:58:00] [INFO] [17/534] [SKIP_NO_CC] 標題: '台燿(6274.TW)：高階板材升級與全球擴產布局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:58:08] [INFO] [18/534] 開始處理網址: https://www.youtube.com/watch?v=EWBMSniu-mA
+[2026-08-05 15:58:13] [INFO] [18/534] [SKIP_NO_CC] 標題: '台達電(2308) ：AI電力霸主價值重構評估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:58:19] [INFO] [19/534] 開始處理網址: https://www.youtube.com/watch?v=D_ChnsWWLrk
+[2026-08-05 15:58:23] [INFO] [19/534] [SKIP_NO_CC] 標題: '亞翔（6139）：東協半導體建廠潮與四千億訂單' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:58:31] [INFO] [20/534] 開始處理網址: https://www.youtube.com/watch?v=rlf6DF8Uzlw
+[2026-08-05 15:58:36] [INFO] [20/534] [SKIP_NO_CC] 標題: '穩懋（3105）法說研究：AI光通轉型與獲利爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:58:46] [INFO] [21/534] 開始處理網址: https://www.youtube.com/watch?v=sZa60IkLTLs
+[2026-08-05 15:58:50] [INFO] [21/534] [SKIP_NO_CC] 標題: '宇瞻（8271）法說會深度研究：AI 記憶體超級週期與豪賭策略' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:58:58] [INFO] [22/534] 開始處理網址: https://www.youtube.com/watch?v=NoCFgd5F2Ts
+[2026-08-05 15:59:03] [INFO] [22/534] [SKIP_NO_CC] 標題: '立隆電（2472）法說解碼：AI與車用雙引擎轉型佈局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:59:12] [INFO] [23/534] 開始處理網址: https://www.youtube.com/watch?v=5QU0KuJokHs
+[2026-08-05 15:59:17] [INFO] [23/534] [SKIP_NO_CC] 標題: '潤弘（2597）：預鑄霸主與AI建廠的成長解碼' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:59:24] [INFO] [24/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=utfBXNpZkmU
+[2026-08-05 15:59:24] [INFO] [25/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=rQTHqxtx0-k
+[2026-08-05 15:59:24] [INFO] [26/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=JyN6BrldaHM
+[2026-08-05 15:59:24] [INFO] [27/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=oz5smtwCkd0
+[2026-08-05 15:59:24] [INFO] [28/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=jGgyCdAEmgY
+[2026-08-05 15:59:24] [INFO] [29/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=QeAebXcFp8o
+[2026-08-05 15:59:24] [INFO] [30/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=byTtasKCaRs
+[2026-08-05 15:59:24] [INFO] [31/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=RRilOZR7iBk
+[2026-08-05 15:59:24] [INFO] [32/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=tN8tePIVfR8
+[2026-08-05 15:59:24] [INFO] [33/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=7bXToPtycCc
+[2026-08-05 15:59:24] [INFO] [34/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=VU0h-7mki5k
+[2026-08-05 15:59:24] [INFO] [35/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=o7VJLjwH6nA
+[2026-08-05 15:59:25] [INFO] [36/534] [ALREADY_PROCESSED] 跳過已完成網址: https://www.youtube.com/watch?v=vlUAWmm3dz8
+[2026-08-05 15:59:25] [INFO] [37/534] 開始處理網址: https://www.youtube.com/watch?v=7KIdqv5lEAw
+[2026-08-05 15:59:32] [INFO] [37/534] [SKIP_NO_CC] 標題: '獲利暴增 5 倍卻暗藏致命傷？最大客戶佔比破三成！Credo (CRDO) 財報背後的兩大紅燈與三張底牌' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:59:43] [INFO] [38/534] 開始處理網址: https://www.youtube.com/watch?v=7wApihZ9_c4
+[2026-08-05 15:59:49] [INFO] [38/534] [SKIP_NO_CC] 標題: 'FY26Q3 財報全面超標！狂吞 136 億美元 AI 訂單，揭密 Jabil (JBL) 甩開低毛利宿命的「降維打擊」戰術！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 15:59:57] [INFO] [39/534] 開始處理網址: https://www.youtube.com/watch?v=ZpsrbmeNyN8
+[2026-08-05 16:00:03] [INFO] [39/534] [SKIP_NO_CC] 標題: '甲骨文暴賺還是慘賠？6380億天價訂單藏魔鬼細節，拆解 ORCL 財報你沒看到的真相！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:00:12] [INFO] [40/534] 開始處理網址: https://www.youtube.com/watch?v=EucsZE-5d-4
+[2026-08-05 16:00:17] [INFO] [40/534] [SKIP_NO_CC] 標題: '企業AI帳單大暴增！宏碁資訊(6811)不蓋機房卻能狂收「AI水電費」？揭開百倍Token利潤的秘密！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:06:03] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 16:06:03] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 16:06:03] [INFO] 讀取網址清單總數: 534 個，已完成記錄檔數: 30 個
+[2026-08-05 16:06:03] [INFO] [1/534] 開始處理網址: https://www.youtube.com/watch?v=0vRK7UMN5-o
+[2026-08-05 16:06:21] [INFO] [1/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-22_【2404】_財報藏魔鬼細節！漢唐(2404)美國營收佔比飆破50%，但這「兩個致命傷」恐鎖死未來獲利天花板？.md
+[2026-08-05 16:06:28] [INFO] [2/534] 開始處理網址: https://www.youtube.com/watch?v=DYeYx4DE1qo
+[2026-08-05 16:06:44] [INFO] [2/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-21_【LPKF】_別管傳統封裝了！AI 算力極限的唯一解方「玻璃基板」，這家關鍵設備商 LPK.F 即將迎來量產爆發？.md
+[2026-08-05 16:06:57] [INFO] [3/534] 開始處理網址: https://www.youtube.com/watch?v=l_px5kGmkXA
+[2026-08-05 16:07:01] [INFO] [3/534] [SKIP_NO_CC] 標題: '友達 (2409.TW)法說會解碼：雙軸轉型與估值評估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:07:07] [INFO] [4/534] 開始處理網址: https://www.youtube.com/watch?v=sF20zytF_mM
+[2026-08-05 16:07:11] [INFO] [4/534] [SKIP_NO_CC] 標題: '樺漢 (6414) ：從獲利逆風邁向實體AI帝國' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:07:18] [INFO] [5/534] 開始處理網址: https://www.youtube.com/watch?v=263wkWDBm-A
+[2026-08-05 16:07:22] [INFO] [5/534] [SKIP_NO_CC] 標題: '力積電（6770）Q2財報：從紅海到3D AI' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:07:32] [INFO] [6/534] 開始處理網址: https://www.youtube.com/watch?v=pwWoXTRP8ZA
+[2026-08-05 16:07:36] [INFO] [6/534] [SKIP_NO_CC] 標題: '南亞科(2408) 法說深度解析：AI 浪潮下的價值重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:07:46] [INFO] [7/534] 開始處理網址: https://www.youtube.com/watch?v=vYeaEqctR6A
+[2026-08-05 16:07:49] [INFO] [7/534] [SKIP_NO_CC] 標題: '大立光(3008.TW)法說深度解析：手機規格挑戰與矽光子轉機' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:08:00] [INFO] [8/534] 開始處理網址: https://www.youtube.com/watch?v=Rn6UeX6BfpA
+[2026-08-05 16:08:04] [INFO] [8/534] [SKIP_NO_CC] 標題: '潤泰材 (8463.TW) 法說調查：泥作革命與價值重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:08:13] [INFO] [9/534] 開始處理網址: https://www.youtube.com/watch?v=ywDnFnc9Vek
+[2026-08-05 16:08:17] [INFO] [9/534] [SKIP_NO_CC] 標題: '高科技建廠的最強軍火商：市場如何無差別錯殺潤泰新（9945）的 Alpha 價值？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:08:28] [INFO] [10/534] 開始處理網址: https://www.youtube.com/watch?v=9NISukJbtu0
+[2026-08-05 16:08:32] [INFO] [10/534] [SKIP_NO_CC] 標題: '鑫科 (3663) 法說調查：FOPLP光環下的估值迷霧' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:08:41] [INFO] [11/534] 開始處理網址: https://www.youtube.com/watch?v=VhkkPLJRgO4
+[2026-08-05 16:08:45] [INFO] [11/534] [SKIP_NO_CC] 標題: '鈦昇（8027）法說深度解析：玻璃基板躍進與本夢比爭奪戰' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:08:55] [INFO] [12/534] 開始處理網址: https://www.youtube.com/watch?v=uQZGgDyhMWo
+[2026-08-05 16:09:00] [INFO] [12/534] [SKIP_NO_CC] 標題: '聯華（1229）：麵粉袋下的半導體與氣體壟斷巨獸' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:09:10] [INFO] [13/534] 開始處理網址: https://www.youtube.com/watch?v=ofPDxEnilyo
+[2026-08-05 16:09:16] [INFO] [13/534] [SKIP_NO_CC] 標題: '聯友金屬（7610.TW）：鎢鈷完美風暴' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:09:27] [INFO] [14/534] 開始處理網址: https://www.youtube.com/watch?v=3Va4zkhsUVA
+[2026-08-05 16:09:30] [INFO] [14/534] [SKIP_NO_CC] 標題: '金寶（2312）：營收幻象下的毛利逆襲與量子轉型' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:09:39] [INFO] [15/534] 開始處理網址: https://www.youtube.com/watch?v=i6P6qa2Sd_0
+[2026-08-05 16:09:43] [INFO] [15/534] [SKIP_NO_CC] 標題: '根基營造（2546.TW）法說深研：半導體建廠軍火商的轉型之路' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:09:49] [INFO] [16/534] 開始處理網址: https://www.youtube.com/watch?v=FmZwSm-PHTA
+[2026-08-05 16:09:53] [INFO] [16/534] [SKIP_NO_CC] 標題: '宇隆 (2233.TW) 法說會解碼：機器人訂單下的史詩級轉型與錯殺' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:10:05] [INFO] [17/534] 開始處理網址: https://www.youtube.com/watch?v=FGUMrJmLPcE
+[2026-08-05 16:10:08] [INFO] [17/534] [SKIP_NO_CC] 標題: '牧德（3563.TW）法說會解碼：華麗轉型' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:10:15] [INFO] [18/534] 開始處理網址: https://www.youtube.com/watch?v=YrDkhGpXDB0
+[2026-08-05 16:10:20] [INFO] [18/534] [SKIP_NO_CC] 標題: '矽格(6257) 法說會調查：AI擴產狂熱下的折舊與定價隱憂' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:10:26] [INFO] [19/534] 開始處理網址: https://www.youtube.com/watch?v=kGtmkdt-bdc
+[2026-08-05 16:10:30] [INFO] [19/534] [SKIP_NO_CC] 標題: '威強電(3022) 法說會解碼：世紀定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:10:38] [INFO] [20/534] 開始處理網址: https://www.youtube.com/watch?v=d_-rpgcSqE0
+[2026-08-05 16:10:42] [INFO] [20/534] [SKIP_NO_CC] 標題: 'GIS KY (6456) ：矽光子願景與財務危機深度解碼' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:10:49] [INFO] [21/534] 開始處理網址: https://www.youtube.com/watch?v=4xwroPKf1VE
+[2026-08-05 16:11:14] [INFO] [21/534] [SKIP_NO_CC] 標題: '力積電（6770）法說會解碼：3D AI 的強勢逆襲與估值重塑' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:11:26] [INFO] [22/534] 開始處理網址: https://www.youtube.com/watch?v=nrhKXi6oDcg
+[2026-08-05 16:11:36] [INFO] [22/534] [SKIP_NO_CC] 標題: '頎邦 (6147) 法說會解碼：驅動IC困局與矽光子轉型的結構爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:11:46] [INFO] [23/534] 開始處理網址: https://www.youtube.com/watch?v=xWWnT-nM9x8
+[2026-08-05 16:11:50] [INFO] [23/534] [SKIP_NO_CC] 標題: '燿華(2367.TW)：跨越死亡谷的星鏈與光模組戰' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:11:57] [INFO] [24/534] 開始處理網址: https://www.youtube.com/watch?v=F3mAA9mGFCQ
+[2026-08-05 16:12:02] [INFO] [24/534] [SKIP_NO_CC] 標題: '廣閎科（6693）法說深度報告：AI散熱與高壓直流雙驅動' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:12:10] [INFO] [25/534] 開始處理網址: https://www.youtube.com/watch?v=jxo46rTRGxQ
+[2026-08-05 16:12:14] [INFO] [25/534] [SKIP_NO_CC] 標題: '朋程 (8255) 法說會：AI高壓模組轉型與車用逆風評析' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:12:22] [INFO] [26/534] 開始處理網址: https://www.youtube.com/watch?v=mFVvrl86YlA
+[2026-08-05 16:12:26] [INFO] [26/534] [SKIP_NO_CC] 標題: '力智(6719) 法說深度解碼：高毛利背後的估值與風險' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:12:38] [INFO] [27/534] 開始處理網址: https://www.youtube.com/watch?v=LrPxnERkeq0
+[2026-08-05 16:12:41] [INFO] [27/534] [SKIP_NO_CC] 標題: '富鼎 (8261) 法說會深度解碼：AI幻夢與基本面重力測試' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:12:51] [INFO] [28/534] 開始處理網址: https://www.youtube.com/watch?v=VkXpE7U-4jA
+[2026-08-05 16:12:56] [INFO] [28/534] [SKIP_NO_CC] 標題: '強茂（2481）法說會深度調查：轉型陣痛與市值重塑的關鍵對決' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:13:06] [INFO] [29/534] 開始處理網址: https://www.youtube.com/watch?v=QoV4g8mjids
+[2026-08-05 16:13:11] [INFO] [29/534] [SKIP_NO_CC] 標題: '茂達（6138）法說會調查：AI散熱紅利與估值重塑報告' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:13:20] [INFO] [30/534] 開始處理網址: https://www.youtube.com/watch?v=qQ64FVJtpPY
+[2026-08-05 16:13:25] [INFO] [30/534] [SKIP_NO_CC] 標題: '台半（5425）：AI伺服器與車規功率元件的戰略突圍' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:13:31] [INFO] 💤 [分批冷卻] 已連續處理 30 部影片，啟動防封 IP 休眠 3 分鐘 (180s)...
+[2026-08-05 16:16:31] [INFO] [31/534] 開始處理網址: https://www.youtube.com/watch?v=AEM1qLanV94
+[2026-08-05 16:16:35] [INFO] [31/534] [SKIP_NO_CC] 標題: '矽力*-KY (6415.TW) 法說會深度解析：12吋高階製程轉型之路' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:16:45] [INFO] [32/534] 開始處理網址: https://www.youtube.com/watch?v=zfAJKcXy_tU
+[2026-08-05 16:16:50] [INFO] [32/534] [SKIP_NO_CC] 標題: '華擎（3515）法說深度解析：AI 狂潮與存貨迷思' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:17:01] [INFO] [33/534] 開始處理網址: https://www.youtube.com/watch?v=3RWNrdCCPsw
+[2026-08-05 16:17:05] [INFO] [33/534] [SKIP_NO_CC] 標題: '凌航（3135）：定價錯誤與預期差解碼' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:17:13] [INFO] [34/534] 開始處理網址: https://www.youtube.com/watch?v=PMnZIUOVSUo
+[2026-08-05 16:17:17] [INFO] [34/534] [SKIP_NO_CC] 標題: '信錦1582）： 估值斷層的真相' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:17:28] [INFO] [35/534] 開始處理網址: https://www.youtube.com/watch?v=81s2XHm3ZLo
+[2026-08-05 16:17:32] [INFO] [35/534] [SKIP_NO_CC] 標題: '寶成（9904.TW）：逆向觀點全面拆解' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:17:39] [INFO] [36/534] 開始處理網址: https://www.youtube.com/watch?v=x0tbSLCAfYs
+[2026-08-05 16:17:43] [INFO] [36/534] [SKIP_NO_CC] 標題: '印能科技（7734）：空間魔術師的獲利大爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:17:50] [INFO] [37/534] 開始處理網址: https://www.youtube.com/watch?v=_Bvy-praRp0
+[2026-08-05 16:17:54] [INFO] [37/534] [SKIP_NO_CC] 標題: '光聖(6442) ：AI光纖轉型與矽光子佈局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:18:06] [INFO] [38/534] 開始處理網址: https://www.youtube.com/watch?v=qZVyB4eWxsw
+[2026-08-05 16:18:10] [INFO] [38/534] [SKIP_NO_CC] 標題: '新日興（3376）：極致預期差' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:18:20] [INFO] [39/534] 開始處理網址: https://www.youtube.com/watch?v=GZVeaopH_aY
+[2026-08-05 16:18:24] [INFO] [39/534] [SKIP_NO_CC] 標題: '堡達（3537）：解碼法說會的超額報酬' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:18:34] [INFO] [40/534] 開始處理網址: https://www.youtube.com/watch?v=OK3rcjALypw
+[2026-08-05 16:18:38] [INFO] [40/534] [SKIP_NO_CC] 標題: '巨漢（6903）：百億預期錯位' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:18:50] [INFO] [41/534] 開始處理網址: https://www.youtube.com/watch?v=FU4Zl9Ttf7w
+[2026-08-05 16:18:54] [INFO] [41/534] [SKIP_NO_CC] 標題: '健鼎科技 (3044) ：百億豪賭' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:19:05] [INFO] [42/534] 開始處理網址: https://www.youtube.com/watch?v=9tF1Ub_ueVQ
+[2026-08-05 16:19:09] [INFO] [42/534] [SKIP_NO_CC] 標題: '敬鵬 (2355)：AI十字鎬與定價權覺醒' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:19:20] [INFO] [43/534] 開始處理網址: https://www.youtube.com/watch?v=tTkyfGYC2bw
+[2026-08-05 16:19:24] [INFO] [43/534] [SKIP_NO_CC] 標題: '長科* (6548) ：AI幻想與現實' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:19:31] [INFO] [44/534] 開始處理網址: https://www.youtube.com/watch?v=tVDYD1uTNVo
+[2026-08-05 16:19:35] [INFO] [44/534] [SKIP_NO_CC] 標題: '南俊國際(6584)：AI鋼鐵抽屜解密' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:19:41] [INFO] [45/534] 開始處理網址: https://www.youtube.com/watch?v=TuYZ76qWVog
+[2026-08-05 16:19:45] [INFO] [45/534] [SKIP_NO_CC] 標題: '經寶精密 jpp-KY（5284) ：AI與航太雙引擎' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:19:56] [INFO] [46/534] 開始處理網址: https://www.youtube.com/watch?v=8x4fxC5_WaI
+[2026-08-05 16:20:00] [INFO] [46/534] [SKIP_NO_CC] 標題: '信驊 (5274)法說會深度解剖：雲端管理龍頭的AI戰略與估值解碼' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:20:08] [INFO] [47/534] 開始處理網址: https://www.youtube.com/watch?v=OYtfzX9lZ7w
+[2026-08-05 16:20:13] [INFO] [47/534] [SKIP_NO_CC] 標題: '光洋科（1785.TW）：AI儲存與半導體戰略布局' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:20:20] [INFO] [48/534] 開始處理網址: https://www.youtube.com/watch?v=EPLVmyFDl-g
+[2026-08-05 16:20:24] [INFO] [48/534] [SKIP_NO_CC] 標題: '華通(2313)：AI與低軌衛星轉型' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:20:32] [INFO] [49/534] 開始處理網址: https://www.youtube.com/watch?v=4bRj_ZVPdFs
+[2026-08-05 16:20:36] [INFO] [49/534] [SKIP_NO_CC] 標題: '台虹（8039）：先進封裝轉型的虛實與價值重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:20:45] [INFO] [50/534] 開始處理網址: https://www.youtube.com/watch?v=c-1qqyhYHm4
+[2026-08-05 16:20:49] [INFO] [50/534] [SKIP_NO_CC] 標題: '崇越電（3388）：AI散熱與特化材料價值重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:21:00] [INFO] [51/534] 開始處理網址: https://www.youtube.com/watch?v=p5txjb9Tzb4
+[2026-08-05 16:21:04] [INFO] [51/534] [SKIP_NO_CC] 標題: '羅昇：AI奇蹟或陷阱？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:21:14] [INFO] [52/534] 開始處理網址: https://www.youtube.com/watch?v=J9NjAfwovjk
+[2026-08-05 16:22:48] [INFO] [52/534] [SKIP_NO_CC] 標題: '永擎 (7711) ：拆解估值' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:22:54] [INFO] [53/534] 開始處理網址: https://www.youtube.com/watch?v=AnvSjxAJzk8
+[2026-08-05 16:23:18] [ERROR] [53/534] [ERROR] 抓取資訊失敗: ERROR: [youtube] AnvSjxAJzk8: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 16:23:30] [INFO] [54/534] 開始處理網址: https://www.youtube.com/watch?v=A2KeWQmILn0
+[2026-08-05 16:23:30] [ERROR] [54/534] [ERROR] 抓取資訊失敗: ERROR: [youtube] A2KeWQmILn0: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 16:23:41] [INFO] [55/534] 開始處理網址: https://www.youtube.com/watch?v=fsEhOA1VMMA
+[2026-08-05 16:23:41] [ERROR] [55/534] [ERROR] 抓取資訊失敗: ERROR: [youtube] fsEhOA1VMMA: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 16:23:48] [INFO] [56/534] 開始處理網址: https://www.youtube.com/watch?v=nYg2Kz4lJpQ
+[2026-08-05 16:23:48] [ERROR] [56/534] [ERROR] 抓取資訊失敗: ERROR: [youtube] nYg2Kz4lJpQ: Unable to download API page: HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed) (caused by TransportError("HTTPSConnection(host='www.youtube.com', port=443): Failed to resolve 'www.youtube.com' ([Errno 11001] getaddrinfo failed)"))
+[2026-08-05 16:23:59] [INFO] [57/534] 開始處理網址: https://www.youtube.com/watch?v=qdApdRgJ_1k
+[2026-08-05 16:24:03] [INFO] [57/534] [SKIP_NO_CC] 標題: '富邦金（2881.TW）：兆元級定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:24:15] [INFO] [58/534] 開始處理網址: https://www.youtube.com/watch?v=m_xF4DyQPA0
+[2026-08-05 16:24:19] [INFO] [58/534] [SKIP_NO_CC] 標題: '中信金（2891.TW）：與定價預期差' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:24:30] [INFO] [59/534] 開始處理網址: https://www.youtube.com/watch?v=o5TYEXwesJY
+[2026-08-05 16:24:34] [INFO] [59/534] [SKIP_NO_CC] 標題: '長榮航太(2645) ：解鎖隱藏價值' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:24:42] [INFO] [60/534] 開始處理網址: https://www.youtube.com/watch?v=1GiWIuxogqw
+[2026-08-05 16:24:46] [INFO] [60/534] [SKIP_NO_CC] 標題: '建準 (2421) ：被嚴重錯估的散熱巨獸' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:24:55] [INFO] 💤 [分批冷卻] 已連續處理 60 部影片，啟動防封 IP 休眠 3 分鐘 (180s)...
+[2026-08-05 16:27:55] [INFO] [61/534] 開始處理網址: https://www.youtube.com/watch?v=1VaM7l8907M
+[2026-08-05 16:27:59] [INFO] [61/534] [SKIP_NO_CC] 標題: '華新科 (2492.TW) 價值重估：AI電力瓶頸' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:28:09] [INFO] [62/534] 開始處理網址: https://www.youtube.com/watch?v=hPEjpgcbj0M
+[2026-08-05 16:28:13] [INFO] [62/534] [SKIP_NO_CC] 標題: '穎崴科技 (6515) ：AI狂潮下的賣鏟人豪賭' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:28:25] [INFO] [63/534] 開始處理網址: https://www.youtube.com/watch?v=VLfzXMr7GjA
+[2026-08-05 16:28:28] [INFO] [63/534] [SKIP_NO_CC] 標題: '大聯大 (3702.TW)：AI價值重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:28:37] [INFO] [64/534] 開始處理網址: https://www.youtube.com/watch?v=1vK6RiY7f2g
+[2026-08-05 16:28:41] [INFO] [64/534] [SKIP_NO_CC] 標題: '晶焱科技 (6411) ：毛利保衛戰到地緣政治紅利' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:28:49] [INFO] [65/534] 開始處理網址: https://www.youtube.com/watch?v=G25wEvrNPLY
+[2026-08-05 16:28:53] [INFO] [65/534] [SKIP_NO_CC] 標題: '嘉澤 (3533.TW) ：AI 高速公路上的收費站' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:29:04] [INFO] [66/534] 開始處理網址: https://www.youtube.com/watch?v=qbLm5nDauR8
+[2026-08-05 16:29:08] [INFO] [66/534] [SKIP_NO_CC] 標題: '偉詮電（2436） ：AI散熱的世紀定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:29:17] [INFO] [67/534] 開始處理網址: https://www.youtube.com/watch?v=POYm8tFeif0
+[2026-08-05 16:29:21] [INFO] [67/534] [SKIP_NO_CC] 標題: '新代科技（7750）：定價錯誤的完美風暴' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:29:30] [INFO] [68/534] 開始處理網址: https://www.youtube.com/watch?v=ew46vbvzrBs
+[2026-08-05 16:29:34] [INFO] [68/534] [SKIP_NO_CC] 標題: '帆宣（6196）：千億級巨大定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:29:42] [INFO] [69/534] 開始處理網址: https://www.youtube.com/watch?v=FlVPSUMUiwI
+[2026-08-05 16:29:46] [INFO] [69/534] [SKIP_NO_CC] 標題: '信昌電（6173）：兆瓦級電力革命' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:29:54] [INFO] [70/534] 開始處理網址: https://www.youtube.com/watch?v=VEgKY-wupj4
+[2026-08-05 16:29:59] [INFO] [70/534] [SKIP_NO_CC] 標題: '尖點 (8021.TW)：揭開AI產能的結構性爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:30:11] [INFO] [71/534] 開始處理網址: https://www.youtube.com/watch?v=7cijwn1HRfY
+[2026-08-05 16:30:15] [INFO] [71/534] [SKIP_NO_CC] 標題: '日電貿(3090) ：AI算力浪潮下的被動元件造王者' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:30:21] [INFO] [72/534] 開始處理網址: https://www.youtube.com/watch?v=ddTk32EFnAs
+[2026-08-05 16:30:24] [INFO] [72/534] [SKIP_NO_CC] 標題: '華電網 (6163)：AI基建與估值錯殺預期差' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:30:36] [INFO] [73/534] 開始處理網址: https://www.youtube.com/watch?v=SA4xQqDd8W0
+[2026-08-05 16:30:40] [INFO] [73/534] [SKIP_NO_CC] 標題: '亞聚（1308.TW）的預期差謎團：極限求生戰術' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:30:49] [INFO] [74/534] 開始處理網址: https://www.youtube.com/watch?v=N1RzROP4VIc
+[2026-08-05 16:30:53] [INFO] [74/534] [SKIP_NO_CC] 標題: '廣達（2382.TW）被掩蓋的爆發：巨大的定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:31:00] [INFO] [75/534] 開始處理網址: https://www.youtube.com/watch?v=YyEKY0EYKSQ
+[2026-08-05 16:31:04] [INFO] [75/534] [SKIP_NO_CC] 標題: '鴻海（2317.TW）預期差：華爾街的巨大定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:31:11] [INFO] [76/534] 開始處理網址: https://www.youtube.com/watch?v=--lCZqRTp0c
+[2026-08-05 16:31:16] [INFO] [76/534] [SKIP_NO_CC] 標題: '研揚(6579)：邊緣AI與183天庫存' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:31:26] [INFO] [77/534] 開始處理網址: https://www.youtube.com/watch?v=WGz9iTOw8So
+[2026-08-05 16:31:30] [INFO] [77/534] [SKIP_NO_CC] 標題: '強茂（2481）洞察：進化為AI算力樞紐' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:31:41] [INFO] [78/534] 開始處理網址: https://www.youtube.com/watch?v=DB64Qd1Enlw
+[2026-08-05 16:31:44] [INFO] [78/534] [SKIP_NO_CC] 標題: '旺矽(6223.TW) ：結構性破局與定價重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:31:51] [INFO] [79/534] 開始處理網址: https://www.youtube.com/watch?v=aTGCKO4-kOk
+[2026-08-05 16:31:55] [INFO] [79/534] [SKIP_NO_CC] 標題: '穎崴 (6515) ：AI 算力的終極收費站' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:32:01] [INFO] [80/534] 開始處理網址: https://www.youtube.com/watch?v=4cjcp3-Z8rc
+[2026-08-05 16:32:05] [INFO] [80/534] [SKIP_NO_CC] 標題: '富采 (3714.TW) ：市場定價錯誤與爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:32:17] [INFO] [81/534] 開始處理網址: https://www.youtube.com/watch?v=dTaAz2IqQc8
+[2026-08-05 16:32:20] [INFO] [81/534] [SKIP_NO_CC] 標題: '佳能(2374.TW) ：AI機器人的定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:32:32] [INFO] [82/534] 開始處理網址: https://www.youtube.com/watch?v=tOsTk4mDBPY
+[2026-08-05 16:32:35] [INFO] [82/534] [SKIP_NO_CC] 標題: '鴻勁（7769）的AI霸權：兆元冰桶' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:32:44] [INFO] [83/534] 開始處理網址: https://www.youtube.com/watch?v=SlyDfogDY0g
+[2026-08-05 16:32:48] [INFO] [83/534] [SKIP_NO_CC] 標題: '原相 (3227)科技：電競龍頭的邊緣 AI 轉型' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:32:59] [INFO] [84/534] 開始處理網址: https://www.youtube.com/watch?v=zWaLIM-1I3Y
+[2026-08-05 16:33:03] [INFO] [84/534] [SKIP_NO_CC] 標題: '祥碩 (5269.TW)：AI高速傳輸霸主' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:33:15] [INFO] [85/534] 開始處理網址: https://www.youtube.com/watch?v=f6fvqz_kG_8
+[2026-08-05 16:33:19] [INFO] [85/534] [SKIP_NO_CC] 標題: '愛普*(6531.TW)：AI算力心臟的隱藏引擎' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:33:26] [INFO] [86/534] 開始處理網址: https://www.youtube.com/watch?v=_bN_zDGmo4Y
+[2026-08-05 16:33:29] [INFO] [86/534] [SKIP_NO_CC] 標題: '辛耘 (3583)：估值高空鋼索' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:33:38] [INFO] [87/534] 開始處理網址: https://www.youtube.com/watch?v=5rachFXhkOQ
+[2026-08-05 16:33:42] [INFO] [87/534] [SKIP_NO_CC] 標題: '騰輝電子-KY (6672)：特種裝甲與通膨大屠殺' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:33:49] [INFO] [88/534] 開始處理網址: https://www.youtube.com/watch?v=EnNfDJRA1Nc
+[2026-08-05 16:33:52] [INFO] [88/534] [SKIP_NO_CC] 標題: '啟碁(6285.TW)：數位基建巨象的庫存與關稅鋼索' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:34:01] [INFO] [89/534] 開始處理網址: https://www.youtube.com/watch?v=gQ5th1kOT_Y
+[2026-08-05 16:34:26] [INFO] [89/534] [SKIP_NO_CC] 標題: '大銀微系統(4576)：市場定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:34:36] [INFO] [90/534] 開始處理網址: https://www.youtube.com/watch?v=Q3AtnjQR83c
+[2026-08-05 16:34:43] [INFO] [90/534] [SKIP_NO_CC] 標題: '元太（8069）：綠色霸權的巨大定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:34:50] [INFO] 💤 [分批冷卻] 已連續處理 90 部影片，啟動防封 IP 休眠 3 分鐘 (180s)...
+[2026-08-05 16:37:50] [INFO] [91/534] 開始處理網址: https://www.youtube.com/watch?v=X2IMqzn7vH0
+[2026-08-05 16:37:54] [INFO] [91/534] [SKIP_NO_CC] 標題: '世芯-KY (3661.TW)：預期差定價終極拆解' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:38:05] [INFO] [92/534] 開始處理網址: https://www.youtube.com/watch?v=CPT11leZ0d4
+[2026-08-05 16:38:09] [INFO] [92/534] [SKIP_NO_CC] 標題: '群聯 (8299) ：儲存快艇到AI深海艦隊的價值重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:38:16] [INFO] [93/534] 開始處理網址: https://www.youtube.com/watch?v=119s3lRPg_A
+[2026-08-05 16:38:20] [INFO] [93/534] [SKIP_NO_CC] 標題: '致茂 (2360.TW) 揭秘：AI 晶片收費站' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:38:31] [INFO] [94/534] 開始處理網址: https://www.youtube.com/watch?v=93_NMoi63ZU
+[2026-08-05 16:38:35] [INFO] [94/534] [SKIP_NO_CC] 標題: '緊急釋出！研華(2395.TW) ：AI造王者的進化之路(法人說明會最新資料)' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:38:41] [INFO] [95/534] 開始處理網址: https://www.youtube.com/watch?v=iHbVWyNBXuI
+[2026-08-05 16:38:45] [INFO] [95/534] [SKIP_NO_CC] 標題: '聯發科 (2454.TW)價值重估：從手機霸主到雲端巨頭' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:38:53] [INFO] [96/534] 開始處理網址: https://www.youtube.com/watch?v=vMSPyLFLtzw
+[2026-08-05 16:38:57] [INFO] [96/534] [SKIP_NO_CC] 標題: '穩懋(3105.TW)：結構性爆發還是巨大的定價錯誤？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:39:09] [INFO] [97/534] 開始處理網址: https://www.youtube.com/watch?v=F83u2pVWDUQ
+[2026-08-05 16:39:13] [INFO] [97/534] [SKIP_NO_CC] 標題: '嘉晶（3016）：史詩級定價錯誤與結構性爆發' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:39:23] [INFO] [98/534] 開始處理網址: https://www.youtube.com/watch?v=xGTZtCAduZg
+[2026-08-05 16:39:26] [INFO] [98/534] [SKIP_NO_CC] 標題: '台達電（2308.TW）：AI能源與散熱霸權' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:39:36] [INFO] [99/534] 開始處理網址: https://www.youtube.com/watch?v=Jy-4n9AH7Ns
+[2026-08-05 16:39:40] [INFO] [99/534] [SKIP_NO_CC] 標題: '瑞儀光電 (6176.TW)：OLED 死亡幽谷中的百億豪賭' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:39:51] [INFO] [100/534] 開始處理網址: https://www.youtube.com/watch?v=ExtB0_IbM8E
+[2026-08-05 16:39:55] [INFO] [100/534] [SKIP_NO_CC] 標題: '中信金（2891.TW）市場巨大的定價錯誤' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:40:05] [INFO] [101/534] 開始處理網址: https://www.youtube.com/watch?v=ExZ_ytPn7go
+[2026-08-05 16:40:11] [INFO] [101/534] [SKIP_NO_CC] 標題: '台化：石化巨擘的史詩級逆轉' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:40:22] [INFO] [102/534] 開始處理網址: https://www.youtube.com/watch?v=YKNK2jBVdik
+[2026-08-05 16:40:26] [INFO] [102/534] [SKIP_NO_CC] 標題: '譜瑞-KY（4966）：偽裝中的AI巨頭？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:40:36] [INFO] [103/534] 開始處理網址: https://www.youtube.com/watch?v=oucyNs0dclE
+[2026-08-05 16:40:51] [INFO] [103/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-20_【CIEN】_滿手 77 億美元訂單出不完 ！Ciena(CIEN) FY2026 Q2 財報大逆襲，揭密 AI 時代最深「收費站」護城河 ！.md
+[2026-08-05 16:41:01] [INFO] [104/534] 開始處理網址: https://www.youtube.com/watch?v=J5HzuZ7mOtI
+[2026-08-05 16:41:16] [INFO] [104/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-19_【8039】_賺錢邏輯徹底改變 ！台虹(8039)提早佈局「去玻纖布」大遷徙 ，未來評價指標將全面由新材料接棒 ？.md
+[2026-08-05 16:41:28] [INFO] [105/534] 開始處理網址: https://www.youtube.com/watch?v=RMNU3Pmhnsw
+[2026-08-05 16:41:44] [INFO] [105/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-18_【3680】_4月營收創歷史天量 ！當全世界瘋搶2奈米，家登 (3680) 正悄悄收走「必備入場券」... 財報裡的魔鬼細節大解密！.md
+[2026-08-05 16:41:54] [INFO] [106/534] 開始處理網址: https://www.youtube.com/watch?v=f4AHI_T9Bfc
+[2026-08-05 16:42:18] [INFO] [106/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-17_【6830】_大家都看錯了！CPO 良率卡關竟然是汎銓（6830) 超級大利多？揭密主力默默在低檔吸籌的除錯聚寶盆！_ 深入解析SemiAnalysis與Mizuho兩大權威報告.md
+[2026-08-05 16:42:29] [INFO] [107/534] 開始處理網址: https://www.youtube.com/watch?v=1hhAlq4wL8k
+[2026-08-05 16:42:46] [INFO] [107/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-16_【TE】_飆漲11倍還能追？從 T1 Energy (TE) 財報看懂 AI 缺電大商機！41GW 爆發前夕，這筆 3.5 億美元的致命融資將決定生死？.md
+[2026-08-05 16:42:58] [INFO] [108/534] 開始處理網址: https://www.youtube.com/watch?v=R5epCLG7gjE
+[2026-08-05 16:43:14] [INFO] [108/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-15_【6903】_滿手111億訂單卻「拒絕接案」 ？拆解巨漢(6903) Q1 創歷史新高背後的財報魔鬼細節！.md
+[2026-08-05 16:43:26] [INFO] [109/534] 開始處理網址: https://www.youtube.com/watch?v=tjpwR3RU7hE
+[2026-08-05 16:43:45] [INFO] [109/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-14_【PANW】_財報全面超標！十年最強的硬體大爆發，Palo Alto Networks(PANW) 護城河到底有多深？.md
+[2026-08-05 16:43:53] [INFO] [110/534] 開始處理網址: https://www.youtube.com/watch?v=h_xFoRoT7ZE
+[2026-08-05 16:44:17] [INFO] [110/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-13_【AVGO博通】_比算力更難被取代的護城河！Broadcom (AVGO) 博通預告 FY27 營收破千億，揭密 AI 霸主的續命狂奔戰略！.md
+[2026-08-05 16:44:25] [INFO] [111/534] 開始處理網址: https://www.youtube.com/watch?v=PvP1m-9vr9U
+[2026-08-05 16:44:56] [INFO] [111/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-12_【MCHP】_Microchip (MCHP) 訂單大爆發！交期急拉 4-8 週！半導體「供給端」全面卡關，這檔隱形冠軍準備起飛？.md
+[2026-08-05 16:45:05] [INFO] [112/534] 開始處理網址: https://www.youtube.com/watch?v=Zpu_qQ95vBE
+[2026-08-05 16:45:21] [INFO] [112/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-11_【FLY】_NASA、太空軍砸重金背書！Firefly(FLY) 挑戰百億「登月商機」，卻被成本加成合約反咬一口？_ 2026Q1 電話會議解析.md
+[2026-08-05 16:45:28] [INFO] [113/534] 開始處理網址: https://www.youtube.com/watch?v=eh31vsJZLfU
+[2026-08-05 16:45:44] [INFO] [113/534] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-10_【2313】_老兵的二次創業！華通(2313)手握MSAP兩岸護城河，這「五個關鍵訊號」決定股價天花板！.md
+[2026-08-05 16:45:54] [INFO] [114/534] 開始處理網址: https://www.youtube.com/watch?v=jFUdOJN1F8M
+[2026-08-05 16:45:59] [INFO] [114/534] [SKIP_NO_CC] 標題: 'EPS 變好看的致命陷阱！FuelCell Energy (FCEL) 瘋狂增資續命，百億 Backlog 縮水背後的財報真相' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:46:11] [INFO] [115/534] 開始處理網址: https://www.youtube.com/watch?v=lIxaBcN-XaY
+[2026-08-05 16:46:16] [INFO] [115/534] [SKIP_NO_CC] 標題: '「重製修正版」2026/05/27 法說會態度大轉彎！汎銓(6830)不賣夢想改「算數學」，三大引擎與隱藏的財報地雷全解析！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:46:27] [INFO] [116/534] 開始處理網址: https://www.youtube.com/watch?v=rj0pQrPvJdE
+[2026-08-05 16:46:31] [INFO] [116/534] [SKIP_NO_CC] 標題: '狂砸10億美元鎖緊產能 ！Marvell (MRVL) 財測跌破眼鏡，三大引擎發動 ，AI工廠鐵路公司真面目曝光 ！' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:46:41] [INFO] [117/534] 開始處理網址: https://www.youtube.com/watch?v=XxfxHlBiQBw
+[2026-08-05 16:46:46] [INFO] [117/534] [SKIP_NO_CC] 標題: 'NVIDIA 砸20億綁定的矽光子黑馬 ！Coherent (COHR) 獲利狂飆55% ，比高股息ETF更值得長抱作為退休存股？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:46:55] [INFO] [118/534] 開始處理網址: https://www.youtube.com/watch?v=kWDm2OqbyU4
+[2026-08-05 16:47:00] [INFO] [118/534] [SKIP_NO_CC] 標題: '現金快燒光了？深度解析 Sivers (SIVE.ST) 致命財報背後的「三重對賭」，這張暴富門票你敢拿嗎？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:47:11] [INFO] [119/534] 開始處理網址: https://www.youtube.com/watch?v=76sBaUqsis4
+[2026-08-05 16:47:16] [INFO] [119/534] [SKIP_NO_CC] 標題: '合一(4743) ON101 2026年五月中國解盲成功！拿到最強武器為何仍說「2026是練兵年」？三道高牆與2027決戰時刻全解析' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:47:27] [INFO] [120/534] 開始處理網址: https://www.youtube.com/watch?v=_XqgB9XEZWg
+[2026-08-05 16:47:32] [INFO] [120/534] [SKIP_NO_CC] 標題: '不賣技術賣「零當機」！朋程(8255)靠25年車規護城河通吃AI電源商機，2027年大爆發前該提早上車嗎？' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 16:47:41] [INFO] 💤 [分批冷卻] 已連續處理 120 部影片，啟動防封 IP 休眠 3 分鐘 (180s)...
+[2026-08-05 17:00:04] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 17:00:04] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 17:00:04] [INFO] 啟動無字幕專用模式，處理 117 部暫存影片
+[2026-08-05 17:00:04] [INFO] [1/117] 開始處理網址: https://www.youtube.com/watch?v=rOH1C1NO8Cg
+[2026-08-05 17:04:38] [INFO] [1/117] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-08-02_【6274台燿】_台燿(6274.TW)：高階板材升級與全球擴產布局.md
+[2026-08-05 17:04:43] [INFO] [2/117] 開始處理網址: https://www.youtube.com/watch?v=EWBMSniu-mA
+[2026-08-05 17:10:14] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 17:10:14] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 17:10:14] [INFO] 讀取網址清單總數: 1 個，已完成記錄檔數: 43 個
+[2026-08-05 17:10:14] [INFO] [1/1] 開始處理網址: https://www.youtube.com/watch?v=76g03bTBsDQ
+[2026-08-05 17:10:21] [INFO] [1/1] [SKIP_NO_CC] 標題: '日月光(3711) 法說會全解析：先進封裝產能翻倍！2026 營運 3 大核心 KPI 獨家看法解析' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 17:10:21] [INFO] ==================== 任務完成摘要 ====================
+[2026-08-05 17:10:21] [INFO] 總檢查網址數: 1
+[2026-08-05 17:10:21] [INFO] 成功生成筆記: 0 部
+[2026-08-05 17:10:21] [INFO] 跳過無 CC 字幕 (暫存 no_subtitles_urls.txt): 1 部
+[2026-08-05 17:10:21] [INFO] 跳過先前已完成影片: 0 部
+[2026-08-05 17:10:21] [INFO] ===================================================
+[2026-08-05 17:10:26] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 17:10:26] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 17:10:26] [INFO] 啟動無字幕專用模式，處理 117 部暫存影片
+[2026-08-05 17:10:26] [INFO] [1/117] 開始處理網址: https://www.youtube.com/watch?v=EWBMSniu-mA
+[2026-08-05 17:13:42] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 17:13:42] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 17:13:42] [INFO] 啟動無字幕專用模式，處理 117 部暫存影片
+[2026-08-05 17:13:42] [INFO] [1/117] 開始處理網址: https://www.youtube.com/watch?v=EWBMSniu-mA
+[2026-08-05 17:17:33] [INFO] [1/117] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-08-02_【2308台達電】_台達電(2308) ：AI電力霸主價值重構評估.md
+[2026-08-05 17:17:37] [INFO] [2/117] 開始處理網址: https://www.youtube.com/watch?v=D_ChnsWWLrk
+[2026-08-05 17:20:49] [INFO] [2/117] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-26_【6139亞翔】_亞翔（6139）：東協半導體建廠潮與四千億訂單.md
+[2026-08-05 17:20:53] [INFO] [3/117] 開始處理網址: https://www.youtube.com/watch?v=rlf6DF8Uzlw
+[2026-08-05 17:31:39] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 17:31:39] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 17:31:39] [INFO] 啟動無字幕專用模式，處理 115 部暫存影片
+[2026-08-05 17:31:39] [INFO] [1/115] 開始處理網址: https://www.youtube.com/watch?v=rlf6DF8Uzlw
+[2026-08-05 17:35:34] [INFO] [1/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-26_【3105穩懋】_穩懋（3105）法說研究：AI光通轉型與獲利爆發.md
+[2026-08-05 17:35:38] [INFO] [2/115] 開始處理網址: https://www.youtube.com/watch?v=sZa60IkLTLs
+[2026-08-05 17:39:26] [INFO] [2/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-26_【8271宇瞻】_宇瞻（8271）法說會深度研究：AI 記憶體超級週期與豪賭策略.md
+[2026-08-05 17:39:30] [INFO] [3/115] 開始處理網址: https://www.youtube.com/watch?v=NoCFgd5F2Ts
+[2026-08-05 17:44:28] [INFO] [3/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-23_【2472立隆電】_立隆電（2472）法說解碼：AI與車用雙引擎轉型佈局.md
+[2026-08-05 17:44:33] [INFO] [4/115] 開始處理網址: https://www.youtube.com/watch?v=5QU0KuJokHs
+[2026-08-05 17:48:17] [INFO] [4/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-23_【2597潤弘】_潤弘（2597）：預鑄霸主與AI建廠的成長解碼.md
+[2026-08-05 17:48:21] [INFO] [5/115] 開始處理網址: https://www.youtube.com/watch?v=0dqYfcPRPRQ
+[2026-08-05 17:56:37] [INFO] [5/115] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-23_【6725矽科宏晟】_台積電大聯盟隱藏版！6725 矽科宏晟 資本額僅3.7億卻吃下龐大建廠大單？.md
+[2026-08-05 17:56:42] [INFO] [6/115] 開始處理網址: https://www.youtube.com/watch?v=l_px5kGmkXA
+[2026-08-05 18:01:03] [INFO] [6/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-08-04_【2409友達】_友達 (2409.TW)法說會解碼：雙軸轉型與估值評估.md
+[2026-08-05 18:01:08] [INFO] [7/115] 開始處理網址: https://www.youtube.com/watch?v=sF20zytF_mM
+[2026-08-05 18:05:45] [INFO] [7/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-16_【6414樺漢】_樺漢 (6414) ：從獲利逆風邁向實體AI帝國.md
+[2026-08-05 18:05:49] [INFO] [8/115] 開始處理網址: https://www.youtube.com/watch?v=263wkWDBm-A
+[2026-08-05 18:10:49] [INFO] [8/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-15_【6770力積電】_力積電（6770）Q2財報：從紅海到3D AI.md
+[2026-08-05 18:10:53] [INFO] [9/115] 開始處理網址: https://www.youtube.com/watch?v=vwh-1G0C3o8
+[2026-08-05 18:25:33] [INFO] [9/115] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-03-05_【CRDOCredo Technology Group】_突破物理極限！單季營收年增逾 200%，Credo (CRDO) 的光銅雙棲護城河到底有多深？.md
+[2026-08-05 18:25:38] [INFO] [10/115] 開始處理網址: https://www.youtube.com/watch?v=7KIdqv5lEAw
+[2026-08-05 18:41:40] [INFO] [10/115] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-28_【CRDOCredo Technology】_獲利暴增 5 倍卻暗藏致命傷？最大客戶佔比破三成！Credo (CRDO) 財報背後的兩大紅燈與三張底牌.md
+[2026-08-05 18:41:45] [INFO] [11/115] 開始處理網址: https://www.youtube.com/watch?v=7wApihZ9_c4
+[2026-08-05 18:58:28] [INFO] [11/115] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-27_【JBL捷普科技】_FY26Q3 財報全面超標！狂吞 136 億美元 AI 訂單，揭密 Jabil (JBL) 甩開低毛利宿命的「降維打擊」戰術！.md
+[2026-08-05 18:58:33] [INFO] [12/115] 開始處理網址: https://www.youtube.com/watch?v=ZpsrbmeNyN8
+[2026-08-05 19:11:37] [INFO] [12/115] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-26_【ORCL甲骨文】_甲骨文暴賺還是慘賠？6380億天價訂單藏魔鬼細節，拆解 ORCL 財報你沒看到的真相！.md
+[2026-08-05 19:11:42] [INFO] [13/115] 開始處理網址: https://www.youtube.com/watch?v=EucsZE-5d-4
+[2026-08-05 19:26:28] [INFO] [13/115] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-25_【6811宏碁資訊】_企業AI帳單大暴增！宏碁資訊(6811)不蓋機房卻能狂收「AI水電費」？揭開百倍Token利潤的秘密！.md
+[2026-08-05 19:26:33] [INFO] [14/115] 開始處理網址: https://www.youtube.com/watch?v=uUrdnxF1iUE
+[2026-08-05 19:40:06] [INFO] [14/115] [SUCCESS] 筆記成功生成: 影片筆記\價值股雷達\2026-06-24_【FRVOFervo Energy】_把地熱變成「精密製造業」！解密 FRVO 的樂高式擴張，4 個決定生死的時間點！.md
+[2026-08-05 19:40:10] [INFO] [15/115] 開始處理網址: https://www.youtube.com/watch?v=pwWoXTRP8ZA
+[2026-08-05 19:43:28] [INFO] [15/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-14_【2408南亞科】_南亞科(2408) 法說深度解析：AI 浪潮下的價值重估.md
+[2026-08-05 19:43:32] [INFO] [16/115] 開始處理網址: https://www.youtube.com/watch?v=vYeaEqctR6A
+[2026-08-05 19:49:10] [INFO] [16/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-14_【3008大立光】_大立光(3008.TW)法說深度解析：手機規格挑戰與矽光子轉機.md
+[2026-08-05 19:49:14] [INFO] [17/115] 開始處理網址: https://www.youtube.com/watch?v=Rn6UeX6BfpA
+[2026-08-05 19:54:22] [ERROR] [17/115] [ERROR] Gemini AI 分析失敗 (潤泰材 (8463.TW) 法說調查：泥作革命與價值重估): 404 Client Error: Not Found for url: http://localhost:11434/api/chat
+[2026-08-05 19:54:26] [INFO] [18/115] 開始處理網址: https://www.youtube.com/watch?v=ywDnFnc9Vek
+[2026-08-05 19:59:44] [INFO] [18/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-09_【9945潤泰新】_高科技建廠的最強軍火商：市場如何無差別錯殺潤泰新（9945）的 Alpha 價值？.md
+[2026-08-05 19:59:48] [INFO] [19/115] 開始處理網址: https://www.youtube.com/watch?v=9NISukJbtu0
+[2026-08-05 20:04:01] [INFO] [19/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-08_【3663鑫科】_鑫科 (3663) 法說調查：FOPLP光環下的估值迷霧.md
+[2026-08-05 20:04:06] [INFO] [20/115] 開始處理網址: https://www.youtube.com/watch?v=VhkkPLJRgO4
+[2026-08-05 20:08:33] [INFO] [20/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-07_【8027鈦昇】_鈦昇（8027）法說深度解析：玻璃基板躍進與本夢比爭奪戰.md
+[2026-08-05 20:08:38] [INFO] [21/115] 開始處理網址: https://www.youtube.com/watch?v=uQZGgDyhMWo
+[2026-08-05 20:13:37] [INFO] [21/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-06_【1229聯華】_聯華（1229）：麵粉袋下的半導體與氣體壟斷巨獸.md
+[2026-08-05 20:13:41] [INFO] [22/115] 開始處理網址: https://www.youtube.com/watch?v=ofPDxEnilyo
+[2026-08-05 20:18:59] [INFO] [22/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-05_【7610聯友金屬】_聯友金屬（7610.TW）：鎢鈷完美風暴.md
+[2026-08-05 20:19:03] [INFO] [23/115] 開始處理網址: https://www.youtube.com/watch?v=3Va4zkhsUVA
+[2026-08-05 20:23:27] [INFO] [23/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-04_【2312金寶】_金寶（2312）：營收幻象下的毛利逆襲與量子轉型.md
+[2026-08-05 20:23:32] [INFO] [24/115] 開始處理網址: https://www.youtube.com/watch?v=i6P6qa2Sd_0
+[2026-08-05 20:27:22] [INFO] [24/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-03_【2546根基營造】_根基營造（2546.TW）法說深研：半導體建廠軍火商的轉型之路.md
+[2026-08-05 20:27:26] [INFO] [25/115] 開始處理網址: https://www.youtube.com/watch?v=FmZwSm-PHTA
+[2026-08-05 20:27:43] [INFO] [25/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-02_【2233宇隆】_宇隆 (2233.TW) 法說會解碼：機器人訂單下的史詩級轉型與錯殺.md
+[2026-08-05 20:27:47] [INFO] [26/115] 開始處理網址: https://www.youtube.com/watch?v=FGUMrJmLPcE
+[2026-08-05 20:32:06] [INFO] [26/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-02_【3563牧德】_牧德（3563.TW）法說會解碼：華麗轉型.md
+[2026-08-05 20:32:10] [INFO] [27/115] 開始處理網址: https://www.youtube.com/watch?v=YrDkhGpXDB0
+[2026-08-05 20:37:01] [INFO] [27/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-02_【6257矽格】_矽格(6257) 法說會調查：AI擴產狂熱下的折舊與定價隱憂.md
+[2026-08-05 20:37:06] [INFO] [28/115] 開始處理網址: https://www.youtube.com/watch?v=kGtmkdt-bdc
+[2026-08-05 20:40:22] [INFO] [28/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-01_【3022威強電】_威強電(3022) 法說會解碼：世紀定價錯誤.md
+[2026-08-05 20:40:26] [INFO] [29/115] 開始處理網址: https://www.youtube.com/watch?v=d_-rpgcSqE0
+[2026-08-05 20:43:53] [INFO] [29/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-01_【6456GIS KY】_GIS KY (6456) ：矽光子願景與財務危機深度解碼.md
+[2026-08-05 20:43:58] [INFO] [30/115] 開始處理網址: https://www.youtube.com/watch?v=4xwroPKf1VE
+[2026-08-05 20:44:12] [INFO] [30/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-30_【6770力積電】_力積電（6770）法說會解碼：3D AI 的強勢逆襲與估值重塑.md
+[2026-08-05 20:44:17] [INFO] [31/115] 開始處理網址: https://www.youtube.com/watch?v=nrhKXi6oDcg
+[2026-08-05 20:47:39] [INFO] [31/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-30_【6147頎邦】_頎邦 (6147) 法說會解碼：驅動IC困局與矽光子轉型的結構爆發.md
+[2026-08-05 20:47:44] [INFO] [32/115] 開始處理網址: https://www.youtube.com/watch?v=xWWnT-nM9x8
+[2026-08-05 20:52:23] [INFO] [32/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-29_【2367燿華】_燿華(2367.TW)：跨越死亡谷的星鏈與光模組戰.md
+[2026-08-05 20:52:27] [INFO] [33/115] 開始處理網址: https://www.youtube.com/watch?v=F3mAA9mGFCQ
+[2026-08-05 20:56:30] [INFO] [33/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-28_【6693廣閎科】_廣閎科（6693）法說深度報告：AI散熱與高壓直流雙驅動.md
+[2026-08-05 20:56:36] [INFO] [34/115] 開始處理網址: https://www.youtube.com/watch?v=jxo46rTRGxQ
+[2026-08-05 20:59:48] [INFO] [34/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-25_【8255朋程】_朋程 (8255) 法說會：AI高壓模組轉型與車用逆風評析.md
+[2026-08-05 20:59:53] [INFO] [35/115] 開始處理網址: https://www.youtube.com/watch?v=mFVvrl86YlA
+[2026-08-05 21:00:06] [INFO] [35/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-24_【6719力智】_力智(6719) 法說深度解碼：高毛利背後的估值與風險.md
+[2026-08-05 21:00:10] [INFO] [36/115] 開始處理網址: https://www.youtube.com/watch?v=LrPxnERkeq0
+[2026-08-05 21:03:19] [INFO] [36/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-24_【8261富鼎】_富鼎 (8261) 法說會深度解碼：AI幻夢與基本面重力測試.md
+[2026-08-05 21:03:24] [INFO] [37/115] 開始處理網址: https://www.youtube.com/watch?v=VkXpE7U-4jA
+[2026-08-05 21:07:08] [INFO] [37/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-23_【2481強茂】_強茂（2481）法說會深度調查：轉型陣痛與市值重塑的關鍵對決.md
+[2026-08-05 21:07:12] [INFO] [38/115] 開始處理網址: https://www.youtube.com/watch?v=QoV4g8mjids
+[2026-08-05 21:11:29] [INFO] [38/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-23_【6138茂達】_茂達（6138）法說會調查：AI散熱紅利與估值重塑報告.md
+[2026-08-05 21:11:33] [INFO] [39/115] 開始處理網址: https://www.youtube.com/watch?v=qQ64FVJtpPY
+[2026-08-05 21:14:53] [INFO] [39/115] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-06-23_【5425台半】_台半（5425）：AI伺服器與車規功率元件的戰略突圍.md
+[2026-08-05 21:14:58] [INFO] [40/115] 開始處理網址: https://www.youtube.com/watch?v=AEM1qLanV94
+[2026-08-05 22:48:16] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 22:48:16] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 22:48:17] [INFO] 讀取網址清單總數: 451 個，已完成記錄檔數: 83 個
+[2026-08-05 22:48:17] [INFO] [1/451] 開始處理網址: https://www.youtube.com/watch?v=Rn6UeX6BfpA
+[2026-08-05 22:48:21] [INFO] [1/451] [SKIP_NO_CC] 標題: '潤泰材 (8463.TW) 法說調查：泥作革命與價值重估' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)
+[2026-08-05 22:48:45] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 22:48:45] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 22:48:45] [INFO] 啟動無字幕專用模式，處理 77 部暫存影片
+[2026-08-05 22:48:45] [INFO] [1/77] 開始處理網址: https://www.youtube.com/watch?v=Rn6UeX6BfpA
+[2026-08-05 22:54:20] [INFO] [1/77] [SUCCESS] 筆記成功生成: 影片筆記\法說解碼 _ 法人級深度研報Flipingtheworld\2026-07-12_【8463潤泰材】_潤泰材 (8463.TW) 法說調查：泥作革命與價值重估.md
+[2026-08-05 22:54:24] [INFO] [2/77] 開始處理網址: https://www.youtube.com/watch?v=AEM1qLanV94
+[2026-08-05 22:59:37] [INFO] ==================== 股票分析定時任務開始 ====================
+[2026-08-05 22:59:37] [WARN] 未檢測到 GEMINI_API_KEY！
+[2026-08-05 22:59:38] [INFO] 啟動無字幕專用模式，處理 76 部暫存影片
+[2026-08-05 22:59:38] [INFO] [1/76] 開始處理網址: https://www.youtube.com/watch?v=AEM1qLanV94
