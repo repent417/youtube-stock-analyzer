@@ -16,7 +16,17 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Prompt
 
-from config import GEMINI_API_KEY, BASE_DIR, NO_SUBTITLES_FILE, PROCESSED_URLS_FILE
+import random
+from config import (
+    GEMINI_API_KEY, 
+    BASE_DIR, 
+    NO_SUBTITLES_FILE, 
+    PROCESSED_URLS_FILE,
+    MIN_DELAY_SECONDS,
+    MAX_DELAY_SECONDS,
+    BATCH_SIZE,
+    BATCH_COOLDOWN_SECONDS
+)
 from yt_extractor import get_video_info, extract_video_id, get_transcript, save_transcript
 from summarizer import generate_summary, save_note
 from stock_indexer import update_stock_index
@@ -186,6 +196,7 @@ def main():
     success_cnt = 0
     skipped_no_cc_cnt = 0
     already_processed_cnt = 0
+    processed_in_this_run = 0
 
     logger.log(f"讀取網址清單總數: {len(urls)} 個，已完成記錄檔數: {len(processed_set)} 個")
 
@@ -202,10 +213,26 @@ def main():
         elif res == "SKIP_NO_CC":
             skipped_no_cc_cnt += 1
             
-        time.sleep(3)
+        processed_in_this_run += 1
+        
+        # 僅在還有後續影片時執行防封 IP 控制
+        if idx < len(urls):
+            # 1. 策略 A：隨機浮動延遲
+            delay = round(random.uniform(MIN_DELAY_SECONDS, MAX_DELAY_SECONDS), 1)
+            console.print(f"  [dim]⏳ [隨機防風控] 暫停 {delay} 秒後處理下一部影片...[/dim]")
+            time.sleep(delay)
+            
+            # 2. 策略 B：分批大休眠
+            if processed_in_this_run > 0 and processed_in_this_run % BATCH_SIZE == 0:
+                cooldown_min = BATCH_COOLDOWN_SECONDS // 60
+                msg = f"💤 [分批冷卻] 已連續處理 {processed_in_this_run} 部影片，啟動防封 IP 休眠 {cooldown_min} 分鐘 ({BATCH_COOLDOWN_SECONDS}s)..."
+                console.print(f"\n[bold yellow]{msg}[/bold yellow]")
+                logger.log(msg, level="INFO")
+                time.sleep(BATCH_COOLDOWN_SECONDS)
 
     logger.finish_run(len(urls), success_cnt, skipped_no_cc_cnt, already_processed_cnt)
     console.print("\n[bold green]🎉 任務處理完成！最新日誌已寫入 logs/latest.log 與 logs/run_日期.log[/bold green]\n")
+
 
 if __name__ == "__main__":
     main()

@@ -27,6 +27,13 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b")
 WHISPER_MODEL_SIZE = "small"  # 亦可改為 "medium" 或 "base"
 
+# 防封 IP 頻率控制設定 (Strategy A + B)
+MIN_DELAY_SECONDS = 6      # 單部影片最少隨機停頓秒數
+MAX_DELAY_SECONDS = 12     # 單部影片最多隨機停頓秒數
+BATCH_SIZE = 30            # 分批門檻：每處理 N 部影片
+BATCH_COOLDOWN_SECONDS = 180  # 分批大休眠秒數 (180s = 3分鐘)
+
+
 
 
 # GEMINI API 金鑰
