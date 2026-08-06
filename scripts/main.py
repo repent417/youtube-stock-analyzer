@@ -58,7 +58,7 @@ def get_processed_urls() -> set:
         return set([l.strip() for l in PROCESSED_URLS_FILE.read_text(encoding="utf-8").splitlines() if l.strip()])
     return set()
 
-def process_youtube_url(url: str, allow_audio_fallback: bool = False, index: int = 1, total: int = 1) -> str:
+def process_youtube_url(url: str, allow_audio_fallback: bool = False, index: int = 1, total: int = 1, threads: int = None) -> str:
     """
     處理單一 YouTube URL
     回傳處理結果: "SUCCESS", "SKIP_NO_CC", "ALREADY_PROCESSED", "ERROR"
@@ -88,7 +88,8 @@ def process_youtube_url(url: str, allow_audio_fallback: bool = False, index: int
 
     # 2. 檢查與抓取字幕
     with console.status("[bold green]正在檢查字幕狀態...[/bold green]"):
-        transcript_data = get_transcript(video_id, url, allow_audio_fallback=allow_audio_fallback)
+        transcript_data = get_transcript(video_id, url, allow_audio_fallback=allow_audio_fallback, threads=threads)
+
         
     # 若不允許音訊轉譯且無 CC 字幕 ➔ 暫存 URL 至 no_subtitles_urls.txt 並跳過
     if not transcript_data['has_cc'] and not allow_audio_fallback:
@@ -145,7 +146,16 @@ def main():
     parser.add_argument("--url", type=str, help="單一 YouTube 影片網址")
     parser.add_argument("--file", type=str, help="包含網址列表的文字檔路徑 (預設為 urls.txt)")
     parser.add_argument("--process-no-subs", action="store_true", help="專門讀取並處理 no_subtitles_urls.txt 中無字幕的影片（啟動音訊轉譯）")
+    parser.add_argument("--threads", type=int, default=None, help="指定 Faster-Whisper CPU 執行緒數量 (預設 16 全開)")
+    parser.add_argument("--low-cpu", action="store_true", help="快捷降頻模式：自動將 CPU 執行緒限制為 4 核心以防滿載")
     args = parser.parse_args()
+
+    threads_setting = 16
+    if args.low_cpu:
+        threads_setting = 4
+    elif args.threads is not None:
+        threads_setting = args.threads
+
 
     console.print(Panel.fit("[bold yellow]📈 YouTube 股票分析影片 AI 筆記系統[/bold yellow]\n[dim]頻道自動分類 × 投資結構化總結 × 即時股價與個股索引[/dim]"))
     logger.init_run()
@@ -167,7 +177,7 @@ def main():
         success_cnt, error_cnt = 0, 0
         for idx, url in enumerate(urls, 1):
             console.print(f"\n[bold yellow]───────────── [{idx}/{len(urls)}] ─────────────[/bold yellow]")
-            res = process_youtube_url(url, allow_audio_fallback=True, index=idx, total=len(urls))
+            res = process_youtube_url(url, allow_audio_fallback=True, index=idx, total=len(urls), threads=threads_setting)
             if res == "SUCCESS":
                 success_cnt += 1
             else:
@@ -209,7 +219,8 @@ def main():
             already_processed_cnt += 1
             continue
 
-        res = process_youtube_url(url, allow_audio_fallback=False, index=idx, total=len(urls))
+        res = process_youtube_url(url, allow_audio_fallback=False, index=idx, total=len(urls), threads=threads_setting)
+
         if res == "SUCCESS":
             success_cnt += 1
         elif res == "SKIP_NO_CC":

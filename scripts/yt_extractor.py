@@ -5,18 +5,21 @@ import time
 from pathlib import Path
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
-from faster_whisper import WhisperModel
-from config import TRANSCRIPTS_DIR, sanitize_filename, WHISPER_MODEL_SIZE
+from config import TRANSCRIPTS_DIR, sanitize_filename, WHISPER_MODEL_SIZE, WHISPER_CPU_THREADS
 
-_whisper_model_cache = None
+_whisper_model_cache = {}
 
-def get_whisper_model():
-    """全域單例加載 Faster-Whisper 模型"""
+def get_whisper_model(threads: int = None):
+    """全域單例加載 Faster-Whisper 模型，可指定 CPU 執行緒數"""
     global _whisper_model_cache
-    if _whisper_model_cache is None:
-        print(f"🎙️ [地端] 正在初始化 Faster-Whisper 模型 ({WHISPER_MODEL_SIZE})...")
-        _whisper_model_cache = WhisperModel(WHISPER_MODEL_SIZE, device="cpu", compute_type="int8", cpu_threads=16)
-    return _whisper_model_cache
+    num_threads = threads if threads is not None else WHISPER_CPU_THREADS
+    if num_threads not in _whisper_model_cache:
+        print(f"🎙️ [地端] 正在初始化 Faster-Whisper 模型 ({WHISPER_MODEL_SIZE}, CPU 執行緒: {num_threads})...")
+        _whisper_model_cache[num_threads] = WhisperModel(WHISPER_MODEL_SIZE, device="cpu", compute_type="int8", cpu_threads=num_threads)
+    return _whisper_model_cache[num_threads]
+
+
+
 
 def extract_video_id(url: str) -> str:
     """從 YouTube 網址中解析出 video_id"""
@@ -55,7 +58,8 @@ def get_video_info(url: str) -> dict:
             'url': url
         }
 
-def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True) -> dict:
+def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, threads: int = None) -> dict:
+
     """
     抓取影片字幕逐字稿，並回傳格式化內容與來源標籤：
     {
@@ -180,7 +184,8 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True) -
                     break
 
             if actual_audio and os.path.exists(actual_audio):
-                model = get_whisper_model()
+                model = get_whisper_model(threads=threads)
+
                 segments, info = model.transcribe(actual_audio, beam_size=5, language="zh")
                 
                 text_lines = []

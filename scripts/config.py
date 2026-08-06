@@ -26,6 +26,8 @@ DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b")
 WHISPER_MODEL_SIZE = "small"  # 亦可改為 "medium" 或 "base"
+WHISPER_CPU_THREADS = 16     # 預設 CPU 執行緒數 (全開 16)
+
 
 # 防封 IP 頻率控制設定 (Strategy A + B)
 MIN_DELAY_SECONDS = 6      # 單部影片最少隨機停頓秒數
