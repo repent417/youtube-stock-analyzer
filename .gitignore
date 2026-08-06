@@ -4,3 +4,8 @@ __pycache__/
 *.pyc
 logs/
 scratch/
+
+# URL text files (local only, do not push to git)
+urls.txt
+no_subtitles_urls.txt
+processed_urls.txt
