@@ -40172,14 +40172,17 @@ def get_clean_stock_info(symbol: str) -> tuple[str, str]:
     """
     傳回 (代號簡稱, 股票中文/簡稱)
     例如: "2337.TW" -> ("2337", "旺宏")
+          "5309O" -> ("5309", "系統電")
           "NVDA" -> ("NVDA", "輝達")
     """
     raw_symbol = re.sub(r'[#\$]', '', symbol.strip().upper())
-    clean_code = raw_symbol.replace('.TW', '').replace('.TWO', '')
+    clean_code = re.sub(r'^(\d{4,5})[O|\.TW|\.TWO|\.JP]+$', r'\1', raw_symbol, flags=re.IGNORECASE)
+    clean_code = clean_code.replace('.TW', '').replace('.TWO', '')
     
     # 1. 優先查常規字典
     if clean_code in STOCK_NAME_MAP:
         return clean_code, STOCK_NAME_MAP[clean_code]
+
         
     # 2. 次之透過 yfinance 獲取 shortName
     try:
