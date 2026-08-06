@@ -2,21 +2,59 @@ import os
 import re
 import tempfile
 import time
+import warnings
+import logging
 from pathlib import Path
+
+# 靜音各種第三方庫之不影響運作的非必要警告訊息 (Warnings)
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+os.environ["HF_HUB_DISABLE_IMPLICIT_TOKEN_WARNING"] = "1"
+os.environ["PYTHONWARNINGS"] = "ignore"
+warnings.filterwarnings("ignore")
+logging.getLogger("transformers").setLevel(logging.ERROR)
+logging.getLogger("optimum").setLevel(logging.ERROR)
+logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
+
+
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
 from config import TRANSCRIPTS_DIR, sanitize_filename, WHISPER_MODEL_SIZE, WHISPER_CPU_THREADS
 
+_openvino_pipe_cache = None
 _whisper_model_cache = {}
 
+def get_openvino_gpu_pipeline():
+    """全域單例加載 OpenVINO Intel iGPU 顯卡 Whisper 轉譯 pipeline"""
+    global _openvino_pipe_cache
+    if _openvino_pipe_cache is None:
+        print(f"🚀 [Intel iGPU 顯卡] 正在初始化 OpenVINO Whisper ({WHISPER_MODEL_SIZE}) 顯卡轉譯引擎...")
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            from optimum.intel.openvino import OVModelForSpeechSeq2Seq
+            from transformers import AutoProcessor, pipeline
+            model_id = f"openai/whisper-{WHISPER_MODEL_SIZE}"
+            model = OVModelForSpeechSeq2Seq.from_pretrained(model_id, export=True, device="GPU")
+            processor = AutoProcessor.from_pretrained(model_id)
+            _openvino_pipe_cache = pipeline(
+                "automatic-speech-recognition",
+                model=model,
+                tokenizer=processor.tokenizer,
+                feature_extractor=processor.feature_extractor,
+                chunk_length_s=30,
+                ignore_warning=True
+            )
+    return _openvino_pipe_cache
+
+
 def get_whisper_model(threads: int = None):
-    """全域單例加載 Faster-Whisper 模型，可指定 CPU 執行緒數"""
+    """全域單例加載 Faster-Whisper CPU 備援模型"""
     global _whisper_model_cache
     num_threads = threads if threads is not None else WHISPER_CPU_THREADS
     if num_threads not in _whisper_model_cache:
-        print(f"🎙️ [地端] 正在初始化 Faster-Whisper 模型 ({WHISPER_MODEL_SIZE}, CPU 執行緒: {num_threads})...")
+        print(f"🎙️ [地端 CPU] 正在初始化 Faster-Whisper 模型 ({WHISPER_MODEL_SIZE}, CPU 執行緒: {num_threads})...")
         _whisper_model_cache[num_threads] = WhisperModel(WHISPER_MODEL_SIZE, device="cpu", compute_type="int8", cpu_threads=num_threads)
     return _whisper_model_cache[num_threads]
+
 
 
 
@@ -162,8 +200,8 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
             'has_cc': False
         }
 
-    # 嘗試方法 3: Faster-Whisper 本地 CPU 語音轉譯
-    print("🎙️ 影片無預設字幕，啟動 Faster-Whisper 本地 CPU 轉譯...")
+    # 嘗試方法 3: 語音轉譯 (預設優先使用 Intel Iris Xe GPU 顯卡加速，失敗時切換 CPU 備援)
+    print("🚀 影片無預設字幕，啟動語音轉譯模式 (優先使用 Intel Iris Xe GPU 顯卡)...")
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
             audio_tmpl = os.path.join(temp_dir, 'audio.%(ext)s')
@@ -184,8 +222,26 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
                     break
 
             if actual_audio and os.path.exists(actual_audio):
-                model = get_whisper_model(threads=threads)
+                # 1. 優先嘗試 Intel Iris Xe GPU (OpenVINO 顯卡加速)
+                try:
+                    pipe = get_openvino_gpu_pipeline()
+                    print("⚡ 正在由 Intel Iris Xe GPU 進行顯卡加速轉譯...")
+                    with warnings.catch_warnings():
+                        warnings.simplefilter("ignore")
+                        gpu_res = pipe(actual_audio, generate_kwargs={"language": "chinese"})
+                    gpu_text = gpu_res.get("text", "").strip()
+                    if gpu_text:
+                        return {
+                            'text': gpu_text,
+                            'source': "⚡ Intel Iris Xe GPU 顯卡轉譯 (OpenVINO)",
+                            'has_cc': False
+                        }
+                except Exception as e_gpu:
+                    print(f"⚠️ GPU 顯卡轉譯異常 ({e_gpu})，自動切換至 Faster-Whisper CPU 備援模式...")
 
+
+                # 2. CPU 備援模式
+                model = get_whisper_model(threads=threads)
                 segments, info = model.transcribe(actual_audio, beam_size=5, language="zh")
                 
                 text_lines = []
@@ -201,11 +257,12 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
                 if text_lines:
                     return {
                         'text': "\n".join(text_lines),
-                        'source': "🎙️ Faster-Whisper 地端轉譯 (無預設 CC 字幕)",
+                        'source': "🎙️ Faster-Whisper 地端 CPU 轉譯 (備援)",
                         'has_cc': False
                     }
     except Exception as e:
-        print(f"⚠️ Faster-Whisper 地端轉譯失敗: {e}")
+        print(f"⚠️ 地端語音轉譯失敗: {e}")
+
 
     return {
         'text': "（警告：未能取得字幕，將嘗試僅由影片資訊進行分析）",
