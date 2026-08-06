@@ -113,7 +113,8 @@ def get_video_info(url: str) -> dict:
             'url': url
         }
 
-def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, threads: int = None) -> dict:
+def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, threads: int = None, use_gpu: bool = False) -> dict:
+
 
     """
     抓取影片字幕逐字稿，並回傳格式化內容與來源標籤：
@@ -217,8 +218,7 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
             'has_cc': False
         }
 
-    # 嘗試方法 3: 語音轉譯 (預設優先使用 Intel Iris Xe GPU 顯卡加速，失敗時切換 CPU 備援)
-    print("🚀 影片無預設字幕，啟動語音轉譯模式 (優先使用 Intel Iris Xe GPU 顯卡)...")
+    # 嘗試方法 3: 語音轉譯 (預設走 Faster-Whisper 純 CPU 模式，當指定 use_gpu=True 時啟動 Intel 顯卡加速)
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
             audio_tmpl = os.path.join(temp_dir, 'audio.%(ext)s')
@@ -239,27 +239,30 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
                     break
 
             if actual_audio and os.path.exists(actual_audio):
-                # 1. 優先嘗試 Intel Iris Xe GPU (OpenVINO 顯卡加速)
-                try:
-                    pipe = get_openvino_gpu_pipeline()
-                    print("⚡ 正在由 Intel Iris Xe GPU 進行顯卡加速轉譯...")
-                    with suppress_stderr():
-                        with warnings.catch_warnings():
-                            warnings.simplefilter("ignore")
-                            gpu_res = pipe(actual_audio, generate_kwargs={"language": "chinese"})
+                # 若顯式要求使用 GPU 顯卡模式
+                if use_gpu:
+                    try:
+                        print("🚀 啟動 Intel Iris Xe GPU 顯卡加速轉譯 (OpenVINO)...")
+                        pipe = get_openvino_gpu_pipeline()
+                        print("⚡ 正在由 Intel Iris Xe GPU 進行顯卡加速轉譯...")
+                        with suppress_stderr():
+                            with warnings.catch_warnings():
+                                warnings.simplefilter("ignore")
+                                gpu_res = pipe(actual_audio, generate_kwargs={"language": "chinese"})
 
-                    gpu_text = gpu_res.get("text", "").strip()
-                    if gpu_text:
-                        return {
-                            'text': gpu_text,
-                            'source': "⚡ Intel Iris Xe GPU 顯卡轉譯 (OpenVINO)",
-                            'has_cc': False
-                        }
-                except Exception as e_gpu:
-                    print(f"⚠️ GPU 顯卡轉譯異常 ({e_gpu})，自動切換至 Faster-Whisper CPU 備援模式...")
+                        gpu_text = gpu_res.get("text", "").strip()
+                        if gpu_text:
+                            return {
+                                'text': gpu_text,
+                                'source': "⚡ Intel Iris Xe GPU 顯卡轉譯 (OpenVINO)",
+                                'has_cc': False
+                            }
+                    except Exception as e_gpu:
+                        print(f"⚠️ GPU 顯卡轉譯異常 ({e_gpu})，自動切換至 Faster-Whisper CPU 備援模式...")
 
-
-                # 2. CPU 備援模式
+                # 預設純 CPU 模式 (Faster-Whisper)
+                num_t = threads if threads is not None else WHISPER_CPU_THREADS
+                print(f"🎙️ 啟動 Faster-Whisper 地端 CPU 轉譯 (執行緒數: {num_t})...")
                 model = get_whisper_model(threads=threads)
                 segments, info = model.transcribe(actual_audio, beam_size=5, language="zh")
                 
@@ -276,9 +279,10 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
                 if text_lines:
                     return {
                         'text': "\n".join(text_lines),
-                        'source': "🎙️ Faster-Whisper 地端 CPU 轉譯 (備援)",
+                        'source': "🎙️ Faster-Whisper 地端 CPU 轉譯",
                         'has_cc': False
                     }
+
     except Exception as e:
         print(f"⚠️ 地端語音轉譯失敗: {e}")
 
