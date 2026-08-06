@@ -5,4 +5,4 @@
 ---
 
 ## 📅 分析紀錄 (Timeline)
-- **[2026-08-04]** [盛群(6202) ：週期復甦與法規剛需](../影片筆記/法說解碼 _ 法人級深度研報Flipingtheworld/2026-08-04_【6202HOLTEK SEMINDUCTOR_2303UNITED MICRO ELECTRONICS_4919NUVOTON TECHNOLOGY ORATION】_盛群(6202) ：週期復甦與法規剛需.md) （頻道：`法說解碼 | 法人級深度研報Flipingtheworld`）
+- **[2026-08-04]** [[2026-08-04_【6202HOLTEK SEMINDUCTOR_2303UNITED MICRO ELECTRONICS_4919NUVOTON TECHNOLOGY ORATION】_盛群(6202) ：週期復甦與法規剛需|盛群(6202) ：週期復甦與法規剛需]] （頻道：`法說解碼 | 法人級深度研報Flipingtheworld`）

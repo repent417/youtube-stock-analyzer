@@ -1,8 +1,0 @@
-# 個股歷史分析索引：6456 GENERAL INTERFACE SOLUTION HOLD
-
-本檔案由自動化系統維護，彙整所有提及 6456 GENERAL INTERFACE SOLUTION HOLD 的 YouTube 股票分析影片筆記。
-
----
-
-## 📅 分析紀錄 (Timeline)
-- **[2026-07-01]** [GIS KY (6456) ：矽光子願景與財務危機深度解碼](../影片筆記/法說解碼 _ 法人級深度研報Flipingtheworld/2026-07-01_【6456GIS KY】_GIS KY (6456) ：矽光子願景與財務危機深度解碼.md) （頻道：`法說解碼 | 法人級深度研報Flipingtheworld`）
