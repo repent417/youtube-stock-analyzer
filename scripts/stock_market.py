@@ -1,5 +1,7 @@
 import yfinance as yf
 import re
+from datetime import datetime
+
 
 # 常見股票代號對照表 (台股與熱門美股)
 STOCK_NAME_MAP = {
@@ -40246,11 +40248,13 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
 
 
 def generate_market_table_md(stock_data: list[dict]) -> str:
-    """將即時股價資料轉換為 Markdown 表格"""
+    """將即時股價資料轉換為 Markdown 表格 (附帶抓取日期與時間)"""
     if not stock_data:
         return "（未抓取到即時市場數據或無指定標的）"
         
+    fetch_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     lines = [
+        f"> 🕒 **股價數據抓取時間**：`{fetch_time}`\n",
         "| 股票代號/名稱 | 即時股價 | 今日漲跌幅 | 52週最高 / 最低 | 本益比 P/E |",
         "| :--- | :--- | :--- | :--- | :--- |"
     ]
@@ -40258,3 +40262,4 @@ def generate_market_table_md(stock_data: list[dict]) -> str:
         lines.append(f"| **{d['name']}** | {d['price']} | {d['change']} | {d['high_low']} | {d['pe']} |")
         
     return "\n".join(lines)
+
