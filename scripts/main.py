@@ -2,6 +2,7 @@ import argparse
 import sys
 import io
 import time
+import random
 from pathlib import Path
 
 # 強制 Windows 控制台使用 UTF-8 編碼以防止 cp950 編碼錯誤
@@ -16,11 +17,9 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Prompt
 
-import random
 from config import (
     GEMINI_API_KEY, 
     BASE_DIR, 
-    NO_SUBTITLES_FILE, 
     PROCESSED_URLS_FILE,
     MIN_DELAY_SECONDS,
     MAX_DELAY_SECONDS,
@@ -44,24 +43,16 @@ def append_url_to_file(file_path: Path, url: str):
         existing_urls.append(url)
         file_path.write_text("\n".join(existing_urls), encoding="utf-8")
 
-def remove_url_from_file(file_path: Path, url: str):
-    """自 txt 檔案移除指定的 URL"""
-    if file_path.exists():
-        existing_urls = [l.strip() for l in file_path.read_text(encoding="utf-8").splitlines() if l.strip()]
-        if url in existing_urls:
-            existing_urls.remove(url)
-            file_path.write_text("\n".join(existing_urls), encoding="utf-8")
-
 def get_processed_urls() -> set:
     """獲取已處理完成的 URL 集合"""
     if PROCESSED_URLS_FILE.exists():
         return set([l.strip() for l in PROCESSED_URLS_FILE.read_text(encoding="utf-8").splitlines() if l.strip()])
     return set()
 
-def process_youtube_url(url: str, allow_audio_fallback: bool = False, index: int = 1, total: int = 1, threads: int = None, use_gpu: bool = False) -> str:
+def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int = None, use_gpu: bool = False) -> str:
     """
     處理單一 YouTube URL
-    回傳處理結果: "SUCCESS", "SKIP_NO_CC", "ALREADY_PROCESSED", "ERROR"
+    回傳處理結果: "SUCCESS", "ALREADY_PROCESSED", "ERROR"
     """
     console.print(f"\n[bold cyan]🚀 [{index}/{total}] 開始處理 YouTube 影片:[/bold cyan] {url}")
     logger.log(f"[{index}/{total}] 開始處理網址: {url}")
@@ -86,34 +77,24 @@ def process_youtube_url(url: str, allow_audio_fallback: bool = False, index: int
             logger.log(msg, level="ERROR")
             return "ERROR"
 
-    # 2. 檢查與抓取字幕
-    with console.status("[bold green]正在檢查字幕狀態...[/bold green]"):
-        transcript_data = get_transcript(video_id, url, allow_audio_fallback=allow_audio_fallback, threads=threads, use_gpu=use_gpu)
-
-
-        
-    # 若不允許音訊轉譯且無 CC 字幕 ➔ 暫存 URL 至 no_subtitles_urls.txt 並跳過
-    if not transcript_data['has_cc'] and not allow_audio_fallback:
-        append_url_to_file(NO_SUBTITLES_FILE, url)
-        msg = f"[{index}/{total}] [SKIP_NO_CC] 標題: '{info['title']}' -> 無預設 CC 字幕，已暫存至 no_subtitles_urls.txt (API 0次)"
-        console.print(f"  [bold yellow]ℹ️ {msg}[/bold yellow]")
-        logger.log(msg, level="INFO")
-        return "SKIP_NO_CC"
+    # 2. 直接由 Faster-Whisper 地端模型進行語音轉譯
+    with console.status("[bold green]正在進行 Faster-Whisper 地端語音轉譯...[/bold green]"):
+        transcript_data = get_transcript(video_id, url, threads=threads, use_gpu=use_gpu)
 
     transcript_text = transcript_data['text']
     transcript_source = transcript_data['source']
-    console.print(f"  [dim]字幕來源: {transcript_source}[/dim]")
+    console.print(f"  [dim]轉譯來源: {transcript_source}[/dim]")
         
     # 保存原始字幕 txt
     transcript_path = save_transcript(info['channel'], info['upload_date'], info['title'], transcript_text)
     console.print(f"  [dim]📄 逐字稿已備份至: {transcript_path.relative_to(BASE_DIR)}[/dim]")
 
     # 3. AI 總結與股票指標提取
-    with console.status("[bold green]正在透過 Gemini AI 進行股票分析與提煉...[/bold green]"):
+    with console.status("[bold green]正在透過 DeepSeek / AI 進行股票分析與提煉...[/bold green]"):
         try:
             summary_result = generate_summary(info, transcript_text, transcript_source=transcript_source)
         except Exception as e:
-            msg = f"[{index}/{total}] [ERROR] Gemini AI 分析失敗 ({info['title']}): {e}"
+            msg = f"[{index}/{total}] [ERROR] AI 分析失敗 ({info['title']}): {e}"
             console.print(f"[bold red]❌ {msg}[/bold red]")
             logger.log(msg, level="ERROR")
             return "ERROR"
@@ -137,21 +118,18 @@ def process_youtube_url(url: str, allow_audio_fallback: bool = False, index: int
                 update_stock_index(t, info, rel_note_path)
             console.print(f"  [bold magenta]📌 已更新 {len(tickers)} 個標的的交叉索引[/bold magenta]")
 
-    # 記錄至已完成 processed_urls.txt，並自 no_subtitles_urls.txt 移除
+    # 記錄至已完成 processed_urls.txt
     append_url_to_file(PROCESSED_URLS_FILE, url)
-    remove_url_from_file(NO_SUBTITLES_FILE, url)
     return "SUCCESS"
 
 def main():
-    parser = argparse.ArgumentParser(description="YouTube 股票分析影片自動總結與索引工具")
+    parser = argparse.ArgumentParser(description="YouTube 股票分析影片自動總結與索引工具 (Faster-Whisper 全自動轉譯版)")
     parser.add_argument("--url", type=str, help="單一 YouTube 影片網址")
     parser.add_argument("--file", type=str, help="包含網址列表的文字檔路徑 (預設為 urls.txt)")
-    parser.add_argument("--process-no-subs", action="store_true", help="專門讀取並處理 no_subtitles_urls.txt 中無字幕的影片（啟動音訊轉譯）")
     parser.add_argument("--threads", type=int, default=None, help="指定 Faster-Whisper CPU 執行緒數量 (預設 16 全開)")
     parser.add_argument("--low-cpu", action="store_true", help="快捷降頻模式：自動將 CPU 執行緒限制為 4 核心以防滿載")
     parser.add_argument("--use-gpu", "--gpu", action="store_true", help="啟用 Intel Iris Xe GPU 顯卡轉譯加速模式")
     args = parser.parse_args()
-
 
     threads_setting = 16
     if args.low_cpu:
@@ -159,38 +137,9 @@ def main():
     elif args.threads is not None:
         threads_setting = args.threads
 
-
-    console.print(Panel.fit("[bold yellow]📈 YouTube 股票分析影片 AI 筆記系統[/bold yellow]\n[dim]頻道自動分類 × 投資結構化總結 × 即時股價與個股索引[/dim]"))
+    console.print(Panel.fit("[bold yellow]📈 YouTube 股票分析影片 AI 筆記系統[/bold yellow]\n[dim]Faster-Whisper 全自動語音轉譯 × 法人級 AI 結構化總結 × 個股索引[/dim]"))
     logger.init_run()
 
-    if not GEMINI_API_KEY:
-        console.print("[bold red]⚠️ 警告: 未檢測到 GEMINI_API_KEY！[/bold red]")
-        logger.log("未檢測到 GEMINI_API_KEY！", level="WARN")
-
-    # 處理無字幕專用模式 (--process-no-subs)
-    if args.process_no_subs:
-        if not NO_SUBTITLES_FILE.exists() or not NO_SUBTITLES_FILE.read_text(encoding="utf-8").strip():
-            console.print("[yellow]目前沒有暫存的無字幕影片 (no_subtitles_urls.txt 為空)。[/yellow]")
-            return
-            
-        urls = [l.strip() for l in NO_SUBTITLES_FILE.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")]
-        console.print(f"[bold magenta]🎙️ 啟動「無字幕音訊轉譯模式」，共有 {len(urls)} 部暫存影片待處理...[/bold magenta]")
-        logger.log(f"啟動無字幕專用模式，處理 {len(urls)} 部暫存影片")
-        
-        success_cnt, error_cnt = 0, 0
-        for idx, url in enumerate(urls, 1):
-            console.print(f"\n[bold yellow]───────────── [{idx}/{len(urls)}] ─────────────[/bold yellow]")
-            res = process_youtube_url(url, allow_audio_fallback=True, index=idx, total=len(urls), threads=threads_setting, use_gpu=args.use_gpu)
-            if res == "SUCCESS":
-                success_cnt += 1
-            else:
-                error_cnt += 1
-            time.sleep(4)
-            
-        console.print(f"\n[bold green]🎉 無字幕影片轉譯完成！成功: {success_cnt}, 失敗: {error_cnt}[/bold green]\n")
-        return
-
-    # 常規模式
     input_file = Path(args.file) if args.file else (BASE_DIR / "urls.txt")
     urls = []
     if args.url:
@@ -222,13 +171,10 @@ def main():
             already_processed_cnt += 1
             continue
 
-        res = process_youtube_url(url, allow_audio_fallback=False, index=idx, total=len(urls), threads=threads_setting, use_gpu=args.use_gpu)
-
+        res = process_youtube_url(url, index=idx, total=len(urls), threads=threads_setting, use_gpu=args.use_gpu)
 
         if res == "SUCCESS":
             success_cnt += 1
-        elif res == "SKIP_NO_CC":
-            skipped_no_cc_cnt += 1
             
         processed_in_this_run += 1
         
@@ -249,7 +195,6 @@ def main():
 
     logger.finish_run(len(urls), success_cnt, skipped_no_cc_cnt, already_processed_cnt)
     console.print("\n[bold green]🎉 任務處理完成！最新日誌已寫入 logs/latest.log 與 logs/run_日期.log[/bold green]\n")
-
 
 if __name__ == "__main__":
     main()

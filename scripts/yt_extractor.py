@@ -4,10 +4,9 @@ import tempfile
 import time
 import warnings
 import logging
-from pathlib import Path
-
 import sys
 import contextlib
+from pathlib import Path
 
 # 靜音各種第三方庫之不影響運作的非必要警告訊息 (Warnings)
 os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
@@ -32,7 +31,7 @@ def suppress_stderr():
         sys.stderr = old_stderr
 
 import yt_dlp
-from youtube_transcript_api import YouTubeTranscriptApi
+from faster_whisper import WhisperModel
 from config import TRANSCRIPTS_DIR, sanitize_filename, WHISPER_MODEL_SIZE, WHISPER_CPU_THREADS
 
 _openvino_pipe_cache = None
@@ -61,20 +60,14 @@ def get_openvino_gpu_pipeline():
                 )
     return _openvino_pipe_cache
 
-
-
 def get_whisper_model(threads: int = None):
-    """全域單例加載 Faster-Whisper CPU 備援模型"""
+    """全域單例加載 Faster-Whisper CPU 轉譯模型"""
     global _whisper_model_cache
     num_threads = threads if threads is not None else WHISPER_CPU_THREADS
     if num_threads not in _whisper_model_cache:
         print(f"🎙️ [地端 CPU] 正在初始化 Faster-Whisper 模型 ({WHISPER_MODEL_SIZE}, CPU 執行緒: {num_threads})...")
         _whisper_model_cache[num_threads] = WhisperModel(WHISPER_MODEL_SIZE, device="cpu", compute_type="int8", cpu_threads=num_threads)
     return _whisper_model_cache[num_threads]
-
-
-
-
 
 def extract_video_id(url: str) -> str:
     """從 YouTube 網址中解析出 video_id"""
@@ -113,112 +106,10 @@ def get_video_info(url: str) -> dict:
             'url': url
         }
 
-def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, threads: int = None, use_gpu: bool = False) -> dict:
-
-
+def get_transcript(video_id: str, url: str, threads: int = None, use_gpu: bool = False) -> dict:
     """
-    抓取影片字幕逐字稿，並回傳格式化內容與來源標籤：
-    {
-        'text': 逐字稿文字,
-        'source': "📜 YouTube CC 字幕" 或 "🎙️ Faster-Whisper 地端轉譯 (無預設 CC 字幕)",
-        'has_cc': True / False
-    }
+    直接下載影片音訊，並由 Faster-Whisper 模型進行地端語音轉譯
     """
-    # 嘗試方法 1: youtube-transcript-api 抓取預設 CC 字幕 (最新 API 相容 api.list)
-    try:
-        api = YouTubeTranscriptApi()
-        transcript_list = None
-        if hasattr(api, 'list'):
-            transcript_list = api.list(video_id)
-        elif hasattr(api, 'list_transcripts'):
-            transcript_list = api.list_transcripts(video_id)
-            
-        if transcript_list:
-            transcript = None
-            try:
-                transcript = transcript_list.find_transcript(['zh-TW', 'zh-Hant', 'zh', 'zh-CN', 'zh-Hans', 'en'])
-            except Exception:
-                for t in transcript_list:
-                    transcript = t
-                    break
-                    
-            if transcript:
-                fetched = transcript.fetch()
-                text_lines = []
-                for item in fetched:
-                    # 相容物件屬性與字典寫法
-                    start_sec = int(getattr(item, 'start', item.get('start', 0) if isinstance(item, dict) else 0))
-                    text = getattr(item, 'text', item.get('text', '') if isinstance(item, dict) else '').strip()
-                    
-                    mins = start_sec // 60
-                    secs = start_sec % 60
-                    time_str = f"[{mins:02d}:{secs:02d}]"
-                    if text:
-                        text_lines.append(f"{time_str} {text}")
-                        
-                if text_lines:
-                    return {
-                        'text': "\n".join(text_lines),
-                        'source': "📜 YouTube CC 字幕",
-                        'has_cc': True
-                    }
-    except Exception as e:
-        print(f"ℹ️ youtube-transcript-api 未取得字幕: {e}")
-
-    # 嘗試方法 2: yt-dlp 原生 CC 字幕抓取備援
-    try:
-        ydl_opts = {
-            'quiet': True,
-            'no_warnings': True,
-            'skip_download': True,
-            'writesubtitles': True,
-            'writeautomaticsub': True,
-            'subtitleslangs': ['zh-TW', 'zh-Hant', 'zh', 'en'],
-            'extractor_args': {'youtube': {'player_client': ['android_vr', 'web_embedded']}},
-        }
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(url, download=False)
-            subs = info.get('subtitles', {}) or info.get('automatic_captions', {})
-            if subs:
-                for lang in ['zh-TW', 'zh-Hant', 'zh', 'en']:
-                    if lang in subs:
-                        sub_info = subs[lang]
-                        # 找到 vtt 或 json3
-                        sub_url = None
-                        for fmt in sub_info:
-                            if fmt.get('ext') in ['vtt', 'json3', 'srv3']:
-                                sub_url = fmt.get('url')
-                                break
-                        if sub_url:
-                            import urllib.request
-                            req = urllib.request.urlopen(sub_url)
-                            raw_sub = req.read().decode('utf-8', errors='ignore')
-                            # 簡單解析 vtt / srv3 清除標籤
-                            lines = []
-                            for line in raw_sub.splitlines():
-                                line = line.strip()
-                                if line and not line.startswith('WEBVTT') and not '-->' in line and not line.isdigit():
-                                    clean_line = re.sub(r'<[^>]+>', '', line)
-                                    if clean_line and clean_line not in lines:
-                                        lines.append(clean_line)
-                            if lines:
-                                return {
-                                    'text': "\n".join(lines[:1000]),
-                                    'source': "📜 YouTube CC 字幕 (yt-dlp)",
-                                    'has_cc': True
-                                }
-    except Exception as e:
-        pass
-
-    # 若不允許音訊轉譯 (預設常規模式)，直接傳回無字幕標記
-    if not allow_audio_fallback:
-        return {
-            'text': "",
-            'source': "NO_CC",
-            'has_cc': False
-        }
-
-    # 嘗試方法 3: 語音轉譯 (預設走 Faster-Whisper 純 CPU 模式，當指定 use_gpu=True 時啟動 Intel 顯卡加速)
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
             audio_tmpl = os.path.join(temp_dir, 'audio.%(ext)s')
@@ -239,7 +130,7 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
                     break
 
             if actual_audio and os.path.exists(actual_audio):
-                # 若顯式要求使用 GPU 顯卡模式
+                # 1. 若顯式指定 --use-gpu 則走 Intel Iris Xe GPU
                 if use_gpu:
                     try:
                         print("🚀 啟動 Intel Iris Xe GPU 顯卡加速轉譯 (OpenVINO)...")
@@ -258,9 +149,9 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
                                 'has_cc': False
                             }
                     except Exception as e_gpu:
-                        print(f"⚠️ GPU 顯卡轉譯異常 ({e_gpu})，自動切換至 Faster-Whisper CPU 備援模式...")
+                        print(f"⚠️ GPU 顯卡轉譯異常 ({e_gpu})，切換至 Faster-Whisper CPU 模式...")
 
-                # 預設純 CPU 模式 (Faster-Whisper)
+                # 2. 預設直接走 Faster-Whisper 純 CPU 模式
                 num_t = threads if threads is not None else WHISPER_CPU_THREADS
                 print(f"🎙️ 啟動 Faster-Whisper 地端 CPU 轉譯 (執行緒數: {num_t})...")
                 model = get_whisper_model(threads=threads)
@@ -284,12 +175,11 @@ def get_transcript(video_id: str, url: str, allow_audio_fallback: bool = True, t
                     }
 
     except Exception as e:
-        print(f"⚠️ 地端語音轉譯失敗: {e}")
-
+        print(f"⚠️ 語音轉譯失敗: {e}")
 
     return {
-        'text': "（警告：未能取得字幕，將嘗試僅由影片資訊進行分析）",
-        'source': "⚠️ 未能取得字幕",
+        'text': "（警告：語音轉譯失敗，將嘗試僅由影片資訊進行分析）",
+        'source': "⚠️ 語音轉譯失敗",
         'has_cc': False
     }
 
@@ -301,8 +191,7 @@ def save_transcript(channel: str, date: str, title: str, transcript: str) -> Pat
     channel_dir = TRANSCRIPTS_DIR / clean_channel
     channel_dir.mkdir(parents=True, exist_ok=True)
     
-    raw_filename = f"{date}_{clean_title}.txt"
-    filename = sanitize_filename(raw_filename, max_length=70)
+    filename = f"{date}_{clean_title}.txt"
     file_path = channel_dir / filename
     
     with open(file_path, "w", encoding="utf-8") as f:
