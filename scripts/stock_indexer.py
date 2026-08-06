@@ -42,9 +42,10 @@ def update_stock_index(ticker: str, video_info: dict, note_rel_path: str):
     date_str = video_info['upload_date']
     title = video_info['title']
     channel = video_info['channel']
+    note_stem = Path(note_rel_path).stem
     
-    # 相對路徑點回 影片筆記
-    entry = f"- **[{date_str}]** [{title}]({note_rel_path}) （頻道：`{channel}`）\n"
+    # 使用 Obsidian 原生雙括號 [[檔名|顯示標題]]，防止資料夾路徑含空白或特殊字元導致跳轉失敗
+    entry = f"- **[{date_str}]** [[{note_stem}|{title}]] （頻道：`{channel}`）\n"
     
     display_title = f"{code} {clean_name}" if clean_name != code else code
     
@@ -63,6 +64,7 @@ def update_stock_index(ticker: str, video_info: dict, note_rel_path: str):
         with open(index_file, "r", encoding="utf-8") as f:
             content = f.read()
             
-        if note_rel_path not in content:
+        if note_stem not in content:
             with open(index_file, "a", encoding="utf-8") as f:
                 f.write(entry)
+
