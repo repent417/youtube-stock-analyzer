@@ -43,10 +43,11 @@ pip install -r requirements.txt
 ```
 
 ### 2. 設定 API Key
-複製 `.env.example` 為 `.env` 並填入您的 Gemini API Key：
+複製 `.env.example` 為 `.env` 並填入您的 DeepSeek API Key：
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
 ```
+
 
 ### 3. 執行指令
 ```bash

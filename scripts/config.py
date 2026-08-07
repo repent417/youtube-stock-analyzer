@@ -38,8 +38,7 @@ BATCH_COOLDOWN_SECONDS = 180  # 分批大休眠秒數 (180s = 3分鐘)
 
 
 
-# GEMINI API 金鑰
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+
 
 def sanitize_filename(name: str, max_length: int = 70) -> str:
     """清理檔案與資料夾名稱中的非法字元 (Windows / Linux 相容)，並限制長度在 max_length 以內"""

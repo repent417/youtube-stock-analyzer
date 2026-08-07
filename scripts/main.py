@@ -18,8 +18,8 @@ from rich.panel import Panel
 from rich.prompt import Prompt
 
 from config import (
-    GEMINI_API_KEY, 
     BASE_DIR, 
+
     PROCESSED_URLS_FILE,
     MIN_DELAY_SECONDS,
     MAX_DELAY_SECONDS,
