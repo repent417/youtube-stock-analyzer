@@ -2,10 +2,10 @@ import argparse
 import sys
 import io
 import re
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-
 
 from rich.console import Console
 from rich.panel import Panel
@@ -23,6 +23,35 @@ from main import process_youtube_url
 console = Console(force_terminal=True)
 REPROCESS_URLS_FILE = BASE_DIR / "reprocess_urls.txt"
 
+class VaultCache:
+    """單次全庫快取載入器 (Single-Pass Cache)，將幾萬次磁碟 I/O 降至一次全庫讀取"""
+    def __init__(self):
+        start_t = time.time()
+        with console.status("[bold green]⚡ 正在進行單次記憶體快取載入 (Single-Pass Cache)...[/bold green]"):
+            # 1. 研報快取
+            self.notes = []
+            for p in NOTES_DIR.rglob('*.md'):
+                try:
+                    self.notes.append({'path': p, 'stem': p.stem, 'content': p.read_text(encoding='utf-8', errors='ignore')})
+                except Exception:
+                    pass
+
+            # 2. 字幕檔索引 (stem -> Path)
+            self.transcripts = {}
+            for p in TRANSCRIPTS_DIR.rglob('*.txt'):
+                self.transcripts[p.stem] = p
+
+            # 3. 個股索引快取
+            self.indexes = []
+            for p in INDEX_DIR.glob('*.md'):
+                try:
+                    self.indexes.append({'path': p, 'stem': p.stem, 'content': p.read_text(encoding='utf-8', errors='ignore')})
+                except Exception:
+                    pass
+                    
+        elapsed = time.time() - start_t
+        console.print(f"  [dim]⚡ 成功加載 {len(self.notes)} 篇研報, {len(self.transcripts)} 篇字幕, {len(self.indexes)} 個索引 (耗時: {elapsed:.2f}s)[/dim]")
+
 def remove_url_from_txt(file_path: Path, url: str):
     """自 txt 檔案移除指定的 URL"""
     if file_path.exists():
@@ -31,53 +60,51 @@ def remove_url_from_txt(file_path: Path, url: str):
             lines.remove(url)
             file_path.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
 
-def cleanup_old_url_artifacts(url: str, dry_run: bool = False):
+def cleanup_old_url_artifacts(url: str, cache: VaultCache, dry_run: bool = False):
     """
-    精準搜尋並刪除指定 URL 的舊有 Markdown 筆記、逐字稿與個股索引條目
+    於記憶體中極速比對 (In-Memory Lookup)，並刪除指定 URL 的舊有 Markdown 筆記、逐字稿與個股索引條目
     """
     deleted_notes = []
     deleted_transcripts = []
     modified_indexes = []
     deleted_indexes = []
 
-    # 1. 搜尋並清理 影片筆記/ 中的舊研報
-    for p in NOTES_DIR.rglob('*.md'):
-        content = p.read_text(encoding='utf-8', errors='ignore')
-        if url in content:
-            deleted_notes.append(p)
+    # 1. 記憶體中極速搜尋研報與字幕 (< 0.001s)
+    for note in cache.notes:
+        if url in note['content']:
+            deleted_notes.append(note['path'])
+            if note['stem'] in cache.transcripts:
+                deleted_transcripts.append(cache.transcripts[note['stem']])
 
-    # 2. 搜尋並清理 原始字幕/ 中的舊逐字稿
-    for p in TRANSCRIPTS_DIR.rglob('*.txt'):
-        content = p.read_text(encoding='utf-8', errors='ignore')
-        if url in content:
-            deleted_transcripts.append(p)
-
-    # 3. 搜尋並清理 個股索引/ 內的條目
+    # 2. 記憶體中極速搜尋並處理個股索引
     for note_path in deleted_notes:
         note_stem = note_path.stem
-        for idx_path in INDEX_DIR.glob('*.md'):
-            idx_content = idx_path.read_text(encoding='utf-8', errors='ignore')
-            if note_stem in idx_content:
-                lines = idx_content.splitlines()
+        for idx in cache.indexes:
+            if note_stem in idx['content']:
+                lines = idx['content'].splitlines()
                 new_lines = [l for l in lines if note_stem not in l]
+                new_content = "\n".join(new_lines) + "\n"
                 
-                # 檢查是否還有其他紀錄
+                # 同步更新快取
+                idx['content'] = new_content
+                
                 has_remaining = any(l.strip().startswith('- **[') for l in new_lines)
                 if not has_remaining:
-                    if idx_path not in deleted_indexes:
-                        deleted_indexes.append(idx_path)
+                    if idx['path'] not in deleted_indexes:
+                        deleted_indexes.append(idx['path'])
                 else:
-                    modified_indexes.append((idx_path, "\n".join(new_lines) + "\n"))
+                    modified_indexes.append((idx['path'], new_content))
 
     if dry_run:
         console.print(f"\n[bold yellow]🔍 [DRY-RUN 預覽] URL: {url}[/bold yellow]")
         console.print(f"  - 將刪除筆記: {[p.name for p in deleted_notes]}")
         console.print(f"  - 將刪除字幕: {[p.name for p in deleted_transcripts]}")
-        console.print(f"  - 將清理個股索引: {[p.name for p in modified_indexes]}")
+        console.print(f"  - 將清理個股索引: {list(set([p.name for p, _ in modified_indexes]))}")
         console.print(f"  - 將刪除空個股索引: {[p.name for p in deleted_indexes]}")
         return
 
-    # 4. 執行實際刪除
+
+    # 3. 執行實際刪除
     for p in deleted_notes:
         if p.exists():
             p.unlink()
@@ -98,13 +125,13 @@ def cleanup_old_url_artifacts(url: str, dry_run: bool = False):
             idx_path.unlink()
             console.print(f"  [dim]🗑️ 已刪除空個股索引: {idx_path.name}[/dim]")
 
-    # 5. 從歷史解鎖檔案移除此 URL
+    # 4. 從歷史解鎖檔案移除此 URL
     remove_url_from_txt(PROCESSED_URLS_FILE, url)
     remove_url_from_txt(NO_SUBTITLES_FILE, url)
     console.print(f"  [bold green]🔓 已將 URL 從 processed_urls.txt 與 no_subtitles_urls.txt 解鎖！[/bold green]")
 
 def main():
-    parser = argparse.ArgumentParser(description="YouTube 股票分析影片「特定網址重跑與重新轉譯」全自動化腳本")
+    parser = argparse.ArgumentParser(description="YouTube 股票分析影片「特定網址重跑與重新轉譯」全自動化腳本 (極速快取版)")
     parser.add_argument("--url", type=str, help="單一欲重跑的 YouTube 影片網址")
     parser.add_argument("--file", type=str, help="包含欲重跑網址清單的文字檔 (預設為 reprocess_urls.txt)")
     parser.add_argument("--dry-run", action="store_true", help="僅預覽要刪除與清理的舊檔案，不實際執行")
@@ -119,7 +146,7 @@ def main():
     elif args.threads is not None:
         threads_setting = args.threads
 
-    console.print(Panel.fit("[bold yellow]🔄 YouTube 影片特定網址重跑與轉譯系統[/bold yellow]\n[dim]精準清理歷史舊檔 × 解鎖 URL × Faster-Whisper 全自動語音轉譯與研報重新生成[/dim]"))
+    console.print(Panel.fit("[bold yellow]🔄 YouTube 影片特定網址重跑與轉譯系統 (極速快取版)[/bold yellow]\n[dim]單次快取載入 × 解鎖 URL × Faster-Whisper 全自動語音轉譯與研報重新生成[/dim]"))
 
     input_file = Path(args.file) if args.file else REPROCESS_URLS_FILE
     urls = []
@@ -132,13 +159,16 @@ def main():
         console.print(f"[yellow]未發現任何待重跑的 URL。請在 {REPROCESS_URLS_FILE.name} 貼入網址或使用 --url <網址> 執行。[/yellow]")
         return
 
+    # 啟動單次全庫快取載入
+    cache = VaultCache()
+
     console.print(f"[bold cyan]🎯 本次共有 {len(urls)} 個 URL 進入重跑處理佇列...[/bold cyan]")
 
     for idx, url in enumerate(urls, 1):
         console.print(f"\n[bold yellow]───────────── 重跑 [{idx}/{len(urls)}] ─────────────[/bold yellow]")
         
-        # 1. 舊檔與紀錄連動清理
-        cleanup_old_url_artifacts(url, dry_run=args.dry_run)
+        # 1. 舊檔與紀錄連動清理 (記憶體極速比對)
+        cleanup_old_url_artifacts(url, cache, dry_run=args.dry_run)
 
         if args.dry_run:
             continue
