@@ -59,4 +59,8 @@ python scripts/main.py --file urls.txt
 
 # 互動模式
 python scripts/main.py
+
+# 🌐 啟動內網跨裝置研報閱讀器 (Web Reader)
+python web/app.py
 ```
+

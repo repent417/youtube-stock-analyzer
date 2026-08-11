@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube 股票分析網頁閱讀器</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+</head>
+<body>
+  <div id="app">
+    <!-- 側邊欄 Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-title">
+          <span class="brand-icon">📈</span>
+          <span>股票分析 Web 閱讀器</span>
+        </div>
+        <div class="lan-badge">
+          <span>🌐 內網位址</span>
+          <span class="lan-ip-text">http://{{ primary_ip }}:{{ port }}</span>
+        </div>
+      </div>
+
+      <!-- 搜尋列 -->
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="🔍 搜尋股票代號、名稱、頻道或關鍵字...">
+      </div>
+
+      <!-- 頁籤導覽 -->
+      <div class="nav-tabs">
+        <button id="tab-channels" class="nav-tab active">📂 頻道筆記</button>
+        <button id="tab-stocks" class="nav-tab">📈 個股索引</button>
+      </div>
+
+      <!-- 側邊欄動態選單列表 -->
+      <div class="sidebar-content">
+        <div id="sidebar-channels"></div>
+        <div id="sidebar-stocks" style="display: none;"></div>
+      </div>
+    </aside>
+
+    <!-- 右側主內容區 Main Viewport -->
+    <main class="main-viewport">
+      <!-- 頂部工具列 -->
+      <header class="top-navbar">
+        <button id="mobile-toggle-btn" class="mobile-toggle" title="開啟選單">☰</button>
+        <div id="current-path-text" class="current-path">歡迎使用 YouTube 股票分析網頁閱讀器</div>
+        
+        <div class="reader-tools">
+          <button id="btn-font-minus" class="tool-btn" title="縮小字體">A-</button>
+          <button id="btn-font-plus" class="tool-btn" title="放大字體">A+</button>
+          <button id="btn-copy-link" class="tool-btn" title="複製網址">🔗 複製網址</button>
+        </div>
+      </header>
+
+      <!-- 研報與索引內容展示區 -->
+      <div class="reader-container">
+        <div id="reader-body">
+          <div class="welcome-card">
+            <h1 class="welcome-title">📊 YouTube 股票分析研報數據庫</h1>
+            <p class="welcome-subtitle">專屬內網跨裝置研報閱讀器 • 支援 Faster-Whisper 地端逐字稿與雙括號 WikiLink 瀏覽</p>
+            
+            <div class="stat-grid">
+              <div class="stat-card">
+                <div id="stat-notes-count" class="stat-num">0</div>
+                <div class="stat-label">📄 彙整法人研報筆記</div>
+              </div>
+              <div class="stat-card">
+                <div id="stat-stocks-count" class="stat-num">0</div>
+                <div class="stat-label">📈 台美股個股歷史索引</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-num" style="color: var(--accent-cyan);">12330</div>
+                <div class="stat-label">🔌 專用內網服務 Port</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

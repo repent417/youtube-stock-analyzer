@@ -56,3 +56,7 @@
 
 - **`python scripts/clean_urls.py`**：
   比對 `urls.txt` 與 `processed_urls.txt`，刪除 `urls.txt` 中已處理過的重複網址。
+
+- **`python web/app.py`**：
+  啟動內網跨裝置研報閱讀器 (Web Reader)，服務綁定 `0.0.0.0`（預設 Port `23300`，如被保留可用 `--port` 自訂），同 Wi-Fi 內網的所有手機、平板與電腦皆可隨時開啟閱讀。
+
