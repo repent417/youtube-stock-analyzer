@@ -129,12 +129,16 @@ async def read_root(request: Request):
     """主頁面"""
     lan_ips = get_lan_ips()
     primary_ip = lan_ips[0] if lan_ips else "localhost"
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "lan_ips": lan_ips,
-        "primary_ip": primary_ip,
-        "port": CURRENT_PORT
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "lan_ips": lan_ips,
+            "primary_ip": primary_ip,
+            "port": CURRENT_PORT
+        }
+    )
+
 
 @app.get("/api/lan_info")
 async def get_lan_info():
