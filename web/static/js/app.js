@@ -1,4 +1,4 @@
-// 全域 SPA 狀態管理
+// 全域 SPA 狀態管理與設定
 const state = {
   activeTab: 'channels', // 'channels' | 'stocks'
   channels: {},
@@ -6,7 +6,9 @@ const state = {
   currentPath: '',
   currentNoteStem: '',
   currentRawMd: '',
-  fontSize: 1.05 // rem
+  fontSize: parseFloat(localStorage.getItem('web_reader_font_size')) || 1.05,
+  theme: localStorage.getItem('web_reader_theme') || 'dark-purple',
+  fontFamily: localStorage.getItem('web_reader_font_family') || 'sans'
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,9 +16,30 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initApp() {
+  applyStoredSettings();
   bindEvents();
   await loadChannels();
   await loadStocks();
+}
+
+function applyStoredSettings() {
+  // 1. 載入主題
+  document.body.setAttribute('data-theme', state.theme);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme') === state.theme);
+  });
+
+  // 2. 載入字體大小
+  updateReaderFontSize(state.fontSize);
+  const slider = document.getElementById('font-size-slider');
+  const label = document.getElementById('font-size-label');
+  if (slider) slider.value = state.fontSize;
+  if (label) label.innerText = `${state.fontSize.toFixed(2)}rem`;
+
+  // 3. 載入字型風格
+  updateReaderFontFamily(state.fontFamily);
+  const fontSelect = document.getElementById('font-family-select');
+  if (fontSelect) fontSelect.value = state.fontFamily;
 }
 
 function bindEvents() {
@@ -32,10 +55,57 @@ function bindEvents() {
     searchTimer = setTimeout(() => handleSearch(e.target.value), 250);
   });
 
-  // 閱讀器工具列
-  document.getElementById('btn-font-plus').addEventListener('click', () => changeFontSize(0.1));
-  document.getElementById('btn-font-minus').addEventListener('click', () => changeFontSize(-0.1));
+  // 閱讀器工具列按鈕
+  document.getElementById('btn-font-plus').addEventListener('click', () => changeFontSize(0.08));
+  document.getElementById('btn-font-minus').addEventListener('click', () => changeFontSize(-0.08));
   document.getElementById('btn-copy-link').addEventListener('click', copyCurrentLink);
+
+  // 設定對話框按鈕
+  const modal = document.getElementById('settings-modal');
+  document.getElementById('btn-settings').addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+
+  document.getElementById('modal-close-btn').addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+
+  // 主題切換
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const themeName = btn.getAttribute('data-theme');
+      state.theme = themeName;
+      localStorage.setItem('web_reader_theme', themeName);
+      document.body.setAttribute('data-theme', themeName);
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      showToast(`🎨 已切換至「${btn.innerText.trim()}」主題`);
+    });
+  });
+
+  // 字體大小 Slider
+  const fontSlider = document.getElementById('font-size-slider');
+  fontSlider.addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    state.fontSize = val;
+    localStorage.setItem('web_reader_font_size', val);
+    document.getElementById('font-size-label').innerText = `${val.toFixed(2)}rem`;
+    updateReaderFontSize(val);
+  });
+
+  // 字型風格 Select
+  const fontSelect = document.getElementById('font-family-select');
+  fontSelect.addEventListener('change', (e) => {
+    const fontVal = e.target.value;
+    state.fontFamily = fontVal;
+    localStorage.setItem('web_reader_font_family', fontVal);
+    updateReaderFontFamily(fontVal);
+    showToast(`✍️ 已切換內文字型風格`);
+  });
 
   // 手機版側邊欄開關
   const mobileBtn = document.getElementById('mobile-toggle-btn');
@@ -44,6 +114,79 @@ function bindEvents() {
       document.querySelector('.sidebar').classList.toggle('open');
     });
   }
+}
+
+function updateReaderFontSize(sizeRem) {
+  document.documentElement.style.setProperty('--reader-font-size', `${sizeRem}rem`);
+}
+
+function updateReaderFontFamily(fontKey) {
+  let fontStr = "'Inter', 'Noto Sans TC', sans-serif";
+  if (fontKey === 'serif') {
+    fontStr = "'Noto Serif TC', Georgia, serif";
+  } else if (fontKey === 'mono') {
+    fontStr = "Consolas, 'Courier New', monospace";
+  }
+  document.documentElement.style.setProperty('--reader-font-family', fontStr);
+}
+
+function changeFontSize(delta) {
+  state.fontSize = Math.min(Math.max(0.8, state.fontSize + delta), 1.6);
+  localStorage.setItem('web_reader_font_size', state.fontSize);
+  
+  const slider = document.getElementById('font-size-slider');
+  const label = document.getElementById('font-size-label');
+  if (slider) slider.value = state.fontSize;
+  if (label) label.innerText = `${state.fontSize.toFixed(2)}rem`;
+
+  updateReaderFontSize(state.fontSize);
+  showToast(`🔤 字體大小: ${state.fontSize.toFixed(2)}rem`);
+}
+
+function copyCurrentLink() {
+  if (!state.currentPath) {
+    showToast('⚠️ 請先點選開啟一篇研報筆記再進行複製');
+    return;
+  }
+
+  const fullUrl = `${window.location.origin}/#${state.currentPath}`;
+
+  // 優先嘗試 Clipboard API (相容 localhost 與 HTTPS)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      showToast('🔗 已將研報網址複製至剪貼簿！可在內網傳發開啟');
+    }).catch(() => {
+      fallbackCopyText(fullUrl);
+    });
+  } else {
+    fallbackCopyText(fullUrl);
+  }
+}
+
+function fallbackCopyText(text) {
+  try {
+    const tempInput = document.createElement('input');
+    tempInput.style.position = 'fixed';
+    tempInput.style.opacity = '0';
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    showToast('🔗 已將研報網址複製至剪貼簿！');
+  } catch (err) {
+    showToast(`🔗 網址: ${text}`);
+  }
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast-notification');
+  if (!toast) return;
+  toast.innerText = msg;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2400);
 }
 
 function switchTab(tabName) {
@@ -69,7 +212,6 @@ async function loadChannels() {
     const data = await res.json();
     state.channels = data.channels;
     
-    // 更新統計與 UI
     document.getElementById('stat-notes-count').innerText = data.total_notes.toLocaleString();
     renderChannelsUI();
   } catch (err) {
@@ -152,12 +294,11 @@ function renderStocksUI(stocksList) {
 
 async function loadNote(filePath) {
   try {
-    // 關閉手機側邊欄
     document.querySelector('.sidebar').classList.remove('open');
 
     const res = await fetch(`/api/note?path=${encodeURIComponent(filePath)}`);
     if (!res.ok) {
-      alert('無法開啟指定的筆記檔案');
+      showToast('⚠️ 無法開啟指定的筆記檔案');
       return;
     }
 
@@ -166,16 +307,14 @@ async function loadNote(filePath) {
     state.currentNoteStem = data.stem;
     state.currentRawMd = data.raw_md;
 
-    // 更新頂部路徑與內容
     document.getElementById('current-path-text').innerText = data.path;
     const body = document.getElementById('reader-body');
     body.innerHTML = `<div class="markdown-body">${data.html}</div>`;
-    body.style.fontSize = `${state.fontSize}rem`;
 
-    // 高亮對應條目
-    updateActiveNoteItem(filePath);
+    // 重新套用當前設定的字體與風格
+    updateReaderFontSize(state.fontSize);
+    updateReaderFontFamily(state.fontFamily);
 
-    // 捲動回頁首
     document.querySelector('.reader-container').scrollTop = 0;
   } catch (err) {
     console.error('加載筆記失敗:', err);
@@ -190,7 +329,7 @@ async function loadWikiLink(targetStem) {
     if (data.found) {
       await loadNote(data.path);
     } else {
-      alert(`⚠️ 找不到 WikiLink 目標: [[${targetStem}]]`);
+      showToast(`⚠️ 找不到 WikiLink 目標: [[${targetStem}]]`);
     }
   } catch (err) {
     console.error('解析 WikiLink 失敗:', err);
@@ -215,7 +354,6 @@ async function handleSearch(query) {
       );
       renderStocksUI(filteredStocks);
     } else {
-      // 搜尋頻道筆記
       const searchResultsView = document.getElementById('sidebar-channels');
       searchResultsView.innerHTML = '';
       
@@ -237,26 +375,6 @@ async function handleSearch(query) {
   } catch (err) {
     console.error('搜尋失敗:', err);
   }
-}
-
-function updateActiveNoteItem(filePath) {
-  document.querySelectorAll('.note-item, .stock-item').forEach(el => el.classList.remove('active'));
-}
-
-function changeFontSize(delta) {
-  state.fontSize = Math.min(Math.max(0.85, state.fontSize + delta), 1.6);
-  const body = document.getElementById('reader-body');
-  if (body) {
-    body.style.fontSize = `${state.fontSize}rem`;
-  }
-}
-
-function copyCurrentLink() {
-  if (!state.currentPath) return;
-  const fullUrl = `${window.location.origin}/#${state.currentPath}`;
-  navigator.clipboard.writeText(fullUrl).then(() => {
-    alert('✅ 已複製本篇研報網址！可在內網複製給其他裝置開啟。');
-  });
 }
 
 function escapeHtml(str) {

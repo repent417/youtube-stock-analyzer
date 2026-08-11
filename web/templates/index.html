@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 </head>
-<body>
+<body data-theme="dark-purple">
   <div id="app">
     <!-- 側邊欄 Sidebar -->
     <aside class="sidebar">
@@ -51,6 +51,7 @@
           <button id="btn-font-minus" class="tool-btn" title="縮小字體">A-</button>
           <button id="btn-font-plus" class="tool-btn" title="放大字體">A+</button>
           <button id="btn-copy-link" class="tool-btn" title="複製網址">🔗 複製網址</button>
+          <button id="btn-settings" class="tool-btn" title="顯示樣式設定">⚙️ 設定</button>
         </div>
       </header>
 
@@ -71,7 +72,7 @@
                 <div class="stat-label">📈 台美股個股歷史索引</div>
               </div>
               <div class="stat-card">
-                <div class="stat-num" style="color: var(--accent-cyan);">12330</div>
+                <div class="stat-num" style="color: var(--accent-cyan);">{{ port }}</div>
                 <div class="stat-label">🔌 專用內網服務 Port</div>
               </div>
             </div>
@@ -80,6 +81,57 @@
       </div>
     </main>
   </div>
+
+  <!-- 設定彈窗 Modal -->
+  <div id="settings-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>⚙️ 閱讀器顯示樣式設定</h2>
+        <button id="modal-close-btn" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- 主題切換 -->
+        <div class="setting-group">
+          <label class="setting-label">🎨 選擇背景視覺主題</label>
+          <div class="theme-options">
+            <button class="theme-btn active" data-theme="dark-purple">
+              <span class="theme-preview purple"></span> 🟣 極致黑紫
+            </button>
+            <button class="theme-btn" data-theme="dark-pure">
+              <span class="theme-preview pure"></span> 🖤 純黑極簡
+            </button>
+            <button class="theme-btn" data-theme="cyberpunk">
+              <span class="theme-preview cyan"></span> 💙 賽博藍綠
+            </button>
+            <button class="theme-btn" data-theme="warm-sepia">
+              <span class="theme-preview sepia"></span> 📜 暖陽復古
+            </button>
+          </div>
+        </div>
+
+        <!-- 字體大小調整 -->
+        <div class="setting-group">
+          <label class="setting-label">🔤 內文預設字體大小: <span id="font-size-label">1.05rem</span></label>
+          <div class="slider-container">
+            <input type="range" id="font-size-slider" min="0.8" max="1.6" step="0.05" value="1.05">
+          </div>
+        </div>
+
+        <!-- 字型風格選擇 -->
+        <div class="setting-group">
+          <label class="setting-label">✍️ 內文字型風格</label>
+          <select id="font-family-select" class="setting-select">
+            <option value="sans">無襯線體 (Standard Sans-Serif)</option>
+            <option value="serif">明體/襯線體 (Serif Font)</option>
+            <option value="mono">等寬體 (Monospace Font)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast 提示訊息 -->
+  <div id="toast-notification" class="toast"></div>
 
   <script src="/static/js/app.js"></script>
 </body>
