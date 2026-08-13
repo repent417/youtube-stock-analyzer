@@ -60,3 +60,7 @@
 - **`python web/app.py`**：
   啟動內網跨裝置研報閱讀器 (Web Reader)，服務綁定 `0.0.0.0`（預設 Port `23300`，如被保留可用 `--port` 自訂），同 Wi-Fi 內網的所有手機、平板與電腦皆可隨時開啟閱讀。
 
+- **`python scripts/fetch_daily_new_videos.py`**：
+  每日自動巡檢 `subscribed_channels.txt` 內 7 個訂閱頻道的最新影片，過濾已處理過的歷史紀錄，將新影片合併追加至 `urls.txt`。（包含 Windows 排程任務 `YouTubeStockAnalyzerDaily2AM` 於每日凌晨 02:00 自動執行）
+
+
