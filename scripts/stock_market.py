@@ -40150,8 +40150,15 @@ def normalize_ticker(symbol: str) -> str:
 def fetch_yfinance_info(ticker_str: str) -> tuple[dict, str]:
     """獲取 yfinance info，包含台股上市 (.TW) 與上櫃 (.TWO) 的自動備援處理"""
     try:
-        stock = yf.Ticker(ticker_str)
-        info = stock.info
+        with open(os.devnull, 'w', encoding='utf-8') as fnull:
+            old_stderr = sys.stderr
+            sys.stderr = fnull
+            try:
+                stock = yf.Ticker(ticker_str)
+                info = stock.info
+            finally:
+                sys.stderr = old_stderr
+
         if info and ('regularMarketPrice' in info or 'currentPrice' in info or 'previousClose' in info):
             return info, ticker_str
     except Exception:
@@ -40161,14 +40168,22 @@ def fetch_yfinance_info(ticker_str: str) -> tuple[dict, str]:
     if ticker_str.endswith(".TW"):
         otc_ticker = ticker_str.replace(".TW", ".TWO")
         try:
-            stock = yf.Ticker(otc_ticker)
-            info = stock.info
+            with open(os.devnull, 'w', encoding='utf-8') as fnull:
+                old_stderr = sys.stderr
+                sys.stderr = fnull
+                try:
+                    stock = yf.Ticker(otc_ticker)
+                    info = stock.info
+                finally:
+                    sys.stderr = old_stderr
+
             if info and ('regularMarketPrice' in info or 'currentPrice' in info or 'previousClose' in info):
                 return info, otc_ticker
         except Exception:
             pass
 
     return {}, ticker_str
+
 
 def get_clean_stock_info(symbol: str) -> tuple[str, str]:
     """

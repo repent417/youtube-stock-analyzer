@@ -19,16 +19,18 @@ logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
 
 @contextlib.contextmanager
 def suppress_stderr():
-    """暫時遮蔽 stderr 以靜音底層 C/C++ 與 Python 函式庫輸出的各種非必要警告訊息"""
+    """安全遮蔽 stderr 靜音警告訊息，避免閉合 I/O 串流引發 ValueError"""
     old_stderr = sys.stderr
+    fnull = open(os.devnull, 'w', encoding='utf-8')
     try:
-        with open(os.devnull, 'w', encoding='utf-8') as fnull:
-            sys.stderr = fnull
-            yield
-    except Exception:
+        sys.stderr = fnull
         yield
     finally:
         sys.stderr = old_stderr
+        try:
+            fnull.close()
+        except Exception:
+            pass
 
 import yt_dlp
 from faster_whisper import WhisperModel
@@ -82,46 +84,87 @@ def extract_video_id(url: str) -> str:
     return ""
 
 def get_video_info(url: str) -> dict:
-    """使用 yt-dlp 抓取影片元資料 (頻道、標題、上傳日期等)"""
-    ydl_opts = {
-        'quiet': True,
-        'no_warnings': True,
-        'extract_flat': False,
-        'extractor_args': {'youtube': {'player_client': ['android_vr', 'web_embedded']}},
-    }
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=False)
-        upload_date = info.get('upload_date', '')
-        if upload_date and len(upload_date) == 8:
-            formatted_date = f"{upload_date[:4]}-{upload_date[4:6]}-{upload_date[6:]}"
-        else:
-            formatted_date = "未知日期"
-            
+    """使用 yt-dlp 抓取影片元資料 (頻道、標題、上傳日期等)，包含備援重試與容錯處理"""
+    client_configs = [
+        ['android', 'ios', 'web'],
+        ['android_vr', 'web_embedded', 'tv']
+    ]
+    
+    info = None
+    for clients in client_configs:
+        ydl_opts = {
+            'quiet': True,
+            'no_warnings': True,
+            'extract_flat': False,
+            'extractor_args': {'youtube': {'player_client': clients}},
+        }
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                if info:
+                    break
+        except Exception:
+            continue
+
+    if not info:
         return {
-            'id': info.get('id', ''),
-            'title': info.get('title', '無標題'),
-            'channel': info.get('uploader', info.get('channel', '未知頻道')),
-            'upload_date': formatted_date,
-            'duration': info.get('duration_string', ''),
+            'id': extract_video_id(url),
+            'title': '未知標題影片',
+            'channel': '未知頻道',
+            'upload_date': '未知日期',
+            'duration': '',
             'url': url
         }
 
+    upload_date = info.get('upload_date', '')
+    if upload_date and len(upload_date) == 8:
+        formatted_date = f"{upload_date[:4]}-{upload_date[4:6]}-{upload_date[6:]}"
+    else:
+        formatted_date = "未知日期"
+        
+    return {
+        'id': info.get('id', ''),
+        'title': info.get('title', '無標題'),
+        'channel': info.get('uploader', info.get('channel', '未知頻道')),
+        'upload_date': formatted_date,
+        'duration': info.get('duration_string', ''),
+        'url': url
+    }
+
 def get_transcript(video_id: str, url: str, threads: int = None, use_gpu: bool = False) -> dict:
     """
-    直接下載影片音訊，並由 Faster-Whisper 模型進行地端語音轉譯
+    下載影片音訊，並由 Faster-Whisper 模型進行地端語音轉譯 (包含 403 Forbidden 備援重試)
     """
+    client_configs = [
+        ['android', 'ios', 'web'],
+        ['android_vr', 'web_embedded', 'tv']
+    ]
+
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
             audio_tmpl = os.path.join(temp_dir, 'audio.%(ext)s')
-            ydl_opts = {
-                'format': 'bestaudio/best',
-                'outtmpl': audio_tmpl,
-                'extractor_args': {'youtube': {'player_client': ['android_vr', 'web_embedded']}},
-                'quiet': True,
-                'no_warnings': True,
-            }
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([url])
+            download_success = False
+            
+            for clients in client_configs:
+                ydl_opts = {
+                    'format': 'bestaudio/best',
+                    'outtmpl': audio_tmpl,
+                    'extractor_args': {'youtube': {'player_client': clients}},
+                    'quiet': True,
+                    'no_warnings': True,
+                }
+                try:
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        ydl.download([url])
+                        download_success = True
+                        break
+                except Exception as e_dl:
+                    continue
+
+            if not download_success:
+                print(f"⚠️ 無法下載影片音訊 (HTTP 403 或限制存取): {url}")
+                return {'text': '', 'source': '⚠️ 語音下載失敗 (403 Forbidden)', 'has_cc': False}
+
             
             actual_audio = None
             for f in os.listdir(temp_dir):
