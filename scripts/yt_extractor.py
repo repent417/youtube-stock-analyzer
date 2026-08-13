@@ -17,21 +17,6 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 logging.getLogger("optimum").setLevel(logging.ERROR)
 logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
 
-@contextlib.contextmanager
-def suppress_stderr():
-    """安全遮蔽 stderr 靜音警告訊息，避免閉合 I/O 串流引發 ValueError"""
-    old_stderr = sys.stderr
-    fnull = open(os.devnull, 'w', encoding='utf-8')
-    try:
-        sys.stderr = fnull
-        yield
-    finally:
-        sys.stderr = old_stderr
-        try:
-            fnull.close()
-        except Exception:
-            pass
-
 import yt_dlp
 from faster_whisper import WhisperModel
 from config import TRANSCRIPTS_DIR, sanitize_filename, WHISPER_MODEL_SIZE, WHISPER_CPU_THREADS
@@ -44,23 +29,23 @@ def get_openvino_gpu_pipeline():
     global _openvino_pipe_cache
     if _openvino_pipe_cache is None:
         print(f"🚀 [Intel iGPU 顯卡] 正在初始化 OpenVINO Whisper ({WHISPER_MODEL_SIZE}) 顯卡轉譯引擎...")
-        with suppress_stderr():
-            with warnings.catch_warnings():
-                warnings.simplefilter("ignore")
-                from optimum.intel.openvino import OVModelForSpeechSeq2Seq
-                from transformers import AutoProcessor, pipeline
-                model_id = f"openai/whisper-{WHISPER_MODEL_SIZE}"
-                model = OVModelForSpeechSeq2Seq.from_pretrained(model_id, export=True, device="GPU")
-                processor = AutoProcessor.from_pretrained(model_id)
-                _openvino_pipe_cache = pipeline(
-                    "automatic-speech-recognition",
-                    model=model,
-                    tokenizer=processor.tokenizer,
-                    feature_extractor=processor.feature_extractor,
-                    chunk_length_s=30,
-                    ignore_warning=True
-                )
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            from optimum.intel.openvino import OVModelForSpeechSeq2Seq
+            from transformers import AutoProcessor, pipeline
+            model_id = f"openai/whisper-{WHISPER_MODEL_SIZE}"
+            model = OVModelForSpeechSeq2Seq.from_pretrained(model_id, export=True, device="GPU")
+            processor = AutoProcessor.from_pretrained(model_id)
+            _openvino_pipe_cache = pipeline(
+                "automatic-speech-recognition",
+                model=model,
+                tokenizer=processor.tokenizer,
+                feature_extractor=processor.feature_extractor,
+                chunk_length_s=30,
+                ignore_warning=True
+            )
     return _openvino_pipe_cache
+
 
 def get_whisper_model(threads: int = None):
     """全域單例加載 Faster-Whisper CPU 轉譯模型"""
@@ -179,10 +164,10 @@ def get_transcript(video_id: str, url: str, threads: int = None, use_gpu: bool =
                         print("🚀 啟動 Intel Iris Xe GPU 顯卡加速轉譯 (OpenVINO)...")
                         pipe = get_openvino_gpu_pipeline()
                         print("⚡ 正在由 Intel Iris Xe GPU 進行顯卡加速轉譯...")
-                        with suppress_stderr():
-                            with warnings.catch_warnings():
-                                warnings.simplefilter("ignore")
-                                gpu_res = pipe(actual_audio, generate_kwargs={"language": "chinese"})
+                        with warnings.catch_warnings():
+                            warnings.simplefilter("ignore")
+                            gpu_res = pipe(actual_audio, generate_kwargs={"language": "chinese"})
+
 
                         gpu_text = gpu_res.get("text", "").strip()
                         if gpu_text:

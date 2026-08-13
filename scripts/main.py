@@ -90,14 +90,14 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
     console.print(f"  [dim]📄 逐字稿已備份至: {transcript_path.relative_to(BASE_DIR)}[/dim]")
 
     # 3. AI 總結與股票指標提取
-    with console.status("[bold green]正在透過 DeepSeek / AI 進行股票分析與提煉...[/bold green]"):
-        try:
-            summary_result = generate_summary(info, transcript_text, transcript_source=transcript_source)
-        except Exception as e:
-            msg = f"[{index}/{total}] [ERROR] AI 分析失敗 ({info['title']}): {e}"
-            console.print(f"[bold red]❌ {msg}[/bold red]")
-            logger.log(msg, level="ERROR")
-            return "ERROR"
+    console.print("  [bold green]🚀 正在透過 DeepSeek / AI 進行股票分析與提煉...[/bold green]")
+    try:
+        summary_result = generate_summary(info, transcript_text, transcript_source=transcript_source)
+    except Exception as e:
+        msg = f"[{index}/{total}] [ERROR] AI 分析失敗 ({info['title']}): {e}"
+        console.print(f"[bold red]❌ {msg}[/bold red]")
+        logger.log(msg, level="ERROR")
+        return "ERROR"
 
     # 4. 寫入 Markdown 筆記 (影片筆記/頻道名稱/<日期>_【股票代號名稱】_<標題>.md)
     tickers = summary_result.get('tickers', [])
@@ -112,11 +112,12 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
 
     # 5. 更新個股交叉索引
     if tickers:
-        with console.status("[bold green]正在更新個股交叉索引...[/bold green]"):
-            for t in tickers:
-                rel_note_path = f"../影片筆記/{note_path.relative_to(BASE_DIR / '影片筆記')}".replace('\\', '/')
-                update_stock_index(t, info, rel_note_path)
-            console.print(f"  [bold magenta]📌 已更新 {len(tickers)} 個標的的交叉索引[/bold magenta]")
+        console.print("  [bold magenta]📌 正在更新個股交叉索引...[/bold magenta]")
+        for t in tickers:
+            rel_note_path = f"../影片筆記/{note_path.relative_to(BASE_DIR / '影片筆記')}".replace('\\', '/')
+            update_stock_index(t, info, rel_note_path)
+        console.print(f"  [bold magenta]📌 已更新 {len(tickers)} 個標的的交叉索引[/bold magenta]")
+
 
     # 記錄至已完成 processed_urls.txt
     append_url_to_file(PROCESSED_URLS_FILE, url)
