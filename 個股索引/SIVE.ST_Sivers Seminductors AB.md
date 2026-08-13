@@ -6,3 +6,4 @@
 
 ## 📅 分析紀錄 (Timeline)
 - **[2026-06-03]** [[2026-06-03_【SIVESivers Semiconductors】_現金快燒光了？深度解析 Sivers (SIVE.ST)|現金快燒光了？深度解析 Sivers (SIVE.ST) 致命財報背後的「三重對賭」，這張暴富門票你敢拿嗎？]] （頻道：`價值股雷達`）
+- **[2026-05-25]** [[2026-05-25_【SIVESivers Semiconductors】_2026_02_26 Sivers Semiconduc|2026/02/26 Sivers Semiconductors (SIVE) 法說會：營收創高×商機大增64%×預告兩年內損平｜#SIVE #矽光子 #LiDAR #法說會 #cpo #雷射]] （頻道：`台股&美股法說整理`）

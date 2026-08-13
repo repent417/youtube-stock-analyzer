@@ -65,6 +65,10 @@ def update_stock_index(ticker: str, video_info: dict, note_rel_path: str):
             content = f.read()
             
         if note_stem not in content:
-            with open(index_file, "a", encoding="utf-8") as f:
-                f.write(entry)
+            raw_new = content + entry
+            from sort_stock_indexes import sort_index_content
+            sorted_new = sort_index_content(raw_new)
+            with open(index_file, "w", encoding="utf-8") as f:
+                f.write(sorted_new)
+
 
