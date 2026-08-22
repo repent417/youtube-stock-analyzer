@@ -54,6 +54,7 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
     處理單一 YouTube URL
     回傳處理結果: "SUCCESS", "ALREADY_PROCESSED", "ERROR"
     """
+    start_time = time.time()
     console.print(f"\n[bold cyan]🚀 [{index}/{total}] 開始處理 YouTube 影片:[/bold cyan] {url}")
     logger.log(f"[{index}/{total}] 開始處理網址: {url}")
     
@@ -118,10 +119,19 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
             update_stock_index(t, info, rel_note_path)
         console.print(f"  [bold magenta]📌 已更新 {len(tickers)} 個標的的交叉索引[/bold magenta]")
 
-
     # 記錄至已完成 processed_urls.txt
     append_url_to_file(PROCESSED_URLS_FILE, url)
+
+    # 計算並顯示單一 URL 總耗時
+    elapsed_sec = time.time() - start_time
+    mins, secs = divmod(int(elapsed_sec), 60)
+    time_display = f"{mins} 分 {secs} 秒" if mins > 0 else f"{elapsed_sec:.1f} 秒"
+    time_msg = f"[{index}/{total}] ⏱️ 本部影片處理完成，總計耗時: {time_display} ({elapsed_sec:.1f} 秒)"
+    console.print(f"  [bold yellow]{time_msg}[/bold yellow]")
+    logger.log(time_msg, level="INFO")
+
     return "SUCCESS"
+
 
 def main():
     parser = argparse.ArgumentParser(description="YouTube 股票分析影片自動總結與索引工具 (Faster-Whisper 全自動轉譯版)")
