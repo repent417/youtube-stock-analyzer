@@ -69,6 +69,14 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
     with console.status("[bold green]正在抓取影片資訊 (標題, 頻道, 日期)...[/bold green]"):
         try:
             info = get_video_info(url)
+            
+            # ⏳ 檢查是否為尚未上映/首播中影片，或無法取得元資料的無效影片
+            if info.get('is_upcoming') or not info.get('is_valid') or info.get('channel') == '未知頻道':
+                msg = f"[{index}/{total}] ⏳ 該影片尚未正式上映/首播中 (或無法存取): {url} (自動跳過處理，不上鎖至 processed_urls.txt)"
+                console.print(f"[bold yellow]⚠️ {msg}[/bold yellow]")
+                logger.log(msg, level="WARNING")
+                return "SKIPPED_UPCOMING"
+
             console.print(f"  [bold gold1]頻道:[/bold gold1] {info['channel']}")
             console.print(f"  [bold gold1]標題:[/bold gold1] {info['title']}")
             console.print(f"  [bold gold1]日期:[/bold gold1] {info['upload_date']}")
@@ -77,6 +85,7 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
             console.print(f"[bold red]❌ {msg}[/bold red]")
             logger.log(msg, level="ERROR")
             return "ERROR"
+
 
     # 2. 直接由 Faster-Whisper 地端模型進行語音轉譯
     with console.status("[bold green]正在進行 Faster-Whisper 地端語音轉譯...[/bold green]"):

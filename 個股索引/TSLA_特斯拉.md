@@ -6,3 +6,4 @@
 
 ## 📅 分析紀錄 (Timeline)
 - **[2026-07-27]** [[2026-07-27_【TSLA特斯拉】_2026_07_23 特斯拉 (Tesla) 法說會：全年資本支出破250億美元×Robot|2026/07/23 特斯拉 (Tesla) 法說會：全年資本支出破250億美元×Robotaxi里程暴增×Optimus迎來千萬量產挑戰｜#Tesla #特斯拉 #Robotaxi #Optimus]] （頻道：`台股&美股法說整理`）
+- **[2025-11-10]** [[2025-11-10_【TSLA特斯拉】_股東們力挺！與馬斯克並肩負重前行_Tesla_1trillion_optimus|股東們力挺！與馬斯克並肩負重前行#Tesla#1trillion#optimus]] （頻道：`ZZ FINANCE`）

@@ -98,8 +98,14 @@ def get_video_info(url: str) -> dict:
             'channel': '未知頻道',
             'upload_date': '未知日期',
             'duration': '',
-            'url': url
+            'url': url,
+            'is_valid': False,
+            'is_upcoming': False
         }
+
+    live_status = info.get('live_status')
+    is_live = info.get('is_live')
+    is_upcoming = live_status in ['is_upcoming', 'is_live'] or is_live is True
 
     upload_date = info.get('upload_date', '')
     if upload_date and len(upload_date) == 8:
@@ -113,8 +119,11 @@ def get_video_info(url: str) -> dict:
         'channel': info.get('uploader', info.get('channel', '未知頻道')),
         'upload_date': formatted_date,
         'duration': info.get('duration_string', ''),
-        'url': url
+        'url': url,
+        'is_valid': True,
+        'is_upcoming': is_upcoming
     }
+
 
 def get_transcript(video_id: str, url: str, threads: int = None, use_gpu: bool = False) -> dict:
     """

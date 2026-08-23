@@ -69,7 +69,14 @@ def fetch_recent_videos_for_channel(channel_url: str, days_limit: int = 2) -> li
         for entry in entries:
             video_url = entry.get('url') or f"https://www.youtube.com/watch?v={entry.get('id')}"
             title = entry.get('title', '未知標題')
-            
+            live_status = entry.get('live_status')
+            is_live = entry.get('is_live')
+
+            # ⏳ 過濾尚未上映/首播的預告影片 (is_upcoming / is_live)
+            if live_status in ['is_upcoming', 'is_live'] or is_live is True:
+                print(f"  - ⏳ [尚未上映首播] {title} (暫不抓取)")
+                continue
+
             # yt-dlp 的 timestamp 可能是以 epoch 或 YYYYMMDD 提供
             timestamp = entry.get('timestamp')
             upload_date_str = entry.get('upload_date')
@@ -92,6 +99,7 @@ def fetch_recent_videos_for_channel(channel_url: str, days_limit: int = 2) -> li
 
             if is_recent and video_url not in new_video_urls:
                 new_video_urls.append((video_url, title, channel_name))
+
 
     except Exception as e:
         print(f"❌ 爬取頻道 {channel_url} 失敗: {e}")

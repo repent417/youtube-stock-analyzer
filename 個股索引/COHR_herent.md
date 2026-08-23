@@ -5,6 +5,7 @@
 ---
 
 ## 📅 分析紀錄 (Timeline)
+- **[2026-08-21]** [[2026-08-21_【COHRCoherent Corp.】_Coherent（COHR）｜全年EPS年增59%，瓶頸卡在磷化銦|Coherent（COHR）｜全年EPS年增59%，瓶頸卡在磷化銦]] （頻道：`價值股雷達`）
 - **[2026-06-06]** [[2026-06-06_【COHRCoherent Corp.】_NVIDIA 砸20億綁定的矽光子黑馬 ！Coherent (COHR|NVIDIA 砸20億綁定的矽光子黑馬 ！Coherent (COHR) 獲利狂飆55% ，比高股息ETF更值得長抱作為退休存股？]] （頻道：`價值股雷達`）
 - **[2026-05-15]** [[2026-05-15_【COHRCoherent 高意】_2026_05_06 Coherent (COHR) 法說會：獲 NVIDI|2026/05/06 Coherent (COHR) 法說會：獲 NVIDIA 20 億美元注資×CPO 長單入袋×1.6T 需求爆發｜#Coherent #輝達 #光通訊 #CPO #法說會 #投資]] （頻道：`台股&美股法說整理`）
 - **[2026-02-14]** [[2026-02-14_【COHRCoherent Corp.】_Nvidia Blackwell 不能沒有它？揭密美股「隱形冠軍 CO|Nvidia Blackwell 不能沒有它？揭密美股「隱形冠軍 COHR」：掌握全球唯一 6 吋 InP 產能！這檔「AI 傳輸獨角獸」訂單爆量 4 倍，比 GPU 還缺貨？]] （頻道：`價值股雷達`）
