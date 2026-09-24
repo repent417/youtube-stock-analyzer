@@ -476,6 +476,14 @@ body {
   margin-bottom: 20px;
 }
 
+/* 🟢 綠網風控提醒 Callout 專屬綠色風格 */
+.markdown-body blockquote:has(p:contains("🟢")),
+.markdown-body blockquote:has(strong:contains("🟢")) {
+  border-left: 4px solid #10b981;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+
 .markdown-body table {
   width: 100%;
   border-collapse: collapse;

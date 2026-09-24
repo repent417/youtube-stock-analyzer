@@ -40225,6 +40225,10 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
             low_52 = info.get('fiftyTwoWeekLow', 'N/A')
             pe_ratio = info.get('trailingPE', info.get('forwardPE', 'N/A'))
             currency = info.get('currency', '')
+            volume = info.get('regularMarketVolume', info.get('volume', 0)) or 0
+            
+            # 算單日成交金額 (Turnover Amount)
+            amount_val = (price * volume) if isinstance(price, (int, float)) and isinstance(volume, (int, float)) else 0
             
             currency_prefix = "NT$" if currency == "TWD" else ("US$" if currency == "USD" else currency)
             price_str = f"{currency_prefix} {price:,.2f}" if isinstance(price, (int, float)) and price > 0 else "N/A"
@@ -40232,6 +40236,18 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
             high_low_str = f"{currency_prefix} {high_52} / {low_52}" if high_52 != 'N/A' else "N/A"
             pe_str = f"{pe_ratio:.1f}" if isinstance(pe_ratio, (int, float)) else "N/A"
             
+            # 格式化成交金額 (以 億 元為單位，美股等效門檻為 3300 萬美元)
+            if amount_val > 0:
+                if currency == "USD":
+                    is_low_turnover = amount_val < 33_000_000
+                    amount_str = f"US$ {amount_val/1e6:,.1f} M"
+                else:
+                    is_low_turnover = amount_val < 1_000_000_000
+                    amount_str = f"NT$ {amount_val/1e8:,.2f} 億"
+            else:
+                is_low_turnover = False
+                amount_str = "N/A"
+
             results.append({
                 'raw': raw,
                 'ticker': actual_ticker,
@@ -40241,7 +40257,10 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
                 'price': price_str,
                 'change': change_str,
                 'high_low': high_low_str,
-                'pe': pe_str
+                'pe': pe_str,
+                'amount_val': amount_val,
+                'amount_str': amount_str,
+                'is_low_turnover': is_low_turnover
             })
         except Exception as e:
             print(f"ℹ️ 無法抓取 {ticker_str} 股票數據: {e}")
@@ -40250,18 +40269,33 @@ def get_stock_data(symbols: list[str]) -> list[dict]:
 
 
 def generate_market_table_md(stock_data: list[dict]) -> str:
-    """將即時股價資料轉換為 Markdown 表格 (附帶抓取日期與時間)"""
+    """將即時股價資料轉換為 Markdown 表格 (附帶抓取日期時間與成交金額<10億綠網風控提醒)"""
     if not stock_data:
         return "（未抓取到即時市場數據或無指定標的）"
         
     fetch_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # 檢查是否有單日成交金額小於 10 億元的標的
+    low_turnover_stocks = [d for d in stock_data if d.get('is_low_turnover')]
+    
     lines = [
-        f"> 🕒 **股價數據抓取時間**：`{fetch_time}`\n",
-        "| 股票代號/名稱 | 即時股價 | 今日漲跌幅 | 52週最高 / 最低 | 本益比 P/E |",
-        "| :--- | :--- | :--- | :--- | :--- |"
+        f"> 🕒 **股價數據抓取時間**：`{fetch_time}`\n"
     ]
+    
+    # 若有低流動性 (成交金額 < 10億) 標的，輸出綠網 Callout 區塊
+    if low_turnover_stocks:
+        low_names = [f"**{d['clean_name']}** ({d['amount_str']})" for d in low_turnover_stocks]
+        lines.append(f"> [!NOTE] 🟢 流動性風控提醒\n> 部分提及標的「單日成交金額小於 10 億元」（{', '.join(low_names)}），屬於中小型流動性標的，請留意流動性風險與控管位階！\n")
+
+    lines.extend([
+        "| 股票代號/名稱 | 即時股價 | 今日漲跌幅 | 單日成交金額 | 52週最高 / 最低 | 本益比 P/E |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- |"
+    ])
+    
     for d in stock_data:
-        lines.append(f"| **{d['name']}** | {d['price']} | {d['change']} | {d['high_low']} | {d['pe']} |")
+        amt_display = f"⚠️ {d['amount_str']}" if d.get('is_low_turnover') else d.get('amount_str', 'N/A')
+        lines.append(f"| **{d['name']}** | {d['price']} | {d['change']} | {amt_display} | {d['high_low']} | {d['pe']} |")
         
     return "\n".join(lines)
+
 

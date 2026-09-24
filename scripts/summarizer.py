@@ -69,8 +69,10 @@ SYSTEM_PROMPT = """你是一位法人級台股與美股證券分析師、頂尖�
 }
 
 請確保所有欄位均為專業精準的【繁體中文】JSON。內容必須深入且具體（包含財務數字、展望、產業邏輯），不可粗略敷衍。
+在評估個股風險與風控停損點 (key_levels / bearish_reasons) 時，請以【單日成交金額小於 10 億元】作為中小型標的流動性風險的判斷標準。
 僅回傳合法的 JSON 物件。
 """
+
 
 def generate_summary_with_deepseek(info: dict, transcript: str, transcript_source: str = "📜 YouTube CC 字幕") -> dict:
     """使用極速且強大的 DeepSeek API (deepseek-chat V3) 進行法人級結構化總結"""
