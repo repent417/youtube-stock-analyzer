@@ -71,11 +71,18 @@ def fetch_recent_videos_for_channel(channel_url: str, days_limit: int = 2) -> li
             title = entry.get('title', '未知標題')
             live_status = entry.get('live_status')
             is_live = entry.get('is_live')
+            availability = entry.get('availability', 'public')
+
+            # 🔒 過濾會員專屬影片 (subscriber_only / premium_only)
+            if availability in ['subscriber_only', 'premium_only']:
+                print(f"  - 🔒 [會員專屬影片] {title} (自動跳過，不寫入 urls.txt)")
+                continue
 
             # ⏳ 過濾尚未上映/首播的預告影片 (is_upcoming / is_live)
             if live_status in ['is_upcoming', 'is_live'] or is_live is True:
                 print(f"  - ⏳ [尚未上映首播] {title} (暫不抓取)")
                 continue
+
 
             # yt-dlp 的 timestamp 可能是以 epoch 或 YYYYMMDD 提供
             timestamp = entry.get('timestamp')

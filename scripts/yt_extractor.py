@@ -76,6 +76,9 @@ def get_video_info(url: str) -> dict:
     ]
     
     info = None
+    last_error_msg = ""
+    is_members_only = False
+
     for clients in client_configs:
         ydl_opts = {
             'quiet': True,
@@ -88,7 +91,11 @@ def get_video_info(url: str) -> dict:
                 info = ydl.extract_info(url, download=False)
                 if info:
                     break
-        except Exception:
+        except Exception as e:
+            err_str = str(e).lower()
+            if 'members' in err_str or 'subscriber' in err_str or 'join this channel' in err_str:
+                is_members_only = True
+            last_error_msg = str(e)
             continue
 
     if not info:
@@ -100,8 +107,13 @@ def get_video_info(url: str) -> dict:
             'duration': '',
             'url': url,
             'is_valid': False,
-            'is_upcoming': False
+            'is_upcoming': False,
+            'is_members_only': is_members_only
         }
+
+    availability = info.get('availability', 'public')
+    if availability in ['subscriber_only', 'premium_only']:
+        is_members_only = True
 
     live_status = info.get('live_status')
     is_live = info.get('is_live')
@@ -121,8 +133,10 @@ def get_video_info(url: str) -> dict:
         'duration': info.get('duration_string', ''),
         'url': url,
         'is_valid': True,
-        'is_upcoming': is_upcoming
+        'is_upcoming': is_upcoming,
+        'is_members_only': is_members_only
     }
+
 
 
 def get_transcript(video_id: str, url: str, threads: int = None, use_gpu: bool = False) -> dict:

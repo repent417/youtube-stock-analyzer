@@ -49,10 +49,21 @@ def get_processed_urls() -> set:
         return set([l.strip() for l in PROCESSED_URLS_FILE.read_text(encoding="utf-8").splitlines() if l.strip()])
     return set()
 
+def remove_url_from_file(file_path: Path, target_url: str):
+    """從指定文字檔 (如 urls.txt) 中擦除指定的 URL"""
+    if not file_path.exists():
+        return
+    try:
+        lines = file_path.read_text(encoding="utf-8").splitlines()
+        new_lines = [line for line in lines if line.strip() != target_url.strip()]
+        file_path.write_text("\n".join(new_lines) + ("\n" if new_lines else ""), encoding="utf-8")
+    except Exception as e:
+        console.print(f"[bold red]❌ 擦除網址失敗 ({target_url}): {e}[/bold red]")
+
 def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int = None, use_gpu: bool = False) -> str:
     """
     處理單一 YouTube URL
-    回傳處理結果: "SUCCESS", "ALREADY_PROCESSED", "ERROR"
+    回傳處理結果: "SUCCESS", "ALREADY_PROCESSED", "ERROR", "SKIPPED_UPCOMING", "MEMBERS_ONLY"
     """
     start_time = time.time()
     console.print(f"\n[bold cyan]🚀 [{index}/{total}] 開始處理 YouTube 影片:[/bold cyan] {url}")
@@ -70,6 +81,13 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
         try:
             info = get_video_info(url)
             
+            # 🔒 檢查是否為頻道會員專屬影片 (無公開存取權限)
+            if info.get('is_members_only'):
+                msg = f"[{index}/{total}] 🔒 該影片為頻道「會員專屬影片」(無法公開存取): {url} (自動刪除此網址)"
+                console.print(f"[bold yellow]⚠️ {msg}[/bold yellow]")
+                logger.log(msg, level="WARNING")
+                return "MEMBERS_ONLY"
+
             # ⏳ 檢查是否為尚未上映/首播中影片，或無法取得元資料的無效影片
             if info.get('is_upcoming') or not info.get('is_valid') or info.get('channel') == '未知頻道':
                 msg = f"[{index}/{total}] ⏳ 該影片尚未正式上映/首播中 (或無法存取): {url} (自動跳過處理，不上鎖至 processed_urls.txt)"
@@ -85,7 +103,6 @@ def process_youtube_url(url: str, index: int = 1, total: int = 1, threads: int =
             console.print(f"[bold red]❌ {msg}[/bold red]")
             logger.log(msg, level="ERROR")
             return "ERROR"
-
 
     # 2. 直接由 Faster-Whisper 地端模型進行語音轉譯
     with console.status("[bold green]正在進行 Faster-Whisper 地端語音轉譯...[/bold green]"):
@@ -180,6 +197,7 @@ def main():
     success_cnt = 0
     skipped_no_cc_cnt = 0
     already_processed_cnt = 0
+    members_only_cnt = 0
     processed_in_this_run = 0
 
     logger.log(f"讀取網址清單總數: {len(urls)} 個，已完成記錄檔數: {len(processed_set)} 個")
@@ -195,6 +213,10 @@ def main():
 
         if res == "SUCCESS":
             success_cnt += 1
+        elif res == "MEMBERS_ONLY":
+            members_only_cnt += 1
+            remove_url_from_file(input_file, url)
+            console.print(f"  [bold red]🗑️ 已自動從 {input_file.name} 中刪除會員專屬網址: {url}[/bold red]")
             
         processed_in_this_run += 1
         
@@ -214,7 +236,8 @@ def main():
                 time.sleep(BATCH_COOLDOWN_SECONDS)
 
     logger.finish_run(len(urls), success_cnt, skipped_no_cc_cnt, already_processed_cnt)
-    console.print("\n[bold green]🎉 任務處理完成！最新日誌已寫入 logs/latest.log 與 logs/run_日期.log[/bold green]\n")
+    console.print(f"\n[bold green]🎉 任務處理完成！(成功: {success_cnt}, 已刪除會員專屬: {members_only_cnt})[/bold green]\n")
+
 
 if __name__ == "__main__":
     main()
