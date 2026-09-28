@@ -40288,14 +40288,14 @@ def generate_market_table_md(stock_data: list[dict]) -> str:
         lines.append(f"> [!NOTE] 🟢 流動性風控提醒\n> 部分提及標的「單日成交金額小於 10 億元」（{', '.join(low_names)}），屬於中小型流動性標的，請留意流動性風險與控管位階！\n")
 
     lines.extend([
-        "| 股票代號/名稱 | 即時股價 | 今日漲跌幅 | 單日成交金額 | 52週最高 / 最低 | 本益比 P/E |",
-        "| :--- | :--- | :--- | :--- | :--- | :--- |"
+        "| 股票代號/名稱 | 即時股價 | 今日漲跌幅 | 52週最高 / 最低 | 本益比 P/E |",
+        "| :--- | :--- | :--- | :--- | :--- |"
     ])
     
     for d in stock_data:
-        amt_display = f"⚠️ {d['amount_str']}" if d.get('is_low_turnover') else d.get('amount_str', 'N/A')
-        lines.append(f"| **{d['name']}** | {d['price']} | {d['change']} | {amt_display} | {d['high_low']} | {d['pe']} |")
+        lines.append(f"| **{d['name']}** | {d['price']} | {d['change']} | {d['high_low']} | {d['pe']} |")
         
     return "\n".join(lines)
+
 
 
